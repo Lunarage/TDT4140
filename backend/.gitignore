@@ -1,0 +1,7 @@
+# Python
+*.pyc
+venv
+
+# Database
+*.db
+*.sqlite3
