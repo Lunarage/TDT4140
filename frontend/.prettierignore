@@ -1,0 +1,2 @@
+# Ignore css as we use stylelint instead
+*.css
