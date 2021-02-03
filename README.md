@@ -53,3 +53,4 @@ Add, commit, and push changes upstream
 `$ git commit`  
 `$ git pull`  
 `$ git push`
+`$ git push`  
