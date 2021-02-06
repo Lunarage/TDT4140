@@ -27,6 +27,10 @@ VSCode also has a terminal.
   - [autopep8](https://pypi.org/project/autopep8/) (`$ pip install --upgrade autopep8`)
     - [Formatting Python in VSCode](https://code.visualstudio.com/docs/python/editing#_formatting)
 
+## How to document
+
+[Markdown syntax](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
+
 ## How to git
 
 Clone repository  
@@ -53,4 +57,3 @@ Add, commit, and push changes upstream
 `$ git commit`  
 `$ git pull`  
 `$ git push`
-`$ git push`  
