@@ -43,6 +43,8 @@ Outline of the most important project files:
 ├── requirements_dev.txt (Python dependencies for development)
 └── requirements.txt (Python dependencies for the project)
 ```
+## Database
+![ER-diagram](Database ER.png)
 
 ## REST API
 
