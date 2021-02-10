@@ -5,3 +5,6 @@ venv
 # Database
 *.db
 *.sqlite3
+
+# Development
+payloads/*
