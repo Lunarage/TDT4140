@@ -27,8 +27,8 @@ class Activity(models.Model):
     """
     title = models.CharField(max_length=80)
     date = models.DateTimeField(null=True, blank=True)
-    organization_owner = models.ForeignKey(Organization, on_delete=models.SET_NULL, null=True)
-    user_owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
+    organization_owner = models.ForeignKey(Organization, on_delete=models.SET_NULL, null=True, blank=True)
+    user_owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True)
 
 
 
