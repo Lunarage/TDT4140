@@ -1,3 +1,5 @@
 # IDE Spesific files
 tags
 .vscode/*
+frontend/.eslintcache
+node_modules/
