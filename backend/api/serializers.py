@@ -35,4 +35,4 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:  # pylint: disable=too-few-public-methods
         model = User
-        fields = ["name"]
+        fields = ["username"]
