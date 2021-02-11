@@ -25,7 +25,7 @@ class ActivitySerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:  # pylint: disable=too-few-public-methods
         model = Activity
-        fields = ["title", "date"]
+        fields = ["title", "date", "organization_owner", "user_owner"]
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
