@@ -3,8 +3,9 @@ DOCSTRING HERE!
 """
 
 from gjorno.models import Organization, Activity
+from django.contrib.auth.models import User
 from rest_framework import viewsets
-from .serializers import OrganizationSerializer, ActivitySerializer
+from .serializers import OrganizationSerializer, ActivitySerializer, UserSerializer
 
 
 class OrganizationViewSet(viewsets.ModelViewSet):  # pylint: disable=too-many-ancestors
@@ -21,3 +22,10 @@ class ActivityViewSet(viewsets.ModelViewSet):  # pylint: disable=too-many-ancest
     """
     queryset = Activity.objects.all()
     serializer_class = ActivitySerializer
+
+class UserViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint for User model.
+    """
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
