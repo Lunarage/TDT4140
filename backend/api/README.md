@@ -2,30 +2,86 @@
 
 ## Activity
 
-### URL
+GET `/api/activity`
 
-/api/activity
+**Response**
 
-### Method
+Name | Type | Description
+-----|------|------------
+title | string | Title of the activity
+date | string | YYYY-MM-DDThh:mm:ssZ (ISO 8601)
+organization_owner | integer | link to organization
+user_owner | integer | link to user
 
-GET, POST
+Example response
+```json
+{
+  "title": "Tur i skogen",
+  "date": "2021-02-28T14:30:00Z",
+  "organization_owner": 1,
+  "user_owner": 1
+}
+```
+
+POST `/api/activity`
+
+**Parameters**
+
+Name | Type | Description
+-----|------|------------
+title | string | Title of the activity
+date | string | YYYY-MM-DDThh:mm:ssZ (ISO 8601)
+
+**Response**
+
+Name | Type | Description
+-----|------|------------
+??? | ??? | ???
 
 ## Organization
 
-### URL
+GET `/api/organization`
 
-/api/organization
+**Response**
 
-### Method
+Name | Type | Description
+-----|------|------------
+??? | ??? | ???
 
-GET, POST
+POST `/api/organization`
+
+**Parameters**
+
+Name | Type | Description
+-----|------|------------
+??? | ??? | ???
+
+**Response**
+
+Name | Type | Description
+-----|------|------------
+??? | ??? | ???
 
 ## User
 
-### URL
+GET `/api/user`
 
-/api/user
+**Response**
 
-### Method
+Name | Type | Description
+-----|------|------------
+??? | ??? | ???
 
-GET, POST
+POST `/api/user`
+
+**Parameters**
+
+Name | Type | Description
+-----|------|------------
+??? | ??? | ???
+
+**Response**
+
+Name | Type | Description
+-----|------|------------
+??? | ??? | ???
