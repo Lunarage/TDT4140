@@ -7,10 +7,12 @@ import Welcome from './welcome/Welcome';
 import MyPage from './myPage/MyPage';
 import Login from './login/Login';
 import Browse from './browse/Browse';
+import Header from './components/Header';
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter >
+      <Header loggedIn={true} />
       <Switch>
         <Route exact path="/" component={Welcome} />
         <Route exact path="/browse" component={Browse} />
