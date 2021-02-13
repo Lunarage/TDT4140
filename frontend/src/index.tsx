@@ -8,17 +8,26 @@ import MyPage from './myPage/MyPage';
 import Login from './login/Login';
 import Browse from './browse/Browse';
 import Header from './components/Header';
+import styled from 'styled-components';
+
+const PageWrapper = styled.div`
+  background-image: url(/Everest.png);
+  background-repeat: no-repeat;
+  height: 100vh;
+`;
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter >
-      <Header loggedIn={true} />
-      <Switch>
-        <Route exact path="/" component={Welcome} />
-        <Route exact path="/browse" component={Browse} />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/mypage" component={MyPage} />
-      </Switch>
+      <PageWrapper>
+        <Header loggedIn={true} />
+        <Switch>
+          <Route exact path="/" component={Welcome} />
+          <Route exact path="/browse" component={Browse} />
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/mypage" component={MyPage} />
+        </Switch>
+      </PageWrapper>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')

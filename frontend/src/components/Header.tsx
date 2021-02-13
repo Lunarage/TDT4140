@@ -1,6 +1,7 @@
 import React from 'react'
 import { useHistory } from "react-router-dom";
 import styled from 'styled-components';
+import { pageName } from '../consts';
 
 interface HeaderProps {
   loggedIn: boolean
@@ -8,18 +9,12 @@ interface HeaderProps {
 
 const Wrapper = styled.div`
   width: 100%;
-  border-bottom: 2px solid black;
   display: flex;
   justify-content: space-between;
   align-items: center;
 `;
 
-const LeftWrapper = styled.div`
-  display: flex;
-  align-items: baseline;
-`;
-
-const RightWrapper = styled.div`
+const UserButton = styled.div`
   display: flex;
   margin: 10px;
 
@@ -40,10 +35,17 @@ const Tab = styled.div`
   }
 `;
 
-const Logo = styled.div`
+const TabsWrapper = styled.div`
+  display: flex;
+  align-items: baseline;
+`;
+
+
+export const Logo = styled.div`
   margin: 10px 20px;
-  font-size: 35px;
+  font-size: 30px;
   font-weight: bold;
+  color: #424242;
 
   &:hover {
     cursor: pointer;
@@ -59,16 +61,16 @@ const Header = ({ loggedIn }: HeaderProps) => {
 
   return (
     <Wrapper>
-      <LeftWrapper>
-        <Logo onClick={() => handleLogoClick("/")}>GJØR' NO</Logo>
+      <Logo onClick={() => handleLogoClick("/")}>{pageName}</Logo>
+      <TabsWrapper>
         <Tab onClick={() => handleLogoClick("/browse")} >
           Aktiviteter
         </Tab >
         <Tab onClick={() => handleLogoClick("/browse")}>
           Arrangementer
         </Tab>
-      </LeftWrapper>
-      { loggedIn ? <RightWrapper onClick={() => handleLogoClick("/mypage")}>Min side</RightWrapper> : <RightWrapper onClick={() => handleLogoClick("/login")}>logg inn</RightWrapper>}
+      </TabsWrapper>
+      { loggedIn ? <UserButton onClick={() => handleLogoClick("/mypage")}>Min side</UserButton> : <UserButton onClick={() => handleLogoClick("/login")}>logg inn</UserButton>}
     </Wrapper >
   );
 };
