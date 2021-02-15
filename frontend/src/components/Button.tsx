@@ -2,12 +2,13 @@ import React from 'react'
 import styled from 'styled-components';
 
 interface ButtonProps {
-  text: string
+  text: string;
+  onClickFunc?: () => void;
 }
 
 const CustomButton = styled.div`
-  width: 75px;
-  height: 25px;
+  width: 115px;
+  height: 37px;
   color: white;
   margin: 10px;
   background-color: #ff4e37;
@@ -29,10 +30,11 @@ const CustomButton = styled.div`
 const TextWrapper = styled.div`
   display: table-cell;
   vertical-align: middle;
+  font-size: 20px;
 `;
 
-const Button = ({ text }: ButtonProps) => (
-  <CustomButton>
+const Button = ({ text, onClickFunc }: ButtonProps) => (  
+  <CustomButton onClick={onClickFunc}>
     <TextWrapper>
       { text }
     </TextWrapper>
