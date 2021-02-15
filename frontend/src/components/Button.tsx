@@ -2,7 +2,8 @@ import React from 'react'
 import styled from 'styled-components';
 
 interface ButtonProps {
-  text: string
+  text: string;
+  onClickFunc?: () => void;
 }
 
 const CustomButton = styled.div`
@@ -12,9 +13,9 @@ const CustomButton = styled.div`
   border-color: red;
 `;
 
-const Button = ({ text }: ButtonProps) => (
-  <CustomButton>
-    text
+const Button = ({ text, onClickFunc }: ButtonProps) => (
+  <CustomButton onClick={onClickFunc}>
+    {text}
   </CustomButton>
 );
 

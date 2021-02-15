@@ -3,12 +3,6 @@ import styled from 'styled-components';
 import { Logo } from '../components/Header';
 import { pageName } from '../consts';
 
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-`;
-
 const BigLogo = styled(Logo)`
   font-size: 65px;
   margin: -20px 1px 30px 10px;
@@ -29,10 +23,10 @@ const LogoText = styled(Logo)`
 `;
 
 const WelcomeLogo = () => (
-  <Wrapper>
+  <>
     <LogoText>Gå ut</LogoText>
     <BigLogo>{pageName}</BigLogo>
-  </Wrapper>
+  </>
 );
 
 export default WelcomeLogo

@@ -1,7 +1,7 @@
 import React from 'react'
 import { useHistory } from "react-router-dom";
 import styled from 'styled-components';
-import { pageName } from '../consts';
+import { pageName, redHexColor } from '../consts';
 
 interface HeaderProps {
   loggedIn: boolean
@@ -27,7 +27,7 @@ const Tab = styled.div`
   display: flex;
   font-size: 20px;
   margin: 10px 15px;
-  color: #ff4e37;
+  color: ${redHexColor};
   font-weight: bold;
 
   &:hover {

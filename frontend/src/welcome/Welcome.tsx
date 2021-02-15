@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components';
 import Button from '../components/Button';
+import Header from '../components/Header';
 import WelcomeLogo from './WelcomeLogo';
 
 const PageWrapper = styled.div`
@@ -8,6 +9,9 @@ const PageWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  background-image: url(/Everest.png);
+  background-repeat: no-repeat;
+  height: 100vh;
 `;
 
 const ContentWrapper = styled.div`
@@ -17,10 +21,19 @@ const ContentWrapper = styled.div`
   align-items: flex-end;
 `;
 
+const WelcomeLogoWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+`;
+
 const Welcome = () => (
   <PageWrapper>
+    <Header loggedIn={false} />
     <ContentWrapper>
-      <WelcomeLogo />
+      <WelcomeLogoWrapper>
+        <WelcomeLogo />
+      </WelcomeLogoWrapper>
       <Button text="Utforsk" />
       <Button text="Logg inn" />
     </ContentWrapper>
