@@ -8,6 +8,7 @@ GET `/api/activity`
 
 Name | Type | Description
 -----|------|------------
+id | integer | Unique id of activity
 title | string | Title of the activity
 date | string | YYYY-MM-DDThh:mm:ssZ (ISO 8601)
 description | string | description
@@ -22,12 +23,14 @@ user_owner | integer | link to user
 
 Example response
 ```json
-{
+[
+  {
   "title": "Tur i skogen",
   "date": "2021-02-28T14:30:00Z",
   "organization_owner": 1,
   "user_owner": 1
-}
+  }
+]
 ```
 
 POST `/api/activity`
