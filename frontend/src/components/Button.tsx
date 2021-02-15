@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components';
+import { redHexColor } from '../consts';
 
 interface ButtonProps {
   text: string;
@@ -11,7 +12,7 @@ const CustomButton = styled.div`
   height: 37px;
   color: white;
   margin: 10px;
-  background-color: #ff4e37;
+  background-color: ${redHexColor};
   padding: 3px 20px;
   outline: 0;
   transition: ease backgroundcolor 250ms;
