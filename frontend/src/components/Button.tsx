@@ -2,7 +2,8 @@ import React from 'react'
 import styled from 'styled-components';
 
 interface ButtonProps {
-  text: string
+  text: string;
+  onClickFunc?: () => void;
 }
 
 const CustomButton = styled.div`
@@ -34,7 +35,7 @@ const TextWrapper = styled.div`
 const Button = ({ text }: ButtonProps) => (
   <CustomButton>
     <TextWrapper>
-      { text }
+      {text}
     </TextWrapper>
   </CustomButton>
 );
