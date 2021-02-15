@@ -7,13 +7,6 @@ from django.conf import settings
 from django.db import models
 
 
-class Test(models.Model):
-    """
-    A test model
-    """
-    value = models.CharField(max_length=80)
-
-
 class Organization(models.Model):
     """
     A Organization model consisting of an attribute "name"
