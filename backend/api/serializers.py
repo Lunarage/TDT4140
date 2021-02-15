@@ -15,7 +15,7 @@ class OrganizationSerializer(serializers.ModelSerializer):
 
     class Meta:  # pylint: disable=too-few-public-methods
         model = Organization
-        fields = ["name", "description", "external_link", "user_member"]
+        fields = ["id", "name", "description", "external_link", "user_member"]
 
 
 class ActivitySerializer(serializers.ModelSerializer):
