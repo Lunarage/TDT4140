@@ -11,25 +11,25 @@ const PageWrapper = styled.div`
   height: 100vh;
 `;
 
-const ContentWrapper = styled.div`
+export const ContentWrapper = styled.div`
   display: flex;
   flex-direction: row;
   height: 100%;
 `;
 
-const SideBar = styled.div`
+export const SideBar = styled.div`
   height: auto;
   width: 230px;
   background-color: ${redHexColor};
   border-radius: 1px;
 `;
 
-const RightWrapper = styled.div`
+export const RightWrapper = styled.div`
   height: 100%;
   width: 100%;
 `;
 
-const FilterWrapper = styled.div`
+export const FilterWrapper = styled.div`
   height: 80px;
   width: auto;
   margin: 10px;
@@ -40,14 +40,14 @@ const FilterWrapper = styled.div`
   padding-left: 20px;
 `;
 
-const ActivityWrapper = styled.div`
+export const ActivityWrapper = styled.div`
   margin: 15px;
   padding: 0 10px;
   display: flex;
   justify-content: space-around;
 `;
 
-const PageHeader = styled.h1`
+export const PageHeader = styled.h1`
   margin-left: 30px;
   color: ${logoColor};
 `;
