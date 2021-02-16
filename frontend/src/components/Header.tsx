@@ -1,10 +1,10 @@
-import React from 'react'
+import React from "react";
 import { useHistory } from "react-router-dom";
-import styled from 'styled-components';
-import { pageName, redHexColor } from '../consts';
+import styled from "styled-components";
+import { logoColor, pageName, redHexColor } from "../consts";
 
 interface HeaderProps {
-  loggedIn: boolean
+  loggedIn: boolean;
 }
 
 const Wrapper = styled.div`
@@ -40,39 +40,57 @@ const TabsWrapper = styled.div`
   align-items: baseline;
 `;
 
-
 export const Logo = styled.div`
   margin: 10px 20px;
   font-size: 30px;
   font-weight: bold;
-  color: #424242;
+  color: ${logoColor};
 
   &:hover {
     cursor: pointer;
   }
 `;
 
+export enum Type {
+  aktiviteter = "Aktiviteter",
+  arrangementer = "Arrangementer"
+}
+
 const Header = ({ loggedIn }: HeaderProps) => {
   const history = useHistory();
 
-  const handleLogoClick = (tab: string) => {
+  const setUrl = (tab: string) => {
     history.push(tab);
-  }
+  };
+
+  const handleTypeClick = (tab: string, type: string) => {
+    history.push(tab + "?type=" + type);
+  };
 
   return (
     <Wrapper>
-      <Logo onClick={() => handleLogoClick("/")}>{pageName}</Logo>
+      <Logo onClick={() => setUrl("/")}>{pageName}</Logo>
       <TabsWrapper>
-        <Tab onClick={() => handleLogoClick("/browse")} >
-          Aktiviteter
-        </Tab >
-        <Tab onClick={() => handleLogoClick("/browse")}>
-          Arrangementer
+        <Tab onClick={() => handleTypeClick("/browse", "aktiviteter")}>
+          {Type.aktiviteter}
+        </Tab>
+        <Tab
+          onClick={() => handleTypeClick("/browse", "arrangementer")}
+        >
+          {Type.arrangementer}
         </Tab>
       </TabsWrapper>
-      { loggedIn ? <UserButton onClick={() => handleLogoClick("/mypage")}>Min side</UserButton> : <UserButton onClick={() => handleLogoClick("/login")}>logg inn</UserButton>}
-    </Wrapper >
+      {loggedIn ? (
+        <UserButton onClick={() => setUrl("/mypage")}>
+          Min side
+        </UserButton>
+      ) : (
+          <UserButton onClick={() => setUrl("/login")}>
+            Logg inn
+          </UserButton>
+        )}
+    </Wrapper>
   );
 };
 
-export default Header
+export default Header;

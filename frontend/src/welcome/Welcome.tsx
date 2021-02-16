@@ -12,6 +12,7 @@ const PageWrapper = styled.div`
   background-image: url(/Everest.png);
   background-repeat: no-repeat;
   height: 100vh;
+  background-size: auto 100%;
 `;
 
 const ContentWrapper = styled.div`
