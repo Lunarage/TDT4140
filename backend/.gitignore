@@ -8,3 +8,6 @@ static/*
 # Database
 *.db
 *.sqlite3
+
+# Development
+payloads/*

@@ -48,7 +48,51 @@ Outline of the most important project files:
 
 ## REST API
 
-`/api`
+### Logging in
+
+Obtain an authentication token
+
+POST `/api/token-auth`
+
+**Parameters**
+
+Name | Type | Description
+-----|------|------------
+username | string | The username
+password | string | The password in clear text
+
+Parameters Example
+
+```json
+{
+  "username": "example",
+  "password": "password123"
+}
+```
+
+**Response**
+
+Name | Type | Description
+-----|------|------------
+email | string | The email of the user
+token | string | The authentication token
+user_id | int | Primary key of the user
+
+Response Example
+
+```json
+{
+  "email": "example@example.com",
+  "token": "<tokenstring>",
+  "user_id": 1
+}
+```
+
+Put the token string in localstorage or something.
+
+Include the token in the header of the requests:
+
+`Authorization: Token <tokenstring>`
 
 ## How to develop
 
