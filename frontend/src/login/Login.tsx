@@ -10,6 +10,7 @@ const PageWrapper = styled.div`
   background-image: url(/EverestTiny.png);
   background-repeat: no-repeat;
   height: 100vh;
+  background-size: auto 100%;
 `;
 
 const WelcomeLogoWrapper = styled.div`
@@ -48,9 +49,9 @@ const LoginWidget = styled.div`
 `;
 
 const LoginHeader = styled.div`
-font-size: 20px;
-margin: 10px;
-font-weight: bold;
+  font-size: 20px;
+  margin: 10px;
+  font-weight: bold;
 `;
 
 export enum Method {
