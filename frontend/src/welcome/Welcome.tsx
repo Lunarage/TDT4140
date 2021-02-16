@@ -5,13 +5,14 @@ import Header from "../components/Header";
 import WelcomeLogo from "./WelcomeLogo";
 
 const PageWrapper = styled.div`
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    background-image: url(/static/Everest.png);
-    background-repeat: no-repeat;
-    height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  background-image: url(/static/Everest.png);
+  background-repeat: no-repeat;
+  height: 100vh;
+  background-size: auto 100%;
 `;
 
 const ContentWrapper = styled.div`
