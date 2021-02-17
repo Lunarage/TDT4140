@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components';
 import Button from '../components/Button';
 import Header from '../components/Header';
+import InputField from '../components/InputField';
 import WelcomeLogo from '../welcome/WelcomeLogo';
 
 const PageWrapper = styled.div`
@@ -48,6 +49,11 @@ const LoginWidget = styled.div`
   box-shadow: rgba(0, 0, 0, 0.45) 1px 5px 15px;
 `;
 
+const InputWrapper = styled.div`
+  width: 300px;
+  margin-top: 50px;
+`;
+
 const LoginHeader = styled.div`
   font-size: 20px;
   margin: 10px;
@@ -75,6 +81,12 @@ const Login = () => {
           <LoginHeader>
             {method}
           </LoginHeader>
+          <InputWrapper>
+          <InputField name="E-post"/>
+          <InputField name="Passord"/>
+          {method == Method.register && <InputField name="Confirm passord"/>}
+          </InputWrapper>
+          <Button text='Submit'/>
         </LoginWidget>
         <ButtonsWrapper>
           <Button text={Method.register} onClickFunc={() => handleClick(Method.register)} />
