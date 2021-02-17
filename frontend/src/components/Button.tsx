@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components';
-import { redHexColor } from '../consts';
+import { redHexColor, redHexColorHover } from '../consts';
 
 interface ButtonProps {
   text: string;
@@ -24,7 +24,7 @@ const CustomButton = styled.div`
 
   &:hover {
     cursor: pointer;
-    background-color: #dc3f2a;
+    background-color: ${redHexColorHover};
   }
 `;
 
