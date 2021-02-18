@@ -53,7 +53,7 @@ export const PageHeader = styled.h1`
   color: ${logoColor};
 `;
 
-const ExpandWrapper = styled.div`
+export const ExpandWrapper = styled.div`
   height: 100%;
   width: 100%;
   position: absolute;
