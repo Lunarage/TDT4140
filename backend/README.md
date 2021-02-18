@@ -144,3 +144,6 @@ If the models are changed, the database must be updated:
 `$ python manage.py migrate`
 
 https://docs.djangoproject.com/en/3.1/topics/migrations/
+
+Run tests:  
+`$ python manage.py test`
