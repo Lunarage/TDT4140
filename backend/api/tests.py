@@ -28,6 +28,7 @@ class APITestCase(TestCase):
         response = client.get('/api/activity/', HTTP_ACCEPT='application/json')
         assert response.status_code == 200
         for activity in response.json():
+            assert "id" in activity
             assert "title" in activity
             assert "date" in activity
             assert "organization_owner" in activity
@@ -50,7 +51,7 @@ class APITestCase(TestCase):
             assert "description" in organization
             assert "image" in organization
             assert "external_link" in organization
-            assert "members" in organization
+            assert "user_member" in organization
 
     def test_get_user(self):
         client = APIClient()
