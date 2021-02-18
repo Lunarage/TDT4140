@@ -2,6 +2,9 @@
 *.pyc
 venv
 
+# Static Files
+static/*
+
 # Database
 *.db
 *.sqlite3
