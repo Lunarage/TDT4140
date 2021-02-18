@@ -5,13 +5,10 @@ https://docs.djangoproject.com/en/3.1/topics/db/models/
 """
 from django.conf import settings
 from django.db import models
-<<<<<<< HEAD
 from django.core.validators import MaxValueValidator, MinValueValidator
-=======
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
->>>>>>> master
 
 
 class Test(models.Model):
