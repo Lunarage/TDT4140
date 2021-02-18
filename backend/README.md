@@ -44,6 +44,12 @@ Outline of the most important project files:
 └── requirements.txt (Python dependencies for the project)
 ```
 ## Database
+The database consists of 4 entities:
+- User
+- Organization
+- Activity 
+- Categories 
+
 ![ER-diagram](Database ER.png)
 
 ## REST API
