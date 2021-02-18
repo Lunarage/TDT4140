@@ -10,7 +10,7 @@ const PageWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  background-image: url(/Everest.png);
+  background-image: url(/static/Everest.png);
   background-repeat: no-repeat;
   height: 100vh;
   background-size: auto 100%;

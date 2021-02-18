@@ -8,7 +8,7 @@ import WelcomeLogo from '../welcome/WelcomeLogo';
 const PageWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  background-image: url(/EverestTiny.png);
+  background-image: url(/static/EverestTiny.png);
   background-repeat: no-repeat;
   height: 100vh;
   background-size: auto 100%;
@@ -82,11 +82,11 @@ const Login = () => {
             {method}
           </LoginHeader>
           <InputWrapper>
-          <InputField name="E-post"/>
-          <InputField name="Passord"/>
-          {method == Method.register && <InputField name="Confirm passord"/>}
+            <InputField name="E-post" />
+            <InputField name="Passord" />
+            {method === Method.register && <InputField name="Confirm passord" />}
           </InputWrapper>
-          <Button text='Submit'/>
+          <Button text='Submit' />
         </LoginWidget>
         <ButtonsWrapper>
           <Button text={Method.register} onClickFunc={() => handleClick(Method.register)} />

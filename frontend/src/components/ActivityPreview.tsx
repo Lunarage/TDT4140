@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components';
 import { redHexColor, redHexColorHover } from '../consts';
 
@@ -58,7 +58,7 @@ interface ActivityPreviewProps {
 const ActivityPreview = ({ onClickFunc }: ActivityPreviewProps) => (
   <Wrapper onClick={onClickFunc}>
     <ImageWrapper>
-      <Image src="Red-Rocks_horizontal.jpg" />
+      <Image src="static/Red-Rocks_horizontal.jpg" />
     </ImageWrapper>
     <TextWrapper>
       <Header> KLATRING </Header>

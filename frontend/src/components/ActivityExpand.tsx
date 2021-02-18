@@ -102,11 +102,11 @@ const ActivityExpand = ({ onExitFunc }: ActivityExpandProps) => (
     <CloseButton onClick={onExitFunc} >X </CloseButton>
     <ActivityExpandHeader>
       &nbsp; &nbsp; SPACEWALK
-         <Logo src="NASA_logo.png" />
+         <Logo src="static/NASA_logo.png" />
     </ActivityExpandHeader>
 
     <Content>
-      <ImageWrapper> <Image src="22858269.jpg" />
+      <ImageWrapper> <Image src="static/22858269.jpg" />
       </ImageWrapper>
 
       <TextContentWrapper>
