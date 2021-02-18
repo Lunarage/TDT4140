@@ -5,9 +5,13 @@ https://docs.djangoproject.com/en/3.1/topics/db/models/
 """
 from django.conf import settings
 from django.db import models
+<<<<<<< HEAD
+from django.core.validators import MaxValueValidator, MinValueValidator
+=======
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
+>>>>>>> master
 
 
 class Organization(models.Model):
@@ -19,6 +23,9 @@ class Organization(models.Model):
     external_link = models.URLField(max_length=200, default="")
     user_member = models.ManyToManyField(settings.AUTH_USER_MODEL)
 
+    def __str__(self):
+        return 'Organization: {}'.format(self.name)
+
 
 class Category(models.Model):
     """
@@ -26,13 +33,23 @@ class Category(models.Model):
     """
     name = models.CharField(max_length=80)
 
+    class Meta:
+        verbose_name = "Category"
+        verbose_name_plural = "categories"
+
+    def __str__(self):
+        return self.name
+
 
 class Equipment(models.Model):
     """
     A Equipment model consisting of an attribute "name"
     """
     name = models.CharField(max_length=80)
-  
+    
+    def __str__(self):
+        return self.name
+
     
 class Activity(models.Model):
     """
@@ -44,13 +61,19 @@ class Activity(models.Model):
     description = models.TextField(blank=True, default="")
     location = models.CharField(max_length=80, default="")
     max_participants = models.IntegerField(default=None, null=True, blank=True)
-    activity_level = models.IntegerField(default=1)
+    activity_level = models.IntegerField(default=1, validators=[MaxValueValidator(5), MinValueValidator(1)])
     organization_owner = models.ForeignKey(Organization, on_delete=models.SET_NULL, null=True, blank=True)
     user_owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
     categories = models.ManyToManyField(Category, blank=True)
     equipment_used = models.ManyToManyField(Equipment, blank=True)
     tagged = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="tags")
+
+    class Meta:
+        verbose_name = "Activity"
+        verbose_name_plural = "Activities"
     
+    def __str__(self):
+        return self.title
     
 
 
