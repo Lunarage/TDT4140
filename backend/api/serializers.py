@@ -35,7 +35,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:  # pylint: disable=too-few-public-methods
         model = User
-        fields = ["username"]
+        fields = ["id", "first_name", "last_name", "username", "email"]
 
 class CategorySerializer(serializers.ModelSerializer):
     """

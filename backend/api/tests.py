@@ -37,7 +37,7 @@ class APITestCase(TestCase):
             assert "max_participants" in activity
             assert "description" in activity
             assert "categories" in activity
-            assert "equipment" in activity
+            assert "equipment_used" in activity
             assert "image" in activity
             assert "location" in activity
 
