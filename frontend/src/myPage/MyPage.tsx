@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components';
 import { ActivityWrapper, ContentWrapper, PageHeader, RightWrapper, SideBar, FilterWrapper as ListNameWrapper } from '../browse/Browse';
 import ActivityPreview from '../components/ActivityPreview';
@@ -10,25 +10,28 @@ const PageWrapper = styled.div`
   height: 100vh;
 `;
 
-const MyPage = () => (
-  <PageWrapper>
-    <Header loggedIn={false} />
-    <ContentWrapper>
-      <SideBar>
-      </SideBar>
-      <RightWrapper>
-        <ListNameWrapper>
-          <PageHeader>Mine favoritter</PageHeader>
-        </ListNameWrapper>
-        <ActivityWrapper>
-          <ActivityPreview />
-          <ActivityPreview />
-          <ActivityPreview />
-          <ActivityPreview />
-        </ActivityWrapper>
-      </RightWrapper>
-    </ContentWrapper>
-  </PageWrapper>
-);
+const MyPage = () => {
+  const [showExpanded, setShowExpanded] = useState<boolean>(false);
+  return (
+    <PageWrapper>
+      <Header loggedIn={false} />
+      <ContentWrapper>
+        <SideBar>
+        </SideBar>
+        <RightWrapper>
+          <ListNameWrapper>
+            <PageHeader>Mine favoritter</PageHeader>
+          </ListNameWrapper>
+          <ActivityWrapper>
+            <ActivityPreview onClickFunc={() => setShowExpanded(true)} />
+            <ActivityPreview onClickFunc={() => setShowExpanded(true)} />
+            <ActivityPreview onClickFunc={() => setShowExpanded(true)} />
+            <ActivityPreview onClickFunc={() => setShowExpanded(true)} />
+          </ActivityWrapper>
+        </RightWrapper>
+      </ContentWrapper>
+    </PageWrapper>
+  );
+}
 
 export default MyPage

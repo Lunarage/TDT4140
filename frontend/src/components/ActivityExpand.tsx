@@ -12,6 +12,10 @@ const Wrapper = styled.div`
   font-size: 24px;
   line-height: 36px;
   mix-blend-mode: normal;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 `;
 
 const ActivityExpandHeader = styled.h1`
@@ -68,45 +72,71 @@ const Logo = styled.img`
     height: 110px;
 `;
 
-const ActivityExpand = () => (
-    <Wrapper>
-      <ActivityExpandHeader>
-         &nbsp; &nbsp; SPACEWALK
+const CloseButton = styled.button`
+  padding: none;
+  border: navajowhite;
+  font-size: 2;
+  position: absolute;
+  left: 1em;
+  top: 0.5em;
+  margin-bottom: 1em;
+  background: ${redHexColor};
+  border-radius: 5px;
+  height: 30px;
+  width: 30px;
+  font-weight: bold;
+  color: white;
+
+  :hover {
+    box-shadow: none;
+    cursor: pointer;
+  }
+`;
+
+interface ActivityExpandProps {
+  onExitFunc: () => void;
+}
+
+const ActivityExpand = ({ onExitFunc }: ActivityExpandProps) => (
+  <Wrapper>
+    <CloseButton onClick={onExitFunc} >X </CloseButton>
+    <ActivityExpandHeader>
+      &nbsp; &nbsp; SPACEWALK
          <Logo src="NASA_logo.png" />
-      </ActivityExpandHeader>
-     
-      <Content>
-        <ImageWrapper> <Image src= "22858269.jpg" /> 
-        </ImageWrapper>
-     
+    </ActivityExpandHeader>
+
+    <Content>
+      <ImageWrapper> <Image src="22858269.jpg" />
+      </ImageWrapper>
+
       <TextContentWrapper>
-     
-      <TextContent>
-        <br></br><b>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis nec ligula velit. Suspendisse lectus sem, dictum ultricies diam tincidunt, imperdiet porttitor dolor. Suspendisse pretium ex vel felis interdum, id ornare sem finibus.</b>
-      </TextContent>
 
-      <TextContent>
-        <br></br>
-        <h2>Utendørs</h2>
-        <h2>Sted: Interstellar</h2>
-        <h2>Dato: 12. Februar 2021</h2>
-        <h2>Klokkeslett: 14.00</h2>
-      </TextContent>
+        <TextContent>
+          <br></br><b>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis nec ligula velit. Suspendisse lectus sem, dictum ultricies diam tincidunt, imperdiet porttitor dolor. Suspendisse pretium ex vel felis interdum, id ornare sem finibus.</b>
+        </TextContent>
 
-      <TextContent>
-        <br></br>
-        <div>Intensitet - 10</div>
-        <div>Kategori - Sport og friluftsliv</div>
-        <div>Antall plasser - 4</div>
-      </TextContent>
+        <TextContent>
+          <br></br>
+          <h2>Utendørs</h2>
+          <h2>Sted: Interstellar</h2>
+          <h2>Dato: 12. Februar 2021</h2>
+          <h2>Klokkeslett: 14.00</h2>
+        </TextContent>
 
-      <TextContent>
-        <br></br>
-        <h2>Om organisasjonen</h2>
-        <div>National Aeronautics and Space Administration (NASA) er en amerikansk føderal etat med oppgaver knyttet til romfart og luftfart. Etaten ble opprettet i 1958 som en direkte følge av Sovjetunionens oppskytning av Sputnik 1. NASA har omkring 18 000 ansatte og hovedkontor i Washington, DC. NASA står bak store bragder, for eksempel Apollo-programmet som sendte mennesker til månen for første gang. NASA sto også bak Mercury-programmet og Gemini-programmet.</div>
-      </TextContent>
+        <TextContent>
+          <br></br>
+          <div>Intensitet - 10</div>
+          <div>Kategori - Sport og friluftsliv</div>
+          <div>Antall plasser - 4</div>
+        </TextContent>
+
+        <TextContent>
+          <br></br>
+          <h2>Om organisasjonen</h2>
+          <div>National Aeronautics and Space Administration (NASA) er en amerikansk føderal etat med oppgaver knyttet til romfart og luftfart. Etaten ble opprettet i 1958 som en direkte følge av Sovjetunionens oppskytning av Sputnik 1. NASA har omkring 18 000 ansatte og hovedkontor i Washington, DC. NASA står bak store bragder, for eksempel Apollo-programmet som sendte mennesker til månen for første gang. NASA sto også bak Mercury-programmet og Gemini-programmet.</div>
+        </TextContent>
       </TextContentWrapper>
-      </Content>      
-    </Wrapper>
-  );
+    </Content>
+  </Wrapper>
+);
 export default ActivityExpand
