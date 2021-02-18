@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components';
+import ActivityExpand from '../components/ActivityExpand';
 import ActivityPreview from '../components/ActivityPreview';
 import Header from '../components/Header';
 import { logoColor, redHexColor } from '../consts';

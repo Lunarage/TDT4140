@@ -67,9 +67,6 @@ export enum Method {
 
 const Login = () => {
   const [method, setMethod] = useState<Method>(Method.login);
-  const handleClick = (newMethod: Method) => {
-    setMethod(newMethod)
-  }
   return (
     <PageWrapper>
       <Header loggedIn={true} />
@@ -89,8 +86,8 @@ const Login = () => {
           <Button text='Submit' />
         </LoginWidget>
         <ButtonsWrapper>
-          <Button text={Method.register} onClickFunc={() => handleClick(Method.register)} />
-          <Button text={Method.login} onClickFunc={() => handleClick(Method.login)} />
+          <Button text={Method.register} onClickFunc={() => setMethod(Method.register)} />
+          <Button text={Method.login} onClickFunc={() => setMethod(Method.login)} />
         </ButtonsWrapper>
       </LoginWrapper>
     </PageWrapper>

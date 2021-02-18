@@ -33,8 +33,8 @@ const TextWrapper = styled.div`
   vertical-align: middle;
 `;
 
-const Button = ({ text }: ButtonProps) => (
-  <CustomButton>
+const Button = ({ text, onClickFunc }: ButtonProps) => (
+  <CustomButton onClick={onClickFunc}>
     <TextWrapper>
       {text}
     </TextWrapper>
