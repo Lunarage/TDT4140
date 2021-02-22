@@ -1,3 +1,5 @@
+export const baseUrl = "http://127.0.0.1:8000/";
+
 export const pageName = "GJØR' NO";
 
 export const redHexColor = "#ff4e37";
