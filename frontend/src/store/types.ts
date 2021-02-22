@@ -35,7 +35,7 @@ export type Organization = BaseState & {
 export type Event = {
     id: number;
     title: string;
-    date: Date;
+    date: string;
     organization_owner: number;
     user_owner: number;
     description: string;
