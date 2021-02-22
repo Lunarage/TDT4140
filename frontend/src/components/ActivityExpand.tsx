@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components';
 import { redHexColor } from '../consts';
-import { isoToDayMonthYear } from '../functions';
+import { isoToDateList } from '../functions';
 import { Event } from '../store/types';
 
 const Wrapper = styled.div`
@@ -104,7 +104,8 @@ interface ActivityExpandProps {
 }
 
 const ActivityExpand = ({ data, onExitFunc }: ActivityExpandProps) => {
-  const [year, month, day] = isoToDayMonthYear(data.date)
+  const [year, month, day, hour, minute] = isoToDateList(data.date)
+  console.log(data);
 
   return (
     <Wrapper>
@@ -122,22 +123,28 @@ const ActivityExpand = ({ data, onExitFunc }: ActivityExpandProps) => {
         <TextContentWrapper>
 
           <TextContent>
-            <br></br>{data.description && <b>{data.description}</b>}
+            <br />{data.description && <b>{data.description}</b>}
           </TextContent>
 
           <TextContent>
-            <br></br>
+            <br />
             {/* <h2>Utendørs</h2> */}
             {data.location && <h2>Sted: {data.location}</h2>}
-            {year && month && day && <h2>Dato: {day}/{month} {year}</h2>}
+            {year && month && day && hour && minute && <h2>Dato: {day}/{month} {year} - {hour}:{minute}</h2>}
             {/* <h2>Klokkeslett: 14.00</h2> */}
           </TextContent>
 
           <TextContent>
-            <br></br>
-            {data.activity_level && <div>Intensitet - {data.activity_level}</div>}
-            {data.categories && <div>Kategori - {data.categories.toString()}</div>}
-            {data.max_participants && <div>Antall plasser - {data.max_participants}</div>}
+            <br />
+            {data.activity_level && <div>Intensitet: {data.activity_level}</div>}
+            {data.equipment_used && <div>Required equipment: {data.equipment_used.toString()}</div>}
+            {data.categories && <div>Kategori: {data.categories.toString()}</div>}
+            {data.max_participants && <div>Antall plasser: {data.max_participants}</div>}
+          </TextContent>
+
+          <TextContent>
+            <br />
+            {data.organization_owner ? <div>Organisasjon: {data.organization_owner}</div> : data.user_owner && <div>User: {data.user_owner}</div>}
           </TextContent>
 
           {/* <TextContent>

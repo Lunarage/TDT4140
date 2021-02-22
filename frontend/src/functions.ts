@@ -3,10 +3,13 @@ export const toUpperCase = (s: string | null) => {
     return s.charAt(0).toUpperCase() + s.slice(1);
 };
 
-export const isoToDayMonthYear = (date: string) => {
+export const isoToDateList = (date: string) => {
     if (!date) {
         return [false];
     }
-    const list = date.split("T")[0].split("-");
-    return list;
+    const [long, short] = date.split("T");
+    const longList = long.split("-");
+    const shortList = short.split(":");
+    const dateList = longList.concat(shortList);
+    return dateList;
 };

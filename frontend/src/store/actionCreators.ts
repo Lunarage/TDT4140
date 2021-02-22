@@ -1,29 +1,14 @@
 import { baseUrl } from "../consts";
+import HttpClient from "../utilities/HttpClient";
 import { ActionTypes } from "./actionTypes";
 import { DispatchType } from "./types";
-
-const defaultGet: RequestInit = {
-    mode: "cors",
-    method: "GET",
-    credentials: undefined,
-    headers: new Headers({}),
-};
-
-const jsonFormatString = "?format=json";
-
-const handleError = (response: any) => {
-    if (response.error) {
-        throw response.err;
-    }
-    return response;
-};
 
 export const getEvents = () => {
     return async (dispatch: DispatchType) => {
         dispatch({ type: ActionTypes.EVENTS_LOADING, payload: [] });
-        return fetch(baseUrl + `api/activity/`, defaultGet)
-            .then((r) => r.json())
-            .then((r) => handleError(r))
+        let client = new HttpClient(baseUrl);
+        return client
+            .get("api/activity")
             .then((response) => {
                 dispatch({
                     type: ActionTypes.EVENTS_FINISHED,
@@ -39,12 +24,9 @@ export const getEvents = () => {
 export const getOrgs = () => {
     return async (dispatch: DispatchType) => {
         dispatch({ type: ActionTypes.ORGS_LOADING, payload: [] });
-        return fetch(
-            baseUrl + `api/organization/` + jsonFormatString,
-            defaultGet
-        )
-            .then((r) => r.json())
-            .then((r) => handleError(r))
+        let client = new HttpClient(baseUrl);
+        return client
+            .get("api/organization")
             .then((response) => {
                 dispatch({
                     type: ActionTypes.ORGS_FINISHED,

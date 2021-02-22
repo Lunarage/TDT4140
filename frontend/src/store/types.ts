@@ -36,12 +36,12 @@ export type Event = {
     id: number;
     title: string;
     date: string;
-    organization_owner: number;
-    user_owner: number;
+    organization_owner: any;
+    user_owner: any;
     description: string;
     location: string;
-    categories: string[];
+    categories: any[];
     activity_level: number;
-    equipment_used: string[];
+    equipment_used: any[];
     max_participants: number;
 };

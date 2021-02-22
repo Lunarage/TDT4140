@@ -3,6 +3,8 @@ import styled from "styled-components";
 import Button from "../components/Button";
 import Header from "../components/Header";
 import InputField from "../components/InputField";
+import { baseUrl } from '../consts';
+import HttpClient from '../utilities/HttpClient';
 import WelcomeLogo from "../welcome/WelcomeLogo";
 
 const PageWrapper = styled.div`
@@ -51,7 +53,7 @@ const LoginWidget = styled.div`
 
 const InputWrapper = styled.div`
   width: 300px;
-  margin-top: 50px;
+  margin-top: 30px;
 `;
 
 const LoginHeader = styled.div`
@@ -67,6 +69,24 @@ export enum Method {
 
 const Login = () => {
   const [method, setMethod] = useState<Method>(Method.login);
+  const [email, setEmail] = useState<string>();
+  const [username, setUsername] = useState<string>();
+  const [firstName, setFirstName] = useState<string>();
+  const [lastName, setLastName] = useState<string>();
+  const [password, setPassword] = useState<string>();
+  const [confPassword, setConfPassword] = useState<string>();
+
+  const handleSubmit = () => {
+    let client = new HttpClient(baseUrl)
+    if (method === Method.login) {
+      console.log(':)')
+      console.log(firstName)
+    }
+    else {
+      console.log(":(")
+    }
+  }
+
   return (
     <PageWrapper>
       <Header loggedIn={true} />
@@ -77,13 +97,16 @@ const Login = () => {
         <LoginWidget>
           <LoginHeader>{method}</LoginHeader>
           <InputWrapper>
-            <InputField name="E-post" />
-            <InputField name="Passord" />
+            {method === Method.register && (<> <InputField name="First name" onChangeFunc={(val) => setFirstName(val)} />
+              <InputField name="Last name" onChangeFunc={(val) => setLastName(val)} />
+              <InputField name="E-post" onChangeFunc={(val) => setEmail(val)} /> </>)}
+            <InputField name="Brukernavn" onChangeFunc={(val) => setUsername(val)} />
+            <InputField name="Passord" onChangeFunc={(val) => setPassword(val)} />
             {method === Method.register && (
-              <InputField name="Confirm passord" />
+              <InputField name="Confirm passord" onChangeFunc={(val) => setConfPassword(val)} />
             )}
           </InputWrapper>
-          <Button text="Submit" />
+          <Button text="Submit" onClickFunc={() => handleSubmit()} />
         </LoginWidget>
         <ButtonsWrapper>
           <Button

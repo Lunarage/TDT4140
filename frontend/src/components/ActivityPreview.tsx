@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { redHexColor, redHexColorHover } from "../consts";
-import { isoToDayMonthYear } from '../functions';
+import { isoToDateList } from '../functions';
 import { Event } from '../store/types';
 
 const Wrapper = styled.div`
@@ -59,7 +59,7 @@ interface ActivityPreviewProps {
 }
 
 const ActivityPreview = ({ data, onClickFunc }: ActivityPreviewProps) => {
-  const [year, month, day] = isoToDayMonthYear(data.date)
+  const [year, month, day] = isoToDateList(data.date)
 
   return (
     <Wrapper onClick={onClickFunc}>
