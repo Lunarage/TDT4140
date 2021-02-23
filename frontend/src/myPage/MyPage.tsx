@@ -24,7 +24,7 @@ const MyPage = () => {
   return (
     <>
       <PageWrapper>
-        <Header loggedIn={false} />
+        <Header />
         <ContentWrapper>
           <SideBar></SideBar>
           <RightWrapper>

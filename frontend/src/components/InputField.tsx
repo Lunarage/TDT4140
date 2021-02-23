@@ -18,20 +18,22 @@ const BoldText = styled.div`
   color: ${redHexColor};
 `;
 interface InputFieldProps {
-    name: string;
-    password?: boolean;
-    text?: string;
+  name: string;
+  password?: boolean;
+  text?: string;
+  onChangeFunc: (val: string) => void
 }
 
-const InputField = ({name, password, text}: InputFieldProps) => {
-    return (
+const InputField = ({ name, password, text, onChangeFunc }: InputFieldProps) => {
+  return (
     <LineWrapper>
-        <BoldText>{name}</BoldText>
-        <Input
-          size='massive'
-          placeholder={text}
-        />
+      <BoldText>{name}</BoldText>
+      <Input
+        size='massive'
+        placeholder={text}
+        onChange={(event) => onChangeFunc(event.target.value)}
+      />
     </LineWrapper>
-    )
+  )
 }
 export default InputField;

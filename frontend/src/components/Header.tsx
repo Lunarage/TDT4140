@@ -1,7 +1,10 @@
 import React from "react";
+import { useSelector } from 'react-redux';
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { logoColor, pageName, redHexColor } from "../consts";
+import { State } from '../store/types';
+import Loading from './Loading';
 
 interface HeaderProps {
   loggedIn: boolean;
@@ -56,8 +59,14 @@ export enum Type {
   arrangementer = "Arrangementer"
 }
 
-const Header = ({ loggedIn }: HeaderProps) => {
+const Header = () => {
   const history = useHistory();
+
+  const {
+    user,
+    isLoading: userLoading,
+    errorMessage: userError,
+  } = useSelector((state: State) => state.userReducer);
 
   const setUrl = (tab: string) => {
     history.push(tab);
@@ -66,6 +75,12 @@ const Header = ({ loggedIn }: HeaderProps) => {
   const handleTypeClick = (tab: string, type: string) => {
     history.push(tab + "?type=" + type);
   };
+
+  if (userError) throw userError;
+
+  if (userLoading) return <Loading />
+
+  console.log(user);
 
   return (
     <Wrapper>
@@ -80,7 +95,7 @@ const Header = ({ loggedIn }: HeaderProps) => {
           {Type.arrangementer}
         </Tab>
       </TabsWrapper>
-      {loggedIn ? (
+      {user ? (
         <UserButton onClick={() => setUrl("/mypage")}>
           Min side
         </UserButton>

@@ -1,7 +1,4 @@
-export type State = {
-    eventsReducer: EventsState;
-    orgsReducer: OrgsState;
-};
+import { AuthenticationResponse } from "../utilities/types";
 
 export type Action = {
     type: string;
@@ -10,17 +7,27 @@ export type Action = {
 
 export type DispatchType = (args: Action) => Action;
 
+export type State = {
+    eventsReducer: EventsState;
+    orgsReducer: OrgsState;
+    userReducer: UserState;
+};
+
 type BaseState = {
     isLoading: boolean;
     errorMessage?: any;
 };
 
 export type EventsState = BaseState & {
-    events?: Event[] | any;
+    events?: Event[];
+};
+
+export type UserState = BaseState & {
+    user?: AuthenticationResponse;
 };
 
 export type OrgsState = BaseState & {
-    organizations?: Organization[] | any;
+    organizations?: Organization[];
 };
 
 export type Organization = BaseState & {

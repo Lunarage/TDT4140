@@ -30,25 +30,25 @@ const WelcomeLogoWrapper = styled.div`
 `;
 
 const Welcome = () => {
-    const history = useHistory();
-    const setUrl = (url: string) => {
-        history.push(url);
-    };
-    return (
-        <PageWrapper>
-            <Header loggedIn={false} />
-            <ContentWrapper>
-                <WelcomeLogoWrapper>
-                    <WelcomeLogo />
-                </WelcomeLogoWrapper>
-                <Button
-                    text="Utforsk"
-                    onClickFunc={() => setUrl("/browse?type=arrangementer")}
-                />
-                <Button text="Logg inn" onClickFunc={() => setUrl("/login")} />
-            </ContentWrapper>
-        </PageWrapper>
-    );
+  const history = useHistory();
+  const setUrl = (url: string) => {
+    history.push(url);
+  };
+  return (
+    <PageWrapper>
+      <Header />
+      <ContentWrapper>
+        <WelcomeLogoWrapper>
+          <WelcomeLogo />
+        </WelcomeLogoWrapper>
+        <Button
+          text="Utforsk"
+          onClickFunc={() => setUrl("/browse?type=arrangementer")}
+        />
+        <Button text="Logg inn" onClickFunc={() => setUrl("/login")} />
+      </ContentWrapper>
+    </PageWrapper>
+  );
 };
 
 export default Welcome;

@@ -96,9 +96,9 @@ const Browse = () => {
 
   return (
     <>
-      {showExpanded && <ExpandWrapper > <ActivityExpand data={events[activityNum]} onExitFunc={() => setShowExpanded(false)} /></ExpandWrapper>}
+      {showExpanded && events && <ExpandWrapper > <ActivityExpand data={events[activityNum]} onExitFunc={() => setShowExpanded(false)} /></ExpandWrapper>}
       <PageWrapper >
-        <Header loggedIn={true} />
+        <Header />
         <ContentWrapper>
           <SideBar>
           </SideBar>
