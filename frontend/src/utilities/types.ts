@@ -1,10 +1,10 @@
-export type Authentication = {
+import { User } from "../types/APITypes";
+
+export interface Credentials {
     username: string;
     password: string;
-};
+}
 
-export type AuthenticationResponse = {
+export interface AuthenticationResponse extends User {
     token: string;
-    user_id: number;
-    email: string;
-};
+}
