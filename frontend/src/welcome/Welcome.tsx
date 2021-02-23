@@ -39,7 +39,7 @@ const Welcome = () => {
 
   const {
     user,
-  } = useSelector((state: State) => state.userReducer);
+  } = useSelector((state: State) => state.getUserReducer);
 
   return (
     <PageWrapper>

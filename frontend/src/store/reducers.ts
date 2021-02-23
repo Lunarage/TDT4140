@@ -1,20 +1,46 @@
 import { ActionTypes } from "./actionTypes";
-import { Action, EventsState, OrgsState, UserState } from "./types";
+import {
+    Action,
+    EventsState,
+    OrgsState,
+    GetUserState,
+    PostUserState,
+} from "./types";
 
 const initialState = {
     isLoading: false,
 };
 
-export const userReducer = (
-    state: UserState = initialState,
+export const postUserReducer = (
+    state: PostUserState = initialState,
     action: Action
 ) => {
     switch (action.type) {
-        case ActionTypes.USER_FINISHED:
+        case ActionTypes.POST_USER_FINISHED:
             return { ...state, isLoading: false, user: action.payload };
-        case ActionTypes.USER_LOADING:
+        case ActionTypes.POST_USER_LOADING:
             return { ...state, isLoading: true };
-        case ActionTypes.USER_ERROR:
+        case ActionTypes.POST_USER_ERROR:
+            return {
+                ...state,
+                isLoading: false,
+                errorMessage:
+                    action.payload.message | action.payload.toString(),
+            };
+    }
+    return state;
+};
+
+export const getUserReducer = (
+    state: GetUserState = initialState,
+    action: Action
+) => {
+    switch (action.type) {
+        case ActionTypes.GET_USER_FINISHED:
+            return { ...state, isLoading: false, user: action.payload };
+        case ActionTypes.GET_USER_LOADING:
+            return { ...state, isLoading: true };
+        case ActionTypes.GET_USER_ERROR:
             return {
                 ...state,
                 isLoading: false,

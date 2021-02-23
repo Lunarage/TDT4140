@@ -66,7 +66,7 @@ const Header = () => {
     user,
     isLoading: userLoading,
     errorMessage: userError,
-  } = useSelector((state: State) => state.userReducer);
+  } = useSelector((state: State) => state.getUserReducer);
 
   const setUrl = (tab: string) => {
     history.push(tab);

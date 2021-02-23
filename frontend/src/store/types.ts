@@ -1,3 +1,4 @@
+import { User } from "../types/APITypes";
 import { AuthenticationResponse } from "../utilities/types";
 
 export type Action = {
@@ -10,7 +11,8 @@ export type DispatchType = (args: Action) => Action;
 export type State = {
     eventsReducer: EventsState;
     orgsReducer: OrgsState;
-    userReducer: UserState;
+    getUserReducer: GetUserState;
+    postUserReducer: PostUserState;
 };
 
 type BaseState = {
@@ -22,8 +24,12 @@ export type EventsState = BaseState & {
     events?: Event[];
 };
 
-export type UserState = BaseState & {
+export type GetUserState = BaseState & {
     user?: AuthenticationResponse;
+};
+
+export type PostUserState = BaseState & {
+    user?: User;
 };
 
 export type OrgsState = BaseState & {

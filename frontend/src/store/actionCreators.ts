@@ -10,23 +10,56 @@ const handleError = (response: any) => {
     return response;
 };
 
-export const getUser = (username: string, password: string) => {
+export const postUser = (
+    first_name: string,
+    last_name: string,
+    username: string,
+    password: string,
+    email: string
+) => {
     return (dispatch: DispatchType) => {
-        dispatch({ type: ActionTypes.USER_LOADING, payload: [] });
+        dispatch({ type: ActionTypes.POST_USER_LOADING, payload: [] });
         let client = new HttpClient(baseUrl);
         return client
-            .post("api/token-auth", { username: username, password: password })
+            .post("api/user", {
+                first_name,
+                last_name,
+                username,
+                password,
+                email,
+            })
             .then((response) => {
                 dispatch({
-                    type: ActionTypes.USER_FINISHED,
+                    type: ActionTypes.POST_USER_FINISHED,
                     payload: response,
                 });
             })
             .then((r) => handleError(r))
             .catch((error) => {
-                console.log(error);
                 dispatch({
-                    type: ActionTypes.USER_ERROR,
+                    type: ActionTypes.POST_USER_ERROR,
+                    payload: error,
+                });
+            });
+    };
+};
+
+export const getUser = (username: string, password: string) => {
+    return (dispatch: DispatchType) => {
+        dispatch({ type: ActionTypes.GET_USER_LOADING, payload: [] });
+        let client = new HttpClient(baseUrl);
+        return client
+            .post("api/token-auth", { username, password })
+            .then((response) => {
+                dispatch({
+                    type: ActionTypes.GET_USER_FINISHED,
+                    payload: response,
+                });
+            })
+            .then((r) => handleError(r))
+            .catch((error) => {
+                dispatch({
+                    type: ActionTypes.GET_USER_ERROR,
                     payload: error,
                 });
             });

@@ -10,7 +10,7 @@ import WelcomeLogo from "../welcome/WelcomeLogo";
 import { State } from '../store/types';
 import { useHistory } from 'react-router-dom';
 import { ActionTypes } from '../store/actionTypes';
-import { getUser } from '../store/actionCreators';
+import { getUser, postUser } from '../store/actionCreators';
 
 const PageWrapper = styled.div`
   display: flex;
@@ -84,10 +84,13 @@ const Login = () => {
   const [password, setPassword] = useState<string>();
   const [confPassword, setConfPassword] = useState<string>();
 
+  const [missingInfo, setMissingInfo] = useState<boolean>(false);
+  const [passwordMatch, setPasswordMatch] = useState<boolean>(true);
+
   const {
     user,
     errorMessage: userError,
-  } = useSelector((state: State) => state.userReducer);
+  } = useSelector((state: State) => state.getUserReducer);
 
   useEffect(() => {
     if (user) {
@@ -98,6 +101,19 @@ const Login = () => {
   const handleSubmit = () => {
     if (method === Method.login && username && password) {
       dispatch(getUser(username, password))
+      setMissingInfo(false)
+      setPasswordMatch(true)
+    } else if (method === Method.register && firstName && lastName && username && password && email) {
+      setMissingInfo(false)
+      if (password !== confPassword) {
+        setPasswordMatch(false)
+      } else {
+        dispatch(postUser(firstName, lastName, username, password, email))
+      }
+    }
+    else {
+      setPasswordMatch(true)
+      setMissingInfo(true)
     }
   }
 
@@ -121,6 +137,8 @@ const Login = () => {
             )}
           </InputWrapper>
           {userError === 0 && <div>Feil brukernavn eller passord</div>}
+          {missingInfo && <div>Fyll inn alle feltene</div>}
+          {!passwordMatch && <div>Passordene er ikke like</div>}
           <Button text="Submit" onClickFunc={() => handleSubmit()} />
         </LoginWidget>
         <ButtonsWrapper>
