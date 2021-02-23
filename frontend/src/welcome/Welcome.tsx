@@ -1,8 +1,10 @@
 import React from "react";
+import { useSelector } from 'react-redux';
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import Button from "../components/Button";
 import Header from "../components/Header";
+import { State } from '../store/types';
 import WelcomeLogo from "./WelcomeLogo";
 
 const PageWrapper = styled.div`
@@ -34,6 +36,11 @@ const Welcome = () => {
   const setUrl = (url: string) => {
     history.push(url);
   };
+
+  const {
+    user,
+  } = useSelector((state: State) => state.userReducer);
+
   return (
     <PageWrapper>
       <Header />
@@ -45,7 +52,7 @@ const Welcome = () => {
           text="Utforsk"
           onClickFunc={() => setUrl("/browse?type=arrangementer")}
         />
-        <Button text="Logg inn" onClickFunc={() => setUrl("/login")} />
+        {!user && <Button text="Logg inn" onClickFunc={() => setUrl("/login")} />}
       </ContentWrapper>
     </PageWrapper>
   );

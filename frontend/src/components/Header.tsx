@@ -80,8 +80,6 @@ const Header = () => {
 
   if (userLoading) return <Loading />
 
-  console.log(user);
-
   return (
     <Wrapper>
       <Logo onClick={() => setUrl("/")}>{pageName}</Logo>
