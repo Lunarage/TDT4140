@@ -6,8 +6,10 @@ import { Event } from '../store/types';
 
 const Wrapper = styled.div`
   background-color: ${redHexColor};
-  width: 1000px;
-  height: 770px;
+  width: auto;
+  min-width: 800px;
+  height: auto;
+  min-height: 500px;
   box-shadow: 1px 1px 20px 4px rgba(0, 0, 0, 0.25);
   color: white;
   font-style: normal;
@@ -34,17 +36,18 @@ const ActivityExpandHeader = styled.h1`
 `;
 
 const Content = styled.div`
-  height: 617px;
+  height: 550px;
   width: 100%;
   color: white;
   display: flex;
   justify-content: space-start;
   font-size: 14px;
   line-height: 20px;
+  padding: 20px;
 `;
 
 const TextContentWrapper = styled.div`
-  width: 702px;
+  width: auto;
   display: flex;
   flex-direction: column;
   padding: 30px;
@@ -52,11 +55,12 @@ const TextContentWrapper = styled.div`
 
 const TextContent = styled.div`
   width: 100%;
+  max-width: 600px;
 `;
 
 
 const Image = styled.img`
-    height: 617px;
+    height: 100%;
     top: 27px;
     margin-left: -50%;
 `;
@@ -65,7 +69,6 @@ const ImageWrapper = styled.div`
     width: 298px;
     height: 100%;
     overflow: hidden;
-    margin: 20px;
     box-shadow: 1px 1px 20px 4px rgba(0, 0, 0, 0.25);
 `;
 
