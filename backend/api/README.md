@@ -15,7 +15,7 @@ title | string | Title of the activity
 date | string | YYYY-MM-DDThh:mm:ssZ (ISO 8601)
 description | string | description
 categories | [integer] | id of categories
-equipment | [integer] | id of equipment
+equipment_used | [integer] | id of equipment
 image | string | link to static file
 location | string | description of location
 max_participants | integer | maximum number of participants
@@ -87,7 +87,7 @@ title | string | Title of the activity
 date | string | YYYY-MM-DDThh:mm:ssZ (ISO 8601)
 description | string | description
 categories | [integer] | id of categories
-equipment | [integer] | id of equipment
+equipment_used | [integer] | id of equipment
 image | string | link to static file
 location | string | description of location
 max_participants | integer | maximum number of participants
