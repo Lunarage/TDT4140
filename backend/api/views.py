@@ -97,6 +97,15 @@ class UserViewSet(viewsets.ModelViewSet):
     #search_fields = ['first_name', 'last_name', 'username', 'email']
     #filterset_class = UserFilter
 
+class CurrentUserViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint for the currently logged in user.
+    """
+    serializer_class = UserSerializer
+    def get_queryset(self):
+        user = self.request.user.id
+        return User.objects.filter(id=user)
+
 class EquipmentViewSet(viewsets.ModelViewSet):
     """
     API endpoint for Equipment model.
