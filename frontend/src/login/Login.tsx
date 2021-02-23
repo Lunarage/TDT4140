@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useDispatch } from 'react-redux';
 import styled from "styled-components";
 import Button from "../components/Button";
 import Header from "../components/Header";
@@ -6,6 +7,7 @@ import InputField from "../components/InputField";
 import { baseUrl } from '../consts';
 import HttpClient from '../utilities/HttpClient';
 import WelcomeLogo from "../welcome/WelcomeLogo";
+import { getUser } from '../store/actionCreators';
 
 const PageWrapper = styled.div`
   display: flex;
@@ -68,6 +70,8 @@ export enum Method {
 }
 
 const Login = () => {
+  const dispatch = useDispatch();
+
   const [method, setMethod] = useState<Method>(Method.login);
   const [email, setEmail] = useState<string>();
   const [username, setUsername] = useState<string>();
@@ -76,11 +80,16 @@ const Login = () => {
   const [password, setPassword] = useState<string>();
   const [confPassword, setConfPassword] = useState<string>();
 
+  const handleToken = (token: string) => {
+
+  }
+
   const handleSubmit = () => {
     let client = new HttpClient(baseUrl)
-    if (method === Method.login) {
+    if (method === Method.login && username && password) {
+      dispatch(getUser(username, password))
       console.log(':)')
-      console.log(firstName)
+      console.log(username)
     }
     else {
       console.log(":(")
@@ -89,7 +98,7 @@ const Login = () => {
 
   return (
     <PageWrapper>
-      <Header loggedIn={true} />
+      <Header />
       <WelcomeLogoWrapper>
         <WelcomeLogo />
       </WelcomeLogoWrapper>

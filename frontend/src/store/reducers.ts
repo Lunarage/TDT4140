@@ -1,8 +1,27 @@
 import { ActionTypes } from "./actionTypes";
-import { Action, EventsState, OrgsState } from "./types";
+import { Action, EventsState, OrgsState, UserState } from "./types";
 
 const initialState = {
     isLoading: false,
+};
+
+export const userReducer = (
+    state: UserState = initialState,
+    action: Action
+) => {
+    switch (action.type) {
+        case ActionTypes.USER_FINISHED:
+            return { ...state, isLoading: false, user: action.payload };
+        case ActionTypes.USER_LOADING:
+            return { ...state, isLoading: true };
+        case ActionTypes.USER_ERROR:
+            return {
+                ...state,
+                isLoading: false,
+                errorMessage: action.payload.message,
+            };
+    }
+    return state;
 };
 
 export const eventsReducer = (
