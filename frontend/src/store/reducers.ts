@@ -18,7 +18,8 @@ export const userReducer = (
             return {
                 ...state,
                 isLoading: false,
-                errorMessage: action.payload.message,
+                errorMessage:
+                    action.payload.message | action.payload.toString(),
             };
     }
     return state;

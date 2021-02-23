@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from 'react-redux';
 import styled from "styled-components";
 import Button from "../components/Button";
 import Header from "../components/Header";
@@ -7,6 +7,9 @@ import InputField from "../components/InputField";
 import { baseUrl } from '../consts';
 import HttpClient from '../utilities/HttpClient';
 import WelcomeLogo from "../welcome/WelcomeLogo";
+import { State } from '../store/types';
+import { useHistory } from 'react-router-dom';
+import { ActionTypes } from '../store/actionTypes';
 import { getUser } from '../store/actionCreators';
 
 const PageWrapper = styled.div`
@@ -71,6 +74,7 @@ export enum Method {
 
 const Login = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const [method, setMethod] = useState<Method>(Method.login);
   const [email, setEmail] = useState<string>();
@@ -80,19 +84,20 @@ const Login = () => {
   const [password, setPassword] = useState<string>();
   const [confPassword, setConfPassword] = useState<string>();
 
-  const handleToken = (token: string) => {
+  const {
+    user,
+    errorMessage: userError,
+  } = useSelector((state: State) => state.userReducer);
 
-  }
+  useEffect(() => {
+    if (user) {
+      history.push("/");
+    }
+  }, [user]);
 
   const handleSubmit = () => {
-    let client = new HttpClient(baseUrl)
     if (method === Method.login && username && password) {
       dispatch(getUser(username, password))
-      console.log(':)')
-      console.log(username)
-    }
-    else {
-      console.log(":(")
     }
   }
 
@@ -115,6 +120,7 @@ const Login = () => {
               <InputField name="Confirm passord" onChangeFunc={(val) => setConfPassword(val)} />
             )}
           </InputWrapper>
+          {userError === 0 && <div>Feil brukernavn eller passord</div>}
           <Button text="Submit" onClickFunc={() => handleSubmit()} />
         </LoginWidget>
         <ButtonsWrapper>

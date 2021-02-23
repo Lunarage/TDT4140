@@ -3,8 +3,15 @@ import HttpClient from "../utilities/HttpClient";
 import { ActionTypes } from "./actionTypes";
 import { DispatchType } from "./types";
 
+const handleError = (response: any) => {
+    if (response?.error) {
+        throw response.error;
+    }
+    return response;
+};
+
 export const getUser = (username: string, password: string) => {
-    return async (dispatch: DispatchType) => {
+    return (dispatch: DispatchType) => {
         dispatch({ type: ActionTypes.USER_LOADING, payload: [] });
         let client = new HttpClient(baseUrl);
         return client
@@ -15,14 +22,19 @@ export const getUser = (username: string, password: string) => {
                     payload: response,
                 });
             })
-            .catch((error) =>
-                dispatch({ type: ActionTypes.USER_ERROR, payload: error })
-            );
+            .then((r) => handleError(r))
+            .catch((error) => {
+                console.log(error);
+                dispatch({
+                    type: ActionTypes.USER_ERROR,
+                    payload: error,
+                });
+            });
     };
 };
 
 export const getEvents = () => {
-    return async (dispatch: DispatchType) => {
+    return (dispatch: DispatchType) => {
         dispatch({ type: ActionTypes.EVENTS_LOADING, payload: [] });
         let client = new HttpClient(baseUrl);
         return client
@@ -33,6 +45,7 @@ export const getEvents = () => {
                     payload: response,
                 });
             })
+            .then((r) => handleError(r))
             .catch((error) =>
                 dispatch({ type: ActionTypes.EVENTS_ERROR, payload: error })
             );
@@ -40,7 +53,7 @@ export const getEvents = () => {
 };
 
 export const getOrgs = () => {
-    return async (dispatch: DispatchType) => {
+    return (dispatch: DispatchType) => {
         dispatch({ type: ActionTypes.ORGS_LOADING, payload: [] });
         let client = new HttpClient(baseUrl);
         return client
@@ -51,6 +64,7 @@ export const getOrgs = () => {
                     payload: response,
                 });
             })
+            .then((r) => handleError(r))
             .catch((error) =>
                 dispatch({ type: ActionTypes.ORGS_ERROR, payload: error })
             );

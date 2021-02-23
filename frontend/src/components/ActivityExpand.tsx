@@ -105,7 +105,6 @@ interface ActivityExpandProps {
 
 const ActivityExpand = ({ data, onExitFunc }: ActivityExpandProps) => {
   const [year, month, day, hour, minute] = isoToDateList(data.date)
-  console.log(data);
 
   return (
     <Wrapper>
