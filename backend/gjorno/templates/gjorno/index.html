@@ -2,12 +2,18 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Hello!</title>
-  <link rel="stylesheet" type="text/css" href="{% static 'gjorno/style.css' %}"" >
-</head>
-<body>
-  <h1>Hello World</h1>
-</body>
+  <head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="{% static "favicon.ico" %} />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <link rel="manifest" href="{% static "manifest.json" %}" />
+    <title>GjørNo'</title>
+  </head>
+  <body>
+    <div id="root">
+      <noscript>You need to enable JavaScript to run this app.</noscript>
+    </div>
+    <script src="{% static "bundle.js" %}"></script>
+  </body>
 </html>

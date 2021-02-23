@@ -44,6 +44,12 @@ Outline of the most important project files:
 └── requirements.txt (Python dependencies for the project)
 ```
 ## Database
+The database consists of 4 entities:
+- User
+- Organization
+- Activity 
+- Categories 
+
 ![ER-diagram](Database ER.png)
 
 ## REST API
@@ -138,3 +144,6 @@ If the models are changed, the database must be updated:
 `$ python manage.py migrate`
 
 https://docs.djangoproject.com/en/3.1/topics/migrations/
+
+Run tests:  
+`$ python manage.py test`
