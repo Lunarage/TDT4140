@@ -12,6 +12,7 @@ class OrganizationSerializer(serializers.ModelSerializer):
     """
     Serializer for the organization model.
     """
+    user_member = serializers.StringRelatedField(many=True, read_only=True)
 
     class Meta:  # pylint: disable=too-few-public-methods
         model = Organization
@@ -22,6 +23,10 @@ class ActivitySerializer(serializers.ModelSerializer):
     """
     Serializer for the activity model.
     """
+    user_owner = serializers.ReadOnlyField(source='user_owner.username')
+    organization_owner = serializers.ReadOnlyField(source='organization_owner.name')
+    equipment_used = serializers.StringRelatedField(many=True, read_only=True)
+    categories = serializers.StringRelatedField(many=True, read_only=True)
 
     class Meta:  # pylint: disable=too-few-public-methods
         model = Activity
@@ -35,13 +40,16 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:  # pylint: disable=too-few-public-methods
         model = User
-        fields = ["id", "first_name", "last_name", "username", "email"]
+        fields = ["id", "first_name", "last_name", "username", "password", "email"]
+
+        def create(self,validated_data):
+            user = User.objects.create_user(username="username", email="email", password="password")
+            return user
 
 class CategorySerializer(serializers.ModelSerializer):
     """
     Serializer for the category model.
     """
-
     class Meta:  # pylint: disable=too-few-public-methods
         model = Category
         fields = ["id", "name"]

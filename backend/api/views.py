@@ -2,9 +2,11 @@
 DOCSTRING HERE!
 """
 
+from api import perms
 from gjorno.models import Organization, Activity, Equipment, Category
 from django.contrib.auth.models import User
 from rest_framework import viewsets
+from rest_framework import permissions
 from .serializers import OrganizationSerializer, ActivitySerializer, UserSerializer, EquipmentSerializer, CategorySerializer
 from rest_framework import filters
 #from django_filters import rest_framework as filters
@@ -69,18 +71,20 @@ class OrganizationViewSet(viewsets.ModelViewSet):  # pylint: disable=too-many-an
     """
     queryset = Organization.objects.all()
     serializer_class = OrganizationSerializer
-    filter_backends = [filters.SearchFilter]
-    search_fields = ['name', 'description']
+    #filter_backends = [filters.SearchFilter]
+    #search_fields = ['name', 'description']
     #filterset_class = OrganizationFilter
 
 class ActivityViewSet(viewsets.ModelViewSet):  # pylint: disable=too-many-ancestors
     """
     API endpoint for Activity model.
     """
+    permission_classes = [perms.IsAuthenticatedAndOwner, perms.PartOfOrganization,]
     queryset = Activity.objects.all()
     serializer_class = ActivitySerializer
     filter_backends = [filters.SearchFilter]
-    search_fields = ['title', 'description', 'user_owner__username', 'organization_owner__name', 'location', 'activity_level', 'equipment_used__name', 'categories__name', 'max_participants']
+    search_fields = ['title']
+    #Search on different params: ['description', 'user_owner__username', 'organization_owner__name', 'location', 'activity_level', 'equipment_used__name', 'categories__name', 'max_participants']
     #filterset_class = ActivityFilter
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -89,8 +93,8 @@ class UserViewSet(viewsets.ModelViewSet):
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    filter_backends = [filters.SearchFilter]
-    search_fields = ['first_name', 'last_name', 'username', 'email']
+    #filter_backends = [filters.SearchFilter]
+    #search_fields = ['first_name', 'last_name', 'username', 'email']
     #filterset_class = UserFilter
 
 class EquipmentViewSet(viewsets.ModelViewSet):
@@ -99,8 +103,8 @@ class EquipmentViewSet(viewsets.ModelViewSet):
     """
     queryset = Equipment.objects.all()
     serializer_class = EquipmentSerializer
-    filter_backends = [filters.SearchFilter]
-    search_fields = ['name']
+    #filter_backends = [filters.SearchFilter]
+    #search_fields = ['name']
     #filterset_class = EquipmentFilter
 
 class CategoryViewSet(viewsets.ModelViewSet):
@@ -109,6 +113,6 @@ class CategoryViewSet(viewsets.ModelViewSet):
     """
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
-    filter_backends = [filters.SearchFilter]
-    search_fields = ['name']
+    #filter_backends = [filters.SearchFilter]
+    #search_fields = ['name']
     #filterset_class = CategoryFilter

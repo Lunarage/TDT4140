@@ -4,6 +4,8 @@
 
 GET `/api/activity`
 
+
+
 **Response**
 
 Name | Type | Description
@@ -28,24 +30,56 @@ Example response
   "id": 1,
   "title": "Tur i skogen",
   "date": "2021-02-28T14:30:00Z",
-  "organization_owner": 1,
-  "user_owner": 1,
+  "organization_owner": "Amnesty",
+  "user_owner": "Nilsern",
   "description": "Bærplukking",
   "location": "Bymarka",
   "categories": ["Tur", "Bærplukking"],
   "activity_level": 2,
   "equipment_used": ["Bærplukker"],
   "max_participants": 20
+  },
+  {
+  "id": 2,
+  "title": "Basketball",
+  "date": "2021-02-28T14:30:00Z",
+  "organization_owner": "Amnesty",
+  "user_owner": "Nilsern",
+  "description": "Basketball",
+  "location": "Munkvollhallen",
+  "categories": ["sport"],
+  "activity_level": 4,
+  "equipment_used": ["Basketball"],
+  "max_participants": 10
   }
 ]
 ```
+GET `/api/activity/?search=basketball`
+
+Example response
+```json
+[
+  {
+  "id": 2,
+  "title": "Basketball",
+  "date": "2021-02-28T14:30:00Z",
+  "organization_owner": "Amnesty",
+  "user_owner": "Nilsern",
+  "description": "Basketball",
+  "location": "Munkvollhallen",
+  "categories": ["sport"],
+  "activity_level": 4,
+  "equipment_used": ["Basketball"],
+  "max_participants": 10
+  }
+]
+```
+
 
 POST `/api/activity`
 
 **Parameters**
 
-**Response**
-
 Name | Type | Description
 -----|------|------------
 id | integer | Unique id of activity
@@ -68,8 +102,8 @@ Example response
   "id": 1,
   "title": "Tur i skogen",
   "date": "2021-02-28T14:30:00Z",
-  "organization_owner": 1,
-  "user_owner": 1,
+  "organization_owner": "Amnesty",
+  "user_owner": "Nilsern",
   "description": "Bærplukking",
   "location": "Bymarka",
   "categories": ["Tur", "Bærplukking"],
@@ -79,6 +113,8 @@ Example response
   }
 ]
 ```
+
+**Response**
 
 ## Organization
 
@@ -113,8 +149,6 @@ POST `/api/organization`
 
 **Parameters**
 
-**Response**
-
 Name | Type | Description
 -----|------|------------
 id | integer | unique id of organization
@@ -137,6 +171,8 @@ Example response
   }
 ]
 ```
+
+**Response**
 
 ## User
 
@@ -169,8 +205,6 @@ POST `/api/user`
 
 **Parameters**
 
-**Response**
-
 Name | Type | Description
 -----|------|------------
 id | integer | id of user
@@ -191,6 +225,8 @@ Example response
   }
 ]
 ```
+
+**Response**
 
 ## Category
 
@@ -213,11 +249,49 @@ Example response
 ]
 ```
 
+POST `/api/category`
+
+**Parameters**
+
+Name | Type | Description
+-----|------|------------
+id | integer | unique id of category
+title | string | name of category
+
+Example response
+```json
+[
+  {
+  "id": 1,
+  "title": "Tur"
+  }
+]
+```
+
 ## Equipment
 
 GET `/api/equipment`
 
 **Response**
+
+Name | Type | Description
+-----|------|------------
+id | integer | unique id of equipment
+title | string | name of equipment
+
+Example response
+```json
+[
+  {
+  "id": 1,
+  "title": "Bærplukker"
+  }
+]
+```
+
+POST `/api/equipment`
+
+**Parameters**
 
 Name | Type | Description
 -----|------|------------
