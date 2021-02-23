@@ -186,6 +186,7 @@ id | integer | id of user
 first_name | string | users first name
 last_name | string | users last name
 username | string | users username
+password | string | users password
 email | string | users email
 
 Example response
@@ -196,6 +197,7 @@ Example response
   "first_name": "Nils",
   "last_name": "Nilsen",
   "username": "Nilsern",
+  "password": "kryptert",
   "email": "nilsni@std.ntnu.no"
   }
 ]
@@ -211,6 +213,7 @@ id | integer | id of user
 first_name | string | users first name
 last_name | string | users last name
 username | string | users username
+password | string | users password
 email | string | users email
 
 Example response
@@ -221,12 +224,42 @@ Example response
   "first_name": "Nils",
   "last_name": "Nilsen",
   "username": "Nilsern",
+  "password": "kryptert",
   "email": "nilsni@std.ntnu.no"
   }
 ]
 ```
 
 **Response**
+
+## CurrentUser
+
+GET `/api/current_user`
+
+**Response**
+
+Name | Type | Description
+-----|------|------------
+id | integer | id of user
+first_name | string | users first name
+last_name | string | users last name
+username | string | users username
+password | string | users password
+email | string | users email
+
+Example response
+```json
+[
+  {
+  "id": 1,
+  "first_name": "Nils",
+  "last_name": "Nilsen",
+  "username": "Nilsern",
+  "password": "kryptert",
+  "email": "nilsni@std.ntnu.no"
+  }
+]
+```
 
 ## Category
 
