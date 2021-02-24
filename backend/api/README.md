@@ -82,7 +82,6 @@ POST `/api/activity`
 
 Name | Type | Description
 -----|------|------------
-id | integer | Unique id of activity
 title | string | Title of the activity
 date | string | YYYY-MM-DDThh:mm:ssZ (ISO 8601)
 description | string | description
@@ -99,7 +98,6 @@ Example response
 ```json
 [
   {
-  "id": 1,
   "title": "Tur i skogen",
   "date": "2021-02-28T14:30:00Z",
   "organization_owner": "Amnesty",
@@ -151,7 +149,6 @@ POST `/api/organization`
 
 Name | Type | Description
 -----|------|------------
-id | integer | unique id of organization
 name | string | name of the organization
 description | string | further information
 image | string | link to static file
@@ -162,7 +159,6 @@ Example response
 ```json
 [
   {
-  "id": 1,
   "name": "Amnesty",
   "description": "Bærplukking",
   "image": "link",
@@ -209,7 +205,6 @@ POST `/api/user`
 
 Name | Type | Description
 -----|------|------------
-id | integer | id of user
 first_name | string | users first name
 last_name | string | users last name
 username | string | users username
@@ -220,7 +215,6 @@ Example response
 ```json
 [
   {
-  "id": 1,
   "first_name": "Nils",
   "last_name": "Nilsen",
   "username": "Nilsern",
@@ -288,14 +282,12 @@ POST `/api/category`
 
 Name | Type | Description
 -----|------|------------
-id | integer | unique id of category
 title | string | name of category
 
 Example response
 ```json
 [
   {
-  "id": 1,
   "title": "Tur"
   }
 ]
@@ -328,14 +320,12 @@ POST `/api/equipment`
 
 Name | Type | Description
 -----|------|------------
-id | integer | unique id of equipment
 title | string | name of equipment
 
 Example response
 ```json
 [
   {
-  "id": 1,
   "title": "Bærplukker"
   }
 ]
