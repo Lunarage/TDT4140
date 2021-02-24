@@ -21,7 +21,7 @@ export const postUser = (
         dispatch({ type: ActionTypes.POST_USER_LOADING, payload: [] });
         let client = new HttpClient(baseUrl);
         return client
-            .post("api/user", {
+            .post("api/user/", {
                 first_name,
                 last_name,
                 username,

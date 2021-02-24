@@ -12,6 +12,7 @@ import { createStore, applyMiddleware, Reducer, combineReducers } from "redux";
 import thunk from "redux-thunk";
 import { Action, State } from "./store/types";
 import { eventsReducer, orgsReducer, getUserReducer, postUserReducer, categoriesReducer, equipmentReducer } from "./store/reducers";
+import 'semantic-ui-css/semantic.min.css'
 
 
 const allReducers: Reducer<State, Action> = combineReducers({

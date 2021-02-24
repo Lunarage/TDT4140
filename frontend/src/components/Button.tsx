@@ -7,7 +7,7 @@ interface ButtonProps {
   onClickFunc?: () => void;
 }
 
-const CustomButton = styled.div`
+export const CustomButton = styled.div`
   min-width: 75px;
   height: 25px;
   color: white;
@@ -28,7 +28,7 @@ const CustomButton = styled.div`
   }
 `;
 
-const TextWrapper = styled.div`
+export const TextWrapper = styled.div`
   display: table-cell;
   vertical-align: middle;
 `;

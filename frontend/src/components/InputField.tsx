@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { redHexColor } from "../consts";
 
 const LineWrapper = styled.div`
-  margin: 8px;
+  margin: 15px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -29,7 +29,6 @@ const InputField = ({ name, password, text, onChangeFunc }: InputFieldProps) => 
     <LineWrapper>
       <BoldText>{name}</BoldText>
       <Input
-        size='massive'
         placeholder={text}
         onChange={(event) => onChangeFunc(event.target.value)}
       />

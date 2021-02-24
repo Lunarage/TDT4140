@@ -98,10 +98,10 @@ const Header = () => {
           >
             {Type.arrangementer}
           </Tab>
-          <Button
+          {user && <Button
             text="Lag ny"
             onClickFunc={() => setShowCreateNew(true)}
-          />
+          />}
         </TabsWrapper>
         {user ? (
           <UserButton onClick={() => setUrl("/mypage")}>

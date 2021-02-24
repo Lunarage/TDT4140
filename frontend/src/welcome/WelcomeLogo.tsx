@@ -5,7 +5,7 @@ import { pageName } from '../consts';
 
 const BigLogo = styled(Logo)`
   font-size: 65px;
-  margin: -20px 1px 30px 10px;
+  margin: 20px 1px 30px 10px;
 
   &:hover {
     cursor: default;

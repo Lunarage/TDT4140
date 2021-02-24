@@ -86,11 +86,16 @@ const Login = () => {
 
   const [missingInfo, setMissingInfo] = useState<boolean>(false);
   const [passwordMatch, setPasswordMatch] = useState<boolean>(true);
+  const [sucessfullRegister, setSucessfullRegister] = useState<boolean>(false);
 
   const {
     user,
     errorMessage: userError,
   } = useSelector((state: State) => state.getUserReducer);
+
+  const {
+    user: postedUser,
+  } = useSelector((state: State) => state.postUserReducer);
 
   useEffect(() => {
     if (user) {
@@ -98,8 +103,15 @@ const Login = () => {
     }
   }, [user]);
 
+  useEffect(() => {
+    if (postedUser) {
+      setSucessfullRegister(true)
+    }
+  }, [postedUser]);
+
   const handleSubmit = () => {
     if (method === Method.login && username && password) {
+      console.log(username, password)
       dispatch(getUser(username, password))
       setMissingInfo(false)
       setPasswordMatch(true)
@@ -115,6 +127,13 @@ const Login = () => {
       setPasswordMatch(true)
       setMissingInfo(true)
     }
+  }
+
+  const resetMessages = () => {
+    setSucessfullRegister(false);
+    setMissingInfo(false);
+    setPasswordMatch(true);
+
   }
 
   return (
@@ -139,16 +158,17 @@ const Login = () => {
           {userError === 0 && <div>Feil brukernavn eller passord</div>}
           {missingInfo && <div>Fyll inn alle feltene</div>}
           {!passwordMatch && <div>Passordene er ikke like</div>}
+          {sucessfullRegister && <div>Du er registrert. Vennligst logg inn</div>}
           <Button text="Submit" onClickFunc={() => handleSubmit()} />
         </LoginWidget>
         <ButtonsWrapper>
           <Button
             text={Method.register}
-            onClickFunc={() => setMethod(Method.register)}
+            onClickFunc={() => { setMethod(Method.register); resetMessages() }}
           />
           <Button
             text={Method.login}
-            onClickFunc={() => setMethod(Method.login)}
+            onClickFunc={() => { setMethod(Method.login); resetMessages() }}
           />
         </ButtonsWrapper>
       </LoginWrapper>
