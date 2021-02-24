@@ -20,7 +20,7 @@ class Organization(models.Model):
     user_member = models.ManyToManyField(settings.AUTH_USER_MODEL)
 
     def __str__(self):
-        return 'Organization: {}'.format(self.name)
+        return self.name
 
 
 class Category(models.Model):
