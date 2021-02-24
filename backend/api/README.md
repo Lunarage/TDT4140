@@ -15,13 +15,17 @@ title | string | Title of the activity
 date | string | YYYY-MM-DDThh:mm:ssZ (ISO 8601)
 description | string | description
 categories | [integer] | id of categories
-equipment_used | [integer] | id of equipment
+categories_names | [string] | strings of categories
+equipment_used | [integer] | id of equipments
+equipment_used_names | [string] | string of equipments
 image | string | link to static file
 location | string | description of location
 max_participants | integer | maximum number of participants
 activity_level | integer | 1-5
-organization_owner | integer | link to organization
-user_owner | integer | link to user
+organization_owner | integer | organization id
+organization_owner_name | string | organization name
+user_owner | integer | user id
+user_owner_username | string | users username
 
 Example response
 ```json
@@ -30,26 +34,34 @@ Example response
   "id": 1,
   "title": "Tur i skogen",
   "date": "2021-02-28T14:30:00Z",
-  "organization_owner": "Amnesty",
-  "user_owner": "Nilsern",
+  "organization_owner": 1,
+  "organization_owner_name": "Amnesty",
+  "user_owner": 2,
+  "user_owner_username": "Nilsern",
   "description": "Bærplukking",
   "location": "Bymarka",
-  "categories": ["Tur", "Bærplukking"],
+  "categories": [2, 3],
+  "categories_names": ["Tur", "Bærplukking"],
   "activity_level": 2,
-  "equipment_used": ["Bærplukker"],
+  "equipment_used": [1],
+  "equipment_used_names": ["Bærplukker"],
   "max_participants": 20
   },
   {
   "id": 2,
   "title": "Basketball",
   "date": "2021-02-28T14:30:00Z",
-  "organization_owner": "Amnesty",
-  "user_owner": "Nilsern",
+  "organization_owner": 1,
+  "organization_owner_name": "Amnesty",
+  "user_owner": 2,
+  "user_owner_username": "Nilsern",
   "description": "Basketball",
   "location": "Munkvollhallen",
-  "categories": ["sport"],
+  "categories": [1],
+  "categories_names": ["Sport"],
   "activity_level": 4,
-  "equipment_used": ["Basketball"],
+  "equipment_used": [1],
+  "equipment_used_names": ["Basketball"],
   "max_participants": 10
   }
 ]
@@ -63,13 +75,17 @@ Example response
   "id": 2,
   "title": "Basketball",
   "date": "2021-02-28T14:30:00Z",
-  "organization_owner": "Amnesty",
-  "user_owner": "Nilsern",
+  "organization_owner": 1,
+  "organization_owner_name": "Amnesty",
+  "user_owner": 2,
+  "user_owner_username": "Nilsern",
   "description": "Basketball",
   "location": "Munkvollhallen",
-  "categories": ["sport"],
+  "categories": [1],
+  "categories_names": ["Sport"],
   "activity_level": 4,
-  "equipment_used": ["Basketball"],
+  "equipment_used": [1],
+  "equipment_used_names": ["Basketball"],
   "max_participants": 10
   }
 ]
@@ -87,13 +103,17 @@ title | string | Title of the activity
 date | string | YYYY-MM-DDThh:mm:ssZ (ISO 8601)
 description | string | description
 categories | [integer] | id of categories
-equipment_used | [integer] | id of equipment
+categories_names | [string] | strings of categories
+equipment_used | [integer] | id of equipments
+equipment_used_names | [string] | string of equipments
 image | string | link to static file
 location | string | description of location
 max_participants | integer | maximum number of participants
 activity_level | integer | 1-5
-organization_owner | integer | link to organization
-user_owner | integer | link to user
+organization_owner | integer | organization id
+organization_owner_name | string | organization name
+user_owner | integer | user id
+user_owner_username | string | users username
 
 Example response
 ```json
@@ -102,13 +122,17 @@ Example response
   "id": 1,
   "title": "Tur i skogen",
   "date": "2021-02-28T14:30:00Z",
-  "organization_owner": "Amnesty",
-  "user_owner": "Nilsern",
+  "organization_owner": 1,
+  "organization_owner_name": "Amnesty",
+  "user_owner": 2,
+  "user_owner_username": "Nilsern",
   "description": "Bærplukking",
   "location": "Bymarka",
-  "categories": ["Tur", "Bærplukking"],
+  "categories": [2, 3],
+  "categories_names": ["Tur", "Bærplukking"],
   "activity_level": 2,
-  "equipment_used": ["Bærplukker"],
+  "equipment_used": [1],
+  "equipment_used_names": ["Bærplukker"],
   "max_participants": 20
   }
 ]
