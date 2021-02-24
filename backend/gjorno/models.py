@@ -17,7 +17,7 @@ class Organization(models.Model):
     name = models.CharField(max_length=80, help_text="The name of the organization")
     description = models.TextField(default="")
     external_link = models.URLField(max_length=200, default="")
-    user_member = models.ManyToManyField(settings.AUTH_USER_MODEL)
+    user_member = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True)
 
     def __str__(self):
         return self.name
@@ -42,11 +42,11 @@ class Equipment(models.Model):
     A Equipment model consisting of an attribute "name"
     """
     name = models.CharField(max_length=80)
-    
+
     def __str__(self):
         return self.name
 
-    
+
 class Activity(models.Model):
     """
     An Activity model which consists of a tittle and the date to when the activity is going to happen.
@@ -62,19 +62,14 @@ class Activity(models.Model):
     user_owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
     categories = models.ManyToManyField(Category, blank=True)
     equipment_used = models.ManyToManyField(Equipment, blank=True)
-    tagged = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="tags")
+    tagged = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="tags",blank=True)
 
     class Meta:
         verbose_name = "Activity"
         verbose_name_plural = "Activities"
-    
+
     def __str__(self):
         return self.title
-    
-
-
-
-
 
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
