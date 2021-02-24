@@ -103,3 +103,41 @@ export const getOrgs = () => {
             );
     };
 };
+
+export const getCategories = () => {
+    return (dispatch: DispatchType) => {
+        dispatch({ type: ActionTypes.CATEGORIES_LOADING, payload: [] });
+        let client = new HttpClient(baseUrl);
+        return client
+            .get("api/category")
+            .then((response) => {
+                dispatch({
+                    type: ActionTypes.CATEGORIES_FINISHED,
+                    payload: response,
+                });
+            })
+            .then((r) => handleError(r))
+            .catch((error) =>
+                dispatch({ type: ActionTypes.CATEGORIES_ERROR, payload: error })
+            );
+    };
+};
+
+export const getEquipment = () => {
+    return (dispatch: DispatchType) => {
+        dispatch({ type: ActionTypes.EQUIPMENT_LOADING, payload: [] });
+        let client = new HttpClient(baseUrl);
+        return client
+            .get("api/equipment")
+            .then((response) => {
+                dispatch({
+                    type: ActionTypes.EQUIPMENT_FINISHED,
+                    payload: response,
+                });
+            })
+            .then((r) => handleError(r))
+            .catch((error) =>
+                dispatch({ type: ActionTypes.EQUIPMENT_ERROR, payload: error })
+            );
+    };
+};

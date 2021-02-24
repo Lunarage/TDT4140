@@ -8,7 +8,7 @@ interface ButtonProps {
 }
 
 const CustomButton = styled.div`
-  width: 75px;
+  min-width: 75px;
   height: 25px;
   color: white;
   margin: 10px;

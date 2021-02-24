@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components';
 import { redHexColor } from '../consts';
 import { isoToDateList } from '../functions';
 import { Event } from '../store/types';
 
-const Wrapper = styled.div`
+export const Wrapper = styled.div`
   background-color: ${redHexColor};
   width: auto;
   min-width: 800px;
@@ -46,7 +46,7 @@ const Content = styled.div`
   padding: 20px;
 `;
 
-const TextContentWrapper = styled.div`
+export const TextContentWrapper = styled.div`
   width: auto;
   display: flex;
   flex-direction: column;
@@ -77,12 +77,12 @@ const Logo = styled.img`
     height: 110px;
 `;
 
-const CloseButton = styled.button`
+export const CloseButton = styled.button`
   padding: none;
   border: navajowhite;
   font-size: 2;
   position: absolute;
-  left: 1em;
+  right: 1em;
   top: 0.5em;
   margin-bottom: 1em;
   background: ${redHexColor};
@@ -130,14 +130,13 @@ const ActivityExpand = ({ data, onExitFunc }: ActivityExpandProps) => {
             {/* <h2>Utendørs</h2> */}
             {data.location && <h2>Sted: {data.location}</h2>}
             {year && month && day && hour && minute && <h2>Dato: {day}/{month} {year} - {hour}:{minute}</h2>}
-            {/* <h2>Klokkeslett: 14.00</h2> */}
           </TextContent>
 
           <TextContent>
             <br />
             {data.activity_level && <div>Intensitet: {data.activity_level}</div>}
-            {data.equipment_used && <div>Required equipment: {data.equipment_used.toString()}</div>}
-            {data.categories && <div>Kategori: {data.categories.toString()}</div>}
+            {data.equipment_used.length > 0 && <div>Required equipment: {data.equipment_used.toString()}</div>}
+            {data.categories.length > 0 && <div>Kategori: {data.categories.toString()}</div>}
             {data.max_participants && <div>Antall plasser: {data.max_participants}</div>}
           </TextContent>
 

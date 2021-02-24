@@ -5,6 +5,8 @@ import {
     OrgsState,
     GetUserState,
     PostUserState,
+    CategoriesState,
+    EquipmentState,
 } from "./types";
 
 const initialState = {
@@ -84,6 +86,52 @@ export const orgsReducer = (
         case ActionTypes.ORGS_LOADING:
             return { ...state, isLoading: true };
         case ActionTypes.ORGS_ERROR:
+            return {
+                ...state,
+                isLoading: false,
+                errorMessage: action.payload.message,
+            };
+    }
+    return state;
+};
+
+export const categoriesReducer = (
+    state: CategoriesState = initialState,
+    action: Action
+) => {
+    switch (action.type) {
+        case ActionTypes.CATEGORIES_FINISHED:
+            return {
+                ...state,
+                isLoading: false,
+                categories: action.payload,
+            };
+        case ActionTypes.CATEGORIES_LOADING:
+            return { ...state, isLoading: true };
+        case ActionTypes.CATEGORIES_ERROR:
+            return {
+                ...state,
+                isLoading: false,
+                errorMessage: action.payload.message,
+            };
+    }
+    return state;
+};
+
+export const equipmentReducer = (
+    state: EquipmentState = initialState,
+    action: Action
+) => {
+    switch (action.type) {
+        case ActionTypes.EQUIPMENT_FINISHED:
+            return {
+                ...state,
+                isLoading: false,
+                equipment: action.payload,
+            };
+        case ActionTypes.EQUIPMENT_LOADING:
+            return { ...state, isLoading: true };
+        case ActionTypes.EQUIPMENT_ERROR:
             return {
                 ...state,
                 isLoading: false,

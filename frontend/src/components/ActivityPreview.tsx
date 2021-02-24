@@ -77,7 +77,7 @@ const ActivityPreview = ({ data, onClickFunc }: ActivityPreviewProps) => {
         {data.activity_level && <TextElement>
           <b>Aktivitetsnivå: </b> {data.activity_level}
         </TextElement>}
-        {data.categories && <TextElement>
+        {data.categories.length > 0 && <TextElement>
           <b>Kategorier: </b> {data.categories.toString()}
         </TextElement>}
         {data.organization_owner && <TextElement>
