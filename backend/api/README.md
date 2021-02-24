@@ -138,7 +138,7 @@ Example response
   "description": "Bærplukking",
   "image": "link",
   "external_link": "https://amnesty.no/",
-  "user_member": [1, 3, 6, 13, 21]
+  "user_member": ["User1", "User2"]
   }
 ]
 ```
