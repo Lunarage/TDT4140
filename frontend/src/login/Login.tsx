@@ -111,7 +111,6 @@ const Login = () => {
 
   const handleSubmit = () => {
     if (method === Method.login && username && password) {
-      console.log(username, password)
       dispatch(getUser(username, password))
       setMissingInfo(false)
       setPasswordMatch(true)

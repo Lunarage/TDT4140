@@ -13,8 +13,6 @@ export const Wrapper = styled.div`
   box-shadow: 1px 1px 20px 4px rgba(0, 0, 0, 0.25);
   color: white;
   font-style: normal;
-  font-size: 24px;
-  line-height: 36px;
   mix-blend-mode: normal;
   position: absolute;
   left: 50%;
@@ -22,7 +20,7 @@ export const Wrapper = styled.div`
   transform: translate(-50%, -50%);
 `;
 
-const ActivityExpandHeader = styled.h1`
+export const ActivityExpandHeader = styled.h1`
   margin: 0;
   width: 100%;
   height: 110px;
@@ -118,33 +116,27 @@ const ActivityExpand = ({ data, onExitFunc }: ActivityExpandProps) => {
       <Content>
         <ImageWrapper> <Image src="static/22858269.jpg" />
         </ImageWrapper>
-
         <TextContentWrapper>
-
           <TextContent>
             <br />{data.description && <b>{data.description}</b>}
           </TextContent>
-
           <TextContent>
             <br />
             {/* <h2>Utendørs</h2> */}
             {data.location && <h2>Sted: {data.location}</h2>}
             {year && month && day && hour && minute && <h2>Dato: {day}/{month} {year} - {hour}:{minute}</h2>}
           </TextContent>
-
           <TextContent>
             <br />
             {data.activity_level && <div>Intensitet: {data.activity_level}</div>}
-            {data.equipment_used.length > 0 && <div>Required equipment: {data.equipment_used.toString()}</div>}
-            {data.categories.length > 0 && <div>Kategori: {data.categories.toString()}</div>}
+            {data.equipment_used_names.length > 0 && <div>Required equipment: {data.equipment_used_names.toString()}</div>}
+            {data.categories_names.length > 0 && <div>Kategori: {data.categories_names.toString()}</div>}
             {data.max_participants && <div>Antall plasser: {data.max_participants}</div>}
           </TextContent>
-
           <TextContent>
             <br />
-            {data.organization_owner ? <div>Organisasjon: {data.organization_owner}</div> : data.user_owner && <div>User: {data.user_owner}</div>}
+            {data.organization_owner_name ? <div>Organisasjon: {data.organization_owner_name}</div> : data.user_owner_username && <div>User: {data.user_owner_username}</div>}
           </TextContent>
-
           {/* <TextContent>
             <br></br>
             {<h2>Om organisasjonen</h2>

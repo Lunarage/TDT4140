@@ -14,6 +14,7 @@ export type State = {
     categoriesReducer: CategoriesState;
     equipmentReducer: EquipmentState;
     getUserReducer: GetUserState;
+    getCurrentUserReducer: GetCurrentUserState;
     postUserReducer: PostUserState;
     postEventReducer: PostEventState;
 };
@@ -29,6 +30,10 @@ export type EventsState = BaseState & {
 
 export type GetUserState = BaseState & {
     user?: AuthenticationResponse;
+};
+
+export type GetCurrentUserState = BaseState & {
+    currentUser?: User[];
 };
 
 export type PostUserState = BaseState & {
@@ -57,19 +62,23 @@ export type Organization = BaseState & {
     description: string;
     image: string;
     external_link: string;
-    user_member: number[];
+    user_member: string[];
 };
 
 export type Event = {
     id: number;
     title: string;
     date: string;
-    organization_owner: string;
-    user_owner: string;
+    organization_owner: number;
+    organization_owner_name: number;
+    user_owner: number;
+    user_owner_username: string;
     description: string;
     location: string;
-    categories: string[];
+    categories_names: string[];
+    categories: number[];
     activity_level: number;
-    equipment_used: string[];
+    equipment_used: number[];
+    equipment_used_names: string[];
     max_participants: number;
 };
