@@ -8,12 +8,12 @@ interface ButtonProps {
 }
 
 export const CustomButton = styled.div`
-  min-width: 75px;
-  height: 25px;
+  min-width: 8em;
+  height: 2.5em;
   color: white;
   margin: 10px;
   background-color: ${redHexColor};
-  padding: 3px 20px;
+  padding: 3px 15px;
   outline: 0;
   transition: ease backgroundcolor 250ms;
   border-radius: 40px;
