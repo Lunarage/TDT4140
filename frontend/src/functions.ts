@@ -13,3 +13,18 @@ export const isoToDateList = (date: string) => {
     const dateList = longList.concat(shortList);
     return dateList;
 };
+
+export const isIsoDate = (str: string) => {
+    if (!/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z/.test(str)) return false;
+    return true;
+};
+
+export const allDigits = (str: string | undefined) => {
+    if (!str || /^\d+$/.test(str)) return true;
+    return false;
+};
+
+export const parseIntWithUndefined = (str: string | undefined) => {
+    if (!str) return undefined;
+    return parseInt(str);
+};

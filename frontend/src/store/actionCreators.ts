@@ -48,23 +48,30 @@ export const postEvent = (
     title: string,
     date: string,
     description: string,
-    password: string,
     location: string,
-    max_participants: string,
-    activity_level: string
+    categories: number[],
+    equipment_used: number[],
+    max_participants: number | undefined,
+    activity_level: number | undefined,
+    organization_owner: number,
+    user_owner: number,
+    token: string
 ) => {
     return (dispatch: DispatchType) => {
         dispatch({ type: ActionTypes.POST_EVENT_LOADING, payload: [] });
-        let client = new HttpClient(baseUrl);
+        let client = new HttpClient(baseUrl, token);
         return client
-            .post("api/activity/", {
+            .post("/api/activity/", {
                 title,
                 date,
+                organization_owner,
+                user_owner,
                 description,
-                password,
                 location,
-                max_participants,
+                categories,
                 activity_level,
+                equipment_used,
+                max_participants,
             })
             .then((response) => {
                 dispatch({
@@ -98,6 +105,28 @@ export const getUser = (username: string, password: string) => {
             .catch((error) => {
                 dispatch({
                     type: ActionTypes.GET_USER_ERROR,
+                    payload: error,
+                });
+            });
+    };
+};
+
+export const getCurrentUser = (token: string) => {
+    return (dispatch: DispatchType) => {
+        dispatch({ type: ActionTypes.GET_CURRENT_USER_LOADING, payload: [] });
+        let client = new HttpClient(baseUrl, token);
+        return client
+            .get("api/current_user")
+            .then((response) => {
+                dispatch({
+                    type: ActionTypes.GET_CURRENT_USER_FINISHED,
+                    payload: response,
+                });
+            })
+            .then((r) => handleError(r))
+            .catch((error) => {
+                dispatch({
+                    type: ActionTypes.GET_CURRENT_USER_ERROR,
                     payload: error,
                 });
             });

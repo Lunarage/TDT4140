@@ -74,6 +74,26 @@ export const getUserReducer = (
     return state;
 };
 
+export const getCurrentUserReducer = (
+    state: GetUserState = initialState,
+    action: Action
+) => {
+    switch (action.type) {
+        case ActionTypes.GET_CURRENT_USER_FINISHED:
+            return { ...state, isLoading: false, currentUser: action.payload };
+        case ActionTypes.GET_CURRENT_USER_LOADING:
+            return { ...state, isLoading: true };
+        case ActionTypes.GET_CURRENT_USER_ERROR:
+            return {
+                ...state,
+                isLoading: false,
+                errorMessage:
+                    action.payload.message | action.payload.toString(),
+            };
+    }
+    return state;
+};
+
 export const eventsReducer = (
     state: EventsState = initialState,
     action: Action
