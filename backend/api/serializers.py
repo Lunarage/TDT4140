@@ -32,24 +32,6 @@ class ActivitySerializer(serializers.ModelSerializer):
         model = Activity
         fields = ["id", "title", "date", "organization_owner", "organization_owner_name", "user_owner", "user_owner_username", "description", "location", "categories", "categories_names", "activity_level", "equipment_used", "equipment_used_names", "max_participants"]
 
-    # def create(self, validated_data):
-    #     print(validated_data)
-    #     activity = Activity(
-    #         title = validated_data['title'], 
-    #         date = validated_data['date'], 
-    #         organization_owner = validated_data['organization_owner'], 
-    #         user_owner = validated_data['user_owner'], 
-    #         description = validated_data['description'], 
-    #         location = validated_data['location'], 
-    #         activity_level = validated_data['activity_level'], 
-    #         max_participants = validated_data['max_participants']
-    #     )
-    #     activity.save()
-    #     activity.categories.add(Category.objects.filter(id__in=validated_data['categories']))
-    #     activity.equipment_used.add(Equipment.objects.filter(id__in=validated_data['equipment_used']))
-    #     activity.save()
-    #     return activity
-
 class UserSerializer(serializers.ModelSerializer):
     """
     Serializer for the user model.
@@ -58,10 +40,19 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:  # pylint: disable=too-few-public-methods
         model = User
         fields = ["id", "first_name", "last_name", "username", "password", "email"]
+        extra_kwargs = {'password': {'write_only': True}}
 
-        def create(self,validated_data):
-            user = User.objects.create_user(username="username", email="email", password="password")
-            return user
+    def create(self, validated_data):
+        print(validated_data)
+        user = User(
+            first_name=validated_data["first_name"],
+            last_name=validated_data["last_name"],
+            username=validated_data["username"],
+            email=validated_data["email"]
+        )
+        user.set_password(validated_data["password"])
+        user.save()
+        return user
 
 class CategorySerializer(serializers.ModelSerializer):
     """
