@@ -44,6 +44,44 @@ export const postUser = (
     };
 };
 
+export const postEvent = (
+    title: string,
+    date: string,
+    description: string,
+    password: string,
+    location: string,
+    max_participants: string,
+    activity_level: string
+) => {
+    return (dispatch: DispatchType) => {
+        dispatch({ type: ActionTypes.POST_EVENT_LOADING, payload: [] });
+        let client = new HttpClient(baseUrl);
+        return client
+            .post("api/activity/", {
+                title,
+                date,
+                description,
+                password,
+                location,
+                max_participants,
+                activity_level,
+            })
+            .then((response) => {
+                dispatch({
+                    type: ActionTypes.POST_EVENT_FINISHED,
+                    payload: response,
+                });
+            })
+            .then((r) => handleError(r))
+            .catch((error) => {
+                dispatch({
+                    type: ActionTypes.POST_EVENT_ERROR,
+                    payload: error,
+                });
+            });
+    };
+};
+
 export const getUser = (username: string, password: string) => {
     return (dispatch: DispatchType) => {
         dispatch({ type: ActionTypes.GET_USER_LOADING, payload: [] });

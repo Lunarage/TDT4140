@@ -1,4 +1,4 @@
-import { Category, Equipment, User } from "../types/APITypes";
+import { Activity, Category, Equipment, User } from "../types/APITypes";
 import { AuthenticationResponse } from "../utilities/types";
 
 export type Action = {
@@ -15,6 +15,7 @@ export type State = {
     equipmentReducer: EquipmentState;
     getUserReducer: GetUserState;
     postUserReducer: PostUserState;
+    postEventReducer: PostEventState;
 };
 
 type BaseState = {
@@ -32,6 +33,10 @@ export type GetUserState = BaseState & {
 
 export type PostUserState = BaseState & {
     user?: User;
+};
+
+export type PostEventState = BaseState & {
+    event?: Activity;
 };
 
 export type OrgsState = BaseState & {

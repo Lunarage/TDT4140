@@ -7,10 +7,31 @@ import {
     PostUserState,
     CategoriesState,
     EquipmentState,
+    PostEventState,
 } from "./types";
 
 const initialState = {
     isLoading: false,
+};
+
+export const postEventReducer = (
+    state: PostEventState = initialState,
+    action: Action
+) => {
+    switch (action.type) {
+        case ActionTypes.POST_EVENT_FINISHED:
+            return { ...state, isLoading: false, event: action.payload };
+        case ActionTypes.POST_EVENT_LOADING:
+            return { ...state, isLoading: true };
+        case ActionTypes.POST_EVENT_ERROR:
+            return {
+                ...state,
+                isLoading: false,
+                errorMessage:
+                    action.payload.message | action.payload.toString(),
+            };
+    }
+    return state;
 };
 
 export const postUserReducer = (
