@@ -1,5 +1,5 @@
 import fetch, { Response } from "node-fetch";
-import { Authentication, AuthenticationResponse } from "./types";
+import { Credentials, AuthenticationResponse } from "./types";
 
 /**
  * A custom error for response codes that are not 2xx
@@ -42,11 +42,11 @@ class HttpClient {
      * @return {Promise<AuthenticationResponse>} Promise of response
      */
     public getUserToken(
-        authentication: Authentication
+        credentials: Credentials
     ): Promise<AuthenticationResponse> {
         return this.post<AuthenticationResponse>(
             "/api/token-auth",
-            authentication
+            credentials
         );
     }
 

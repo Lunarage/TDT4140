@@ -21,7 +21,10 @@ class CustomAuthToken(ObtainAuthToken):
 
         # These are the fields we send on a sucessfull login.
         return Response({
+            'id': user.pk,
+            'username': user.username,
             'token': token.key,
-            'user_id': user.pk,
+            'first_name': user.first_name,
+            'last_name': user.last_name,
             'email': user.email,
         })

@@ -1,7 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
+import { useSelector } from 'react-redux';
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
+import { ExpandWrapper } from '../browse/Browse';
 import { logoColor, pageName, redHexColor } from "../consts";
+import { State } from '../store/types';
+import Button from './Button';
+import Loading from './Loading';
+import NewActivity from './NewActivity';
 
 interface HeaderProps {
   loggedIn: boolean;
@@ -56,8 +62,15 @@ export enum Type {
   arrangementer = "Arrangementer"
 }
 
-const Header = ({ loggedIn }: HeaderProps) => {
+const Header = () => {
   const history = useHistory();
+  const [showCreateNew, setShowCreateNew] = useState<boolean>(false);
+
+  const {
+    user,
+    isLoading: userLoading,
+    errorMessage: userError,
+  } = useSelector((state: State) => state.getUserReducer);
 
   const setUrl = (tab: string) => {
     history.push(tab);
@@ -67,29 +80,40 @@ const Header = ({ loggedIn }: HeaderProps) => {
     history.push(tab + "?type=" + type);
   };
 
+  if (userError) throw userError;
+
+  if (userLoading) return <Loading />
+
   return (
-    <Wrapper>
-      <Logo onClick={() => setUrl("/")}>{pageName}</Logo>
-      <TabsWrapper>
-        <Tab onClick={() => handleTypeClick("/browse", "aktiviteter")}>
-          {Type.aktiviteter}
-        </Tab>
-        <Tab
-          onClick={() => handleTypeClick("/browse", "arrangementer")}
-        >
-          {Type.arrangementer}
-        </Tab>
-      </TabsWrapper>
-      {loggedIn ? (
-        <UserButton onClick={() => setUrl("/mypage")}>
-          Min side
-        </UserButton>
-      ) : (
-          <UserButton onClick={() => setUrl("/login")}>
-            Logg inn
+    <>
+      {showCreateNew && <ExpandWrapper > <NewActivity onExitFunc={() => setShowCreateNew(false)} /></ExpandWrapper>}
+      <Wrapper>
+        <Logo onClick={() => setUrl("/")}>{pageName}</Logo>
+        <TabsWrapper>
+          <Tab onClick={() => handleTypeClick("/browse", "aktiviteter")}>
+            {Type.aktiviteter}
+          </Tab>
+          <Tab
+            onClick={() => handleTypeClick("/browse", "arrangementer")}
+          >
+            {Type.arrangementer}
+          </Tab>
+          {user && <Button
+            text="Lag ny"
+            onClickFunc={() => setShowCreateNew(true)}
+          />}
+        </TabsWrapper>
+        {user ? (
+          <UserButton onClick={() => setUrl("/mypage")}>
+            Min side
           </UserButton>
-        )}
-    </Wrapper>
+        ) : (
+            <UserButton onClick={() => setUrl("/login")}>
+              Logg inn
+            </UserButton>
+          )}
+      </Wrapper>
+    </>
   );
 };
 

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { redHexColor } from "../consts";
 
 const LineWrapper = styled.div`
-  margin: 8px;
+  margin: 15px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -18,20 +18,21 @@ const BoldText = styled.div`
   color: ${redHexColor};
 `;
 interface InputFieldProps {
-    name: string;
-    password?: boolean;
-    text?: string;
+  name: string;
+  password?: boolean;
+  text?: string;
+  onChangeFunc: (val: string) => void
 }
 
-const InputField = ({name, password, text}: InputFieldProps) => {
-    return (
+const InputField = ({ name, password, text, onChangeFunc }: InputFieldProps) => {
+  return (
     <LineWrapper>
-        <BoldText>{name}</BoldText>
-        <Input
-          size='massive'
-          placeholder={text}
-        />
+      <BoldText>{name}</BoldText>
+      <Input
+        placeholder={text}
+        onChange={(event) => onChangeFunc(event.target.value)}
+      />
     </LineWrapper>
-    )
+  )
 }
 export default InputField;

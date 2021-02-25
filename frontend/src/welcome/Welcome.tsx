@@ -1,8 +1,10 @@
 import React from "react";
+import { useSelector } from 'react-redux';
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import Button from "../components/Button";
 import Header from "../components/Header";
+import { State } from '../store/types';
 import WelcomeLogo from "./WelcomeLogo";
 
 const PageWrapper = styled.div`
@@ -30,25 +32,30 @@ const WelcomeLogoWrapper = styled.div`
 `;
 
 const Welcome = () => {
-    const history = useHistory();
-    const setUrl = (url: string) => {
-        history.push(url);
-    };
-    return (
-        <PageWrapper>
-            <Header loggedIn={false} />
-            <ContentWrapper>
-                <WelcomeLogoWrapper>
-                    <WelcomeLogo />
-                </WelcomeLogoWrapper>
-                <Button
-                    text="Utforsk"
-                    onClickFunc={() => setUrl("/browse?type=arrangementer")}
-                />
-                <Button text="Logg inn" onClickFunc={() => setUrl("/login")} />
-            </ContentWrapper>
-        </PageWrapper>
-    );
+  const history = useHistory();
+  const setUrl = (url: string) => {
+    history.push(url);
+  };
+
+  const {
+    user,
+  } = useSelector((state: State) => state.getUserReducer);
+
+  return (
+    <PageWrapper>
+      <Header />
+      <ContentWrapper>
+        <WelcomeLogoWrapper>
+          <WelcomeLogo />
+        </WelcomeLogoWrapper>
+        <Button
+          text="Utforsk"
+          onClickFunc={() => setUrl("/browse?type=arrangementer")}
+        />
+        {!user && <Button text="Logg inn" onClickFunc={() => setUrl("/login")} />}
+      </ContentWrapper>
+    </PageWrapper>
+  );
 };
 
 export default Welcome;

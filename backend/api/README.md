@@ -4,6 +4,8 @@
 
 GET `/api/activity`
 
+
+
 **Response**
 
 Name | Type | Description
@@ -13,13 +15,17 @@ title | string | Title of the activity
 date | string | YYYY-MM-DDThh:mm:ssZ (ISO 8601)
 description | string | description
 categories | [integer] | id of categories
-equipment | [integer] | id of equipment
+categories_names | [string] | strings of categories
+equipment_used | [integer] | id of equipments
+equipment_used_names | [string] | string of equipments
 image | string | link to static file
 location | string | description of location
 max_participants | integer | maximum number of participants
 activity_level | integer | 1-5
-organization_owner | integer | link to organization
-user_owner | integer | link to user
+organization_owner | integer | organization id
+organization_owner_name | string | organization name
+user_owner | integer | user id
+user_owner_username | string | users username
 
 Example response
 ```json
@@ -29,23 +35,67 @@ Example response
   "title": "Tur i skogen",
   "date": "2021-02-28T14:30:00Z",
   "organization_owner": 1,
-  "user_owner": 1,
+  "organization_owner_name": "Amnesty",
+  "user_owner": 2,
+  "user_owner_username": "Nilsern",
   "description": "Bærplukking",
   "location": "Bymarka",
-  "categories": ["Tur", "Bærplukking"],
+  "categories": [2, 3],
+  "categories_names": ["Tur", "Bærplukking"],
   "activity_level": 2,
-  "equipment_used": ["Bærplukker"],
+  "equipment_used": [1],
+  "equipment_used_names": ["Bærplukker"],
   "max_participants": 20
+  },
+  {
+  "id": 2,
+  "title": "Basketball",
+  "date": "2021-02-28T14:30:00Z",
+  "organization_owner": 1,
+  "organization_owner_name": "Amnesty",
+  "user_owner": 2,
+  "user_owner_username": "Nilsern",
+  "description": "Basketball",
+  "location": "Munkvollhallen",
+  "categories": [1],
+  "categories_names": ["Sport"],
+  "activity_level": 4,
+  "equipment_used": [1],
+  "equipment_used_names": ["Basketball"],
+  "max_participants": 10
   }
 ]
 ```
+GET `/api/activity/?search=basketball`
+
+Example response
+```json
+[
+  {
+  "id": 2,
+  "title": "Basketball",
+  "date": "2021-02-28T14:30:00Z",
+  "organization_owner": 1,
+  "organization_owner_name": "Amnesty",
+  "user_owner": 2,
+  "user_owner_username": "Nilsern",
+  "description": "Basketball",
+  "location": "Munkvollhallen",
+  "categories": [1],
+  "categories_names": ["Sport"],
+  "activity_level": 4,
+  "equipment_used": [1],
+  "equipment_used_names": ["Basketball"],
+  "max_participants": 10
+  }
+]
+```
+
 
 POST `/api/activity`
 
 **Parameters**
 
-**Response**
-
 Name | Type | Description
 -----|------|------------
 id | integer | Unique id of activity
@@ -53,13 +103,17 @@ title | string | Title of the activity
 date | string | YYYY-MM-DDThh:mm:ssZ (ISO 8601)
 description | string | description
 categories | [integer] | id of categories
-equipment | [integer] | id of equipment
+categories_names | [string] | strings of categories
+equipment_used | [integer] | id of equipments
+equipment_used_names | [string] | string of equipments
 image | string | link to static file
 location | string | description of location
 max_participants | integer | maximum number of participants
 activity_level | integer | 1-5
-organization_owner | integer | link to organization
-user_owner | integer | link to user
+organization_owner | integer | organization id
+organization_owner_name | string | organization name
+user_owner | integer | user id
+user_owner_username | string | users username
 
 Example response
 ```json
@@ -69,16 +123,22 @@ Example response
   "title": "Tur i skogen",
   "date": "2021-02-28T14:30:00Z",
   "organization_owner": 1,
-  "user_owner": 1,
+  "organization_owner_name": "Amnesty",
+  "user_owner": 2,
+  "user_owner_username": "Nilsern",
   "description": "Bærplukking",
   "location": "Bymarka",
-  "categories": ["Tur", "Bærplukking"],
+  "categories": [2, 3],
+  "categories_names": ["Tur", "Bærplukking"],
   "activity_level": 2,
-  "equipment_used": ["Bærplukker"],
+  "equipment_used": [1],
+  "equipment_used_names": ["Bærplukker"],
   "max_participants": 20
   }
 ]
 ```
+
+**Response**
 
 ## Organization
 
@@ -104,7 +164,7 @@ Example response
   "description": "Bærplukking",
   "image": "link",
   "external_link": "https://amnesty.no/",
-  "user_member": [1, 3, 6, 13, 21]
+  "user_member": ["User1", "User2"]
   }
 ]
 ```
@@ -112,8 +172,6 @@ Example response
 POST `/api/organization`
 
 **Parameters**
-
-**Response**
 
 Name | Type | Description
 -----|------|------------
@@ -138,6 +196,8 @@ Example response
 ]
 ```
 
+**Response**
+
 ## User
 
 GET `/api/user`
@@ -150,6 +210,7 @@ id | integer | id of user
 first_name | string | users first name
 last_name | string | users last name
 username | string | users username
+password | string | users password
 email | string | users email
 
 Example response
@@ -160,6 +221,7 @@ Example response
   "first_name": "Nils",
   "last_name": "Nilsen",
   "username": "Nilsern",
+  "password": "kryptert",
   "email": "nilsni@std.ntnu.no"
   }
 ]
@@ -169,14 +231,13 @@ POST `/api/user`
 
 **Parameters**
 
-**Response**
-
 Name | Type | Description
 -----|------|------------
 id | integer | id of user
 first_name | string | users first name
 last_name | string | users last name
 username | string | users username
+password | string | users password
 email | string | users email
 
 Example response
@@ -187,6 +248,38 @@ Example response
   "first_name": "Nils",
   "last_name": "Nilsen",
   "username": "Nilsern",
+  "password": "kryptert",
+  "email": "nilsni@std.ntnu.no"
+  }
+]
+```
+
+**Response**
+
+## CurrentUser
+
+GET `/api/current_user`
+
+**Response**
+
+Name | Type | Description
+-----|------|------------
+id | integer | id of user
+first_name | string | users first name
+last_name | string | users last name
+username | string | users username
+password | string | users password
+email | string | users email
+
+Example response
+```json
+[
+  {
+  "id": 1,
+  "first_name": "Nils",
+  "last_name": "Nilsen",
+  "username": "Nilsern",
+  "password": "kryptert",
   "email": "nilsni@std.ntnu.no"
   }
 ]
@@ -213,11 +306,49 @@ Example response
 ]
 ```
 
+POST `/api/category`
+
+**Parameters**
+
+Name | Type | Description
+-----|------|------------
+id | integer | unique id of category
+title | string | name of category
+
+Example response
+```json
+[
+  {
+  "id": 1,
+  "title": "Tur"
+  }
+]
+```
+
 ## Equipment
 
 GET `/api/equipment`
 
 **Response**
+
+Name | Type | Description
+-----|------|------------
+id | integer | unique id of equipment
+title | string | name of equipment
+
+Example response
+```json
+[
+  {
+  "id": 1,
+  "title": "Bærplukker"
+  }
+]
+```
+
+POST `/api/equipment`
+
+**Parameters**
 
 Name | Type | Description
 -----|------|------------
