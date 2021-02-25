@@ -61,7 +61,7 @@ export const postEvent = (
         dispatch({ type: ActionTypes.POST_EVENT_LOADING, payload: [] });
         let client = new HttpClient(baseUrl, token);
         return client
-            .post("/api/activity/", {
+            .post("api/activity/", {
                 title,
                 date,
                 organization_owner,
