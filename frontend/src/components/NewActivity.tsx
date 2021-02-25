@@ -32,6 +32,7 @@ const ButtonTextWrapper = styled(TextWrapper)`
 const Wrapper = styled.div`
   display: flex;
   padding-top: 1em;
+  padding-bottom: 1em;
   font-size: 17px;
   justify-content: center;
   min-height: 300px;
@@ -197,7 +198,7 @@ const NewActivity = ({ onExitFunc }: NewActivityProps) => {
           setInvalidFields("dato")
         } else if (!allDigits(maxParticipants)) {
           setInvalidFields("maks deltakere")
-        } else if (activityLevel && (!allDigits(activityLevel) || (0 >= parseInt(activityLevel)) || (5 <= parseInt(activityLevel)))) {
+        } else if (activityLevel && (!allDigits(activityLevel) || (0 >= parseInt(activityLevel)) || (5 < parseInt(activityLevel)))) {
           setInvalidFields("aktivitetsnivå")
         } else {
           if (categoriesData && equipmentData && user) {
