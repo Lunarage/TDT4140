@@ -164,12 +164,8 @@ const NewActivity = ({ onExitFunc }: NewActivityProps) => {
     if (organizations && currentUser) {
       organizations.forEach(org => {
         let nameList: string[] = []
-        console.log(organizations)
-        console.log(currentUser)
         let orgs: Dropdown = []
-        console.log(org)
         if (org.user_member.includes(currentUser[0].username)) {
-          console.log("yey")
           nameList.push(org.name)
           orgs.push({ key: org.id, value: org.name, text: org.name })
         }
@@ -207,16 +203,6 @@ const NewActivity = ({ onExitFunc }: NewActivityProps) => {
           if (categoriesData && equipmentData && user) {
             const categoriesIdList = findDictValueInList(categoriesData, selectedCategories.split(","))
             const equipmentIdList = findDictValueInList(equipmentData, selectedEquipment.split(","))
-            console.log("title", title)
-            console.log("location", location)
-            console.log("fullDate", fullDate)
-            console.log("description", description)
-            console.log("categoriesIdList", categoriesIdList)
-            console.log("equipmentIdList", equipmentIdList)
-            console.log("parseIntWithUndefined(maxParticipants)", parseIntWithUndefined(maxParticipants))
-            console.log("parseIntWithUndefined(activityLevel)", parseIntWithUndefined(activityLevel))
-            console.log("orgId", orgId)
-            console.log("user.token", user.token)
             dispatch(postEvent(title,
               fullDate,
               description,
