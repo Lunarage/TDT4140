@@ -1,10 +1,14 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import ActivityExpand from '../components/ActivityExpand';
 import ActivityPreview from '../components/ActivityPreview';
 import Header from '../components/Header';
+import Loading from '../components/Loading';
 import { logoColor, redHexColor } from '../consts';
 import { toUpperCase } from '../functions';
+import { getEvents } from '../store/actionCreators';
+import { State } from '../store/types';
 
 const PageWrapper = styled.div`
   display: flex;
@@ -65,15 +69,36 @@ export const ExpandWrapper = styled.div`
 
 
 const Browse = () => {
+  const dispatch = useDispatch();
+
   const [showExpanded, setShowExpanded] = useState<boolean>(false);
+  const [activityNum, setActivityNum] = useState<number>(0)
+
   const url = new URL(window.location.href)
   const type = url.searchParams.get("type")
 
+  const {
+    events,
+    isLoading: eventsLoading,
+    errorMessage: eventsError,
+  } = useSelector((state: State) => state.eventsReducer);
+
+  useEffect(() => {
+    dispatch(getEvents());
+  }, [dispatch]);
+
+  const handleActivityClick = (num: number) => {
+    setShowExpanded(true)
+    setActivityNum(num)
+  }
+
+  if (eventsError) throw eventsError;
+
   return (
     <>
-      {showExpanded && <ExpandWrapper > <ActivityExpand onExitFunc={() => setShowExpanded(false)} /></ExpandWrapper>}
+      {showExpanded && events && <ExpandWrapper > <ActivityExpand data={events[activityNum]} onExitFunc={() => setShowExpanded(false)} /></ExpandWrapper>}
       <PageWrapper >
-        <Header loggedIn={true} />
+        <Header />
         <ContentWrapper>
           <SideBar>
           </SideBar>
@@ -81,12 +106,13 @@ const Browse = () => {
             <PageHeader>{toUpperCase(type)}</PageHeader>
             <FilterWrapper>
             </FilterWrapper>
-            <ActivityWrapper>
-              <ActivityPreview onClickFunc={() => setShowExpanded(true)} />
-              <ActivityPreview onClickFunc={() => setShowExpanded(true)} />
-              <ActivityPreview onClickFunc={() => setShowExpanded(true)} />
-              <ActivityPreview onClickFunc={() => setShowExpanded(true)} />
-            </ActivityWrapper>
+            {eventsLoading || !events ? <Loading /> :
+              <ActivityWrapper>
+                {events[0] && <ActivityPreview data={events[0]} onClickFunc={() => handleActivityClick(0)} />}
+                {events[1] && <ActivityPreview data={events[1]} onClickFunc={() => handleActivityClick(1)} />}
+                {events[2] && <ActivityPreview data={events[2]} onClickFunc={() => handleActivityClick(2)} />}
+                {events[3] && <ActivityPreview data={events[3]} onClickFunc={() => handleActivityClick(3)} />}
+              </ActivityWrapper>}
           </RightWrapper>
         </ContentWrapper>
       </PageWrapper>
