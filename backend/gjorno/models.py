@@ -32,7 +32,7 @@ class Organization(models.Model):
     )
 
     def __str__(self):
-        return "Organization: {}".format(self.name)
+        return self.name
 
 
 class Category(models.Model):
@@ -100,7 +100,8 @@ class Activity(models.Model):
     tagged = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
         related_name="tags",
-        help_text="What users have tagged (like/favourite) the activity."
+        help_text="What users have tagged (like/favourite) the activity.",
+        blank=True
     )
 
     class Meta:

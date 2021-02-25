@@ -79,7 +79,11 @@ class ActivityViewSet(viewsets.ModelViewSet):  # pylint: disable=too-many-ancest
     """
     API endpoint for Activity model.
     """
-    permission_classes = [perms.IsAuthenticatedAndOwner, perms.PartOfOrganization,]
+    permission_classes = [
+        perms.AuthenticatedOrReadOnly &
+        perms.PartOfOrganization &
+        perms.IsAuthenticatedAndOwner
+    ]
     queryset = Activity.objects.all()
     serializer_class = ActivitySerializer
     filter_backends = [filters.SearchFilter]
