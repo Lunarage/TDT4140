@@ -1,16 +1,14 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import styled from "styled-components";
 import Button from "../components/Button";
 import Header from "../components/Header";
 import InputField from "../components/InputField";
-import { baseUrl } from '../consts';
-import HttpClient from '../utilities/HttpClient';
 import WelcomeLogo from "../welcome/WelcomeLogo";
 import { State } from '../store/types';
 import { useHistory } from 'react-router-dom';
-import { ActionTypes } from '../store/actionTypes';
 import { getUser, postUser } from '../store/actionCreators';
+import Loading from '../components/Loading';
 
 const PageWrapper = styled.div`
   display: flex;
@@ -72,6 +70,10 @@ export enum Method {
   register = "Registrer",
 }
 
+const ErrorMessage = () => (
+  <div>Noe gikk feil - prøv igjen </div>
+)
+
 const Login = () => {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -88,24 +90,37 @@ const Login = () => {
   const [passwordMatch, setPasswordMatch] = useState<boolean>(true);
   const [sucessfullRegister, setSucessfullRegister] = useState<boolean>(false);
 
+  const [loginError, setLoginError] = useState<boolean>(false);
+  const [regError, setRegError] = useState<boolean>(false);
+
   const {
     user,
+    isLoading: userLoading,
     errorMessage: userError,
   } = useSelector((state: State) => state.getUserReducer);
 
   const {
     user: postedUser,
+    isLoading: postLoading,
+    errorMessage: postError
   } = useSelector((state: State) => state.postUserReducer);
 
   useEffect(() => {
     if (user) {
       history.push("/");
     }
-  }, [user]);
+    if (userError) {
+      setLoginError(true)
+    }
+  }, [user, userError]);
 
   useEffect(() => {
     if (postedUser) {
+      resetMessages()
       setSucessfullRegister(true)
+    }
+    if (postError) {
+      setRegError(true)
     }
   }, [postedUser]);
 
@@ -132,8 +147,12 @@ const Login = () => {
     setSucessfullRegister(false);
     setMissingInfo(false);
     setPasswordMatch(true);
+    setLoginError(false);
+    setRegError(false);
 
   }
+
+  if (postLoading || userLoading) return <Loading />
 
   return (
     <PageWrapper>
@@ -154,7 +173,8 @@ const Login = () => {
               <InputField name="Confirm passord" onChangeFunc={(val) => setConfPassword(val)} />
             )}
           </InputWrapper>
-          {userError === 0 && <div>Feil brukernavn eller passord</div>}
+          {loginError && (userError.statusCode === 400 ? <div>Feil brukernavn eller passord</div> : ErrorMessage)}
+          {regError && ErrorMessage}
           {missingInfo && <div>Fyll inn alle feltene</div>}
           {!passwordMatch && <div>Passordene er ikke like</div>}
           {sucessfullRegister && <div>Du er registrert. Vennligst logg inn</div>}
