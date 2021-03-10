@@ -68,8 +68,6 @@ const Header = () => {
 
   const {
     user,
-    isLoading: userLoading,
-    errorMessage: userError,
   } = useSelector((state: State) => state.getUserReducer);
 
   const setUrl = (tab: string) => {
@@ -79,10 +77,6 @@ const Header = () => {
   const handleTypeClick = (tab: string, type: string) => {
     history.push(tab + "?type=" + type);
   };
-
-  if (userError) throw userError;
-
-  if (userLoading) return <Loading />
 
   return (
     <>
@@ -108,10 +102,10 @@ const Header = () => {
             Min side
           </UserButton>
         ) : (
-            <UserButton onClick={() => setUrl("/login")}>
-              Logg inn
-            </UserButton>
-          )}
+          <UserButton onClick={() => setUrl("/login")}>
+            Logg inn
+          </UserButton>
+        )}
       </Wrapper>
     </>
   );

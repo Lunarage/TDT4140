@@ -27,8 +27,7 @@ export const postEventReducer = (
             return {
                 ...state,
                 isLoading: false,
-                errorMessage:
-                    action.payload.message | action.payload.toString(),
+                errorMessage: action.payload,
             };
     }
     return state;
@@ -47,8 +46,7 @@ export const postUserReducer = (
             return {
                 ...state,
                 isLoading: false,
-                errorMessage:
-                    action.payload.message | action.payload.toString(),
+                errorMessage: action.payload,
             };
     }
     return state;
@@ -67,8 +65,7 @@ export const getUserReducer = (
             return {
                 ...state,
                 isLoading: false,
-                errorMessage:
-                    action.payload.message | action.payload.toString(),
+                errorMessage: action.payload,
             };
     }
     return state;
@@ -87,8 +84,7 @@ export const getCurrentUserReducer = (
             return {
                 ...state,
                 isLoading: false,
-                errorMessage:
-                    action.payload.message | action.payload.toString(),
+                errorMessage: action.payload,
             };
     }
     return state;
@@ -107,7 +103,7 @@ export const eventsReducer = (
             return {
                 ...state,
                 isLoading: false,
-                errorMessage: action.payload.message,
+                errorMessage: action.payload,
             };
     }
     return state;
@@ -130,7 +126,7 @@ export const orgsReducer = (
             return {
                 ...state,
                 isLoading: false,
-                errorMessage: action.payload.message,
+                errorMessage: action.payload,
             };
     }
     return state;
@@ -153,7 +149,7 @@ export const categoriesReducer = (
             return {
                 ...state,
                 isLoading: false,
-                errorMessage: action.payload.message,
+                errorMessage: action.payload,
             };
     }
     return state;
@@ -176,7 +172,7 @@ export const equipmentReducer = (
             return {
                 ...state,
                 isLoading: false,
-                errorMessage: action.payload.message,
+                errorMessage: action.payload,
             };
     }
     return state;

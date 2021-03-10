@@ -8,6 +8,7 @@ import { getCategories, getCurrentUser, getEquipment, postEvent, getOrgs } from 
 import { Dropdown, Input, StrictDropdownDividerProps, TextArea } from 'semantic-ui-react';
 import { CustomButton, TextWrapper } from './Button';
 import { allDigits, isIsoDate, parseIntWithUndefined } from '../functions';
+import Loading from './Loading';
 
 
 type Dropdown = { key: number, value: string, text: string }[]
@@ -120,6 +121,7 @@ const NewActivity = ({ onExitFunc }: NewActivityProps) => {
 
   const {
     currentUser,
+    isLoading: currUserLoading,
   } = useSelector((state: State) => state.getCurrentUserReducer);
 
   const {
@@ -222,6 +224,8 @@ const NewActivity = ({ onExitFunc }: NewActivityProps) => {
     }
   }
 
+  if (currUserLoading) return <Loading />
+
   return (
     <WidgetWrapper>
       <CloseButton onClick={onExitFunc} >X </CloseButton>
@@ -290,8 +294,8 @@ const NewActivity = ({ onExitFunc }: NewActivityProps) => {
                 }
               />
             ) : (
-                "loading..."
-              )}
+              "loading..."
+            )}
           </LineWrapper>
           <LineWrapper>
             <BoldText>Kategorier: </BoldText>
@@ -307,8 +311,8 @@ const NewActivity = ({ onExitFunc }: NewActivityProps) => {
                 }
               />
             ) : (
-                "loading..."
-              )}
+              "loading..."
+            )}
           </LineWrapper>
           <LineWrapper>
             <BoldText>Utstyr: </BoldText>
@@ -324,8 +328,8 @@ const NewActivity = ({ onExitFunc }: NewActivityProps) => {
                 }
               />
             ) : (
-                "loading..."
-              )}
+              "loading..."
+            )}
           </LineWrapper>
           <BoldText>Beskrivelse*: </BoldText>
           <TextArea
