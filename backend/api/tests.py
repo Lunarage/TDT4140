@@ -6,6 +6,7 @@ from django.test import TestCase
 from django.contrib.auth.models import User
 from rest_framework import status
 from rest_framework.test import APIClient
+from rest_framework.authtoken.models import Token
 from gjorno.models import Activity, Organization
 
 
@@ -108,47 +109,87 @@ class APITestCase(TestCase):
         for activity in response.json():
             self.assertTrue("basketball" in activity["title"].lower())
 
+
 class APISignupCase(TestCase):
     """
     A test for the sign up function of the API.
     """
 
     def setUp(self):
-        test_user1 = User(username="test")
+        test_user = User(username="test")
+        test_user.save()
         test_organization = Organization(name="TestOrg")
-        test_user1.save()
         test_organization.save()
+        # Non-organized activity
         test_activity = Activity(
             title="Tur i skogen",
-            date="2021-02-28T14:30Z",
-            user_owner=test_user1,
+            user_owner=test_user,
         )
+        # Organized activity
         test_activity2 = Activity(
             title="Basketball",
-            date="2021-03-28T14:30Z",
             max_participants=1,
-            user_owner=test_user1,
+            user_owner=test_user,
             organization_owner=test_organization
         )
+        # Full organized activity
         test_activity3 = Activity(
             title="Ekstrembasketball",
-            date="2021-03-28T14:30Z",
             max_participants=0,
-            user_owner=test_user1,
+            user_owner=test_user,
             organization_owner=test_organization
         )
         test_activity.save()
         test_activity2.save()
         test_activity3.save()
 
-    def test_authorization(self):
+    def test_non_authorized_user(self):  # pylint: disable=no-self-use
+        """
+        Try to sign up for an activity without being logged in.
+        We expect to receive forbidden 401 because we don't provide any credentials.
+        """
         client = APIClient()
-        response = client.put("/api/activity/1/signup/", HTTP_ACCEPT="application/json")
-        print(response)
-        assert response.status_code == 401
+        response = client.put("/api/activity/2/signup/", HTTP_ACCEPT="application/json")
+        assert response.status_code == status.HTTP_401_UNAUTHORIZED
 
-    def test_signup(self):
+    def test_signup_non_organized(self):  # pylint: disable=no-self-use
+        """
+        Try to sign up for an activity that is not organized.
+        We expect to receive bad request 400.
+        """
+        user = User.objects.get(username="test")
+        token = Token.objects.get(user__username=user.username)
         client = APIClient()
+        client.credentials(HTTP_AUTHORIZATION="Token " + token.key)
         response = client.put("/api/activity/1/signup/", HTTP_ACCEPT="application/json")
-        print(response)
-        assert response.status_code == 400
+        assert response.status_code == status.HTTP_400_BAD_REQUEST
+
+    def test_signup_put_and_delete(self):  # pylint: disable=no-self-use
+        """
+        Sign up for avtivity
+        and check that the sign up list of the activity contains the user.
+        Then withdraw from the activity
+        and check that the user is no longer in the list.
+        """
+        user = User.objects.get(username="test")
+        token = Token.objects.get(user__username=user.username)
+        client = APIClient()
+        client.credentials(HTTP_AUTHORIZATION="Token " + token.key)
+        response = client.put("/api/activity/2/signup/", HTTP_ACCEPT="application/json")
+        assert response.status_code == status.HTTP_204_NO_CONTENT
+        activity = Activity.objects.get(pk=2)
+        assert user in activity.signed_up.all()
+        response = client.delete("/api/activity/2/signup/", HTTP_ACCEPT="application/json")
+        assert response.status_code == status.HTTP_204_NO_CONTENT
+        assert user not in activity.signed_up.all()
+
+    def test_activity_full(self):  # pylint: disable=no-self-use
+        """
+        Attempt to sign up for a full activity.
+        """
+        user = User.objects.get(username="test")
+        token = Token.objects.get(user__username=user.username)
+        client = APIClient()
+        client.credentials(HTTP_AUTHORIZATION="Token " + token.key)
+        response = client.put("/api/activity/3/signup/", HTTP_ACCEPT="application/json")
+        assert response.status_code == status.HTTP_400_BAD_REQUEST
