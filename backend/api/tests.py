@@ -143,16 +143,16 @@ class APISignupCase(TestCase):
         test_activity2.save()
         test_activity3.save()
 
-    def test_non_authorized_user(self):  # pylint: disable=no-self-use
+    def test_non_authorized_user(self):
         """
         Try to sign up for an activity without being logged in.
         We expect to receive forbidden 401 because we don't provide any credentials.
         """
         client = APIClient()
         response = client.put("/api/activity/2/signup/", HTTP_ACCEPT="application/json")
-        assert response.status_code == status.HTTP_401_UNAUTHORIZED
+        self.assertTrue(response.status_code == status.HTTP_401_UNAUTHORIZED)
 
-    def test_signup_non_organized(self):  # pylint: disable=no-self-use
+    def test_signup_non_organized(self):
         """
         Try to sign up for an activity that is not organized.
         We expect to receive bad request 400.
@@ -161,10 +161,11 @@ class APISignupCase(TestCase):
         token = Token.objects.get(user__username=user.username)
         client = APIClient()
         client.credentials(HTTP_AUTHORIZATION="Token " + token.key)
-        response = client.put("/api/activity/1/signup/", HTTP_ACCEPT="application/json")
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
 
-    def test_signup_put_and_delete(self):  # pylint: disable=no-self-use
+        response = client.put("/api/activity/1/signup/", HTTP_ACCEPT="application/json")
+        self.assertTrue(response.status_code == status.HTTP_400_BAD_REQUEST)
+
+    def test_signup_put_and_delete(self):
         """
         Sign up for avtivity
         and check that the sign up list of the activity contains the user.
@@ -175,15 +176,18 @@ class APISignupCase(TestCase):
         token = Token.objects.get(user__username=user.username)
         client = APIClient()
         client.credentials(HTTP_AUTHORIZATION="Token " + token.key)
-        response = client.put("/api/activity/2/signup/", HTTP_ACCEPT="application/json")
-        assert response.status_code == status.HTTP_204_NO_CONTENT
-        activity = Activity.objects.get(pk=2)
-        assert user in activity.signed_up.all()
-        response = client.delete("/api/activity/2/signup/", HTTP_ACCEPT="application/json")
-        assert response.status_code == status.HTTP_204_NO_CONTENT
-        assert user not in activity.signed_up.all()
 
-    def test_activity_full(self):  # pylint: disable=no-self-use
+        response = client.put("/api/activity/2/signup/", HTTP_ACCEPT="application/json")
+        self.assertTrue(response.status_code == status.HTTP_204_NO_CONTENT)
+
+        activity = Activity.objects.get(pk=2)
+        self.assertTrue(user in activity.signed_up.all())
+
+        response = client.delete("/api/activity/2/signup/", HTTP_ACCEPT="application/json")
+        self.assertTrue(response.status_code == status.HTTP_204_NO_CONTENT)
+        self.assertTrue(user not in activity.signed_up.all())
+
+    def test_activity_full(self):
         """
         Attempt to sign up for a full activity.
         """
@@ -191,5 +195,49 @@ class APISignupCase(TestCase):
         token = Token.objects.get(user__username=user.username)
         client = APIClient()
         client.credentials(HTTP_AUTHORIZATION="Token " + token.key)
+
         response = client.put("/api/activity/3/signup/", HTTP_ACCEPT="application/json")
-        assert response.status_code == status.HTTP_400_BAD_REQUEST
+        self.assertTrue(response.status_code == status.HTTP_400_BAD_REQUEST)
+
+
+class APIStarCase(TestCase):
+    """
+    A test for the star function of the API.
+    """
+
+    def setUp(self):
+        test_user = User(username="test")
+        test_user.save()
+        test_activity = Activity(
+            title="Tur i skogen",
+            user_owner=test_user,
+        )
+        test_activity.save()
+
+    def test_non_authorized_user(self):  # pylint: disable=no-self-use
+        """
+        Try to star an activity without being logged in.
+        We expect to receive forbidden 401 because we don't provide any credentials.
+        """
+        client = APIClient()
+        response = client.put("/api/activity/1/star/", HTTP_ACCEPT="application/json")
+        self.assertTrue(response.status_code == status.HTTP_401_UNAUTHORIZED)
+
+    def test_star_put_and_delete(self):
+        """
+        Star an activity
+        and check that the star list of the activity contains the user.
+        Then unstar the activity
+        and check that the user is no longer on the list.
+        """
+        user = User.objects.get(username="test")
+        token = Token.objects.get(user__username=user.username)
+        client = APIClient()
+        client.credentials(HTTP_AUTHORIZATION="Token " + token.key)
+        response = client.put("/api/activity/1/star/", HTTP_ACCEPT="application/json")
+        self.assertTrue(response.status_code == status.HTTP_204_NO_CONTENT)
+        activity = Activity.objects.get(pk=1)
+        self.assertTrue(user in activity.tagged.all())
+        response = client.delete("/api/activity/1/star/", HTTP_ACCEPT="application/json")
+        self.assertTrue(response.status_code == status.HTTP_204_NO_CONTENT)
+        self.assertTrue(user not in activity.tagged.all())

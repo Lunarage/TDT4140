@@ -125,6 +125,26 @@ class ActivityViewSet(viewsets.ModelViewSet):  # pylint: disable=too-many-ancest
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
+    @action(
+        methods=['put', 'delete'],
+        detail=True,
+        permission_classes=[permissions.IsAuthenticated],
+    )
+    def star(self, request, *args, **kwargs):  # pylint: disable=unused-argument
+        """
+        Stars or unstars the activity for the authorized user.
+        """
+        user = request.user
+        activity = self.get_object()
+        if request.method == 'PUT':
+            activity.tagged.add(user)
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        elif request.method == 'DELETE':
+            activity.tagged.remove(user)
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        else:
+            # This should never be run
+            return Response(status=status.HTTP_418_IM_A_TEAPOT)
 
 
 class UserViewSet(viewsets.ModelViewSet):

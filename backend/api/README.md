@@ -155,6 +155,19 @@ Returns status code 400 on failure
 either due to the activity not being organized
 or the activity is full.
 
+PUT `/api/activity/{id}/star`
+DELETE `/api/activity/{id}/star`
+
+Stars an activity for the logged in user.
+
+**Parameters**
+
+Name | Type | Description
+-----|------|------------
+id | integer | Unique id of activity
+
+Returns status code 204 on success with no content.
+
 ## Organization
 
 GET `/api/organization`
