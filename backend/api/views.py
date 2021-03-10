@@ -5,10 +5,17 @@ DOCSTRING HERE!
 from api import perms
 from gjorno.models import Organization, Activity, Equipment, Category
 from django.contrib.auth.models import User
-from rest_framework import viewsets
-from rest_framework import permissions
-from .serializers import OrganizationSerializer, ActivitySerializer, UserSerializer, EquipmentSerializer, CategorySerializer
-from rest_framework import filters
+from rest_framework import viewsets, permissions, filters, status
+from rest_framework.response import Response
+from rest_framework.decorators import action
+from .serializers import (
+    OrganizationSerializer,
+    ActivitySerializer,
+    UserSerializer,
+    EquipmentSerializer,
+    CategorySerializer,
+)
+
 #from django_filters import rest_framework as filters
 
 
@@ -90,6 +97,28 @@ class ActivityViewSet(viewsets.ModelViewSet):  # pylint: disable=too-many-ancest
     search_fields = ['title']
     #Search on different params: ['description', 'user_owner__username', 'organization_owner__name', 'location', 'activity_level', 'equipment_used__name', 'categories__name', 'max_participants']
     #filterset_class = ActivityFilter
+
+    @action(methods=['put', 'delete'], detail=True)
+    def signup(self, request, *args, **kwargs):
+        """
+        Signs up or withdraws the authorized user for/from the specified activity.
+        """
+        user = request.user
+        activity = self.get_object()
+        if activity.is_organized():
+            if request.method == 'PUT':
+                if not activity.is_full():
+                    activity.signed_up.add(user)
+                    return Response(status=status.HTTP_204_NO_CONTENT)
+                else:
+                    return Response(status=status.HTTP_400_BAD_REQUEST)
+            elif request.method == 'DELETE':
+                activity.signed_up.remove(user)
+                return Response(status=status.HTTP_204_NO_CONTENT)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
 
 class UserViewSet(viewsets.ModelViewSet):
     """
