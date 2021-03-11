@@ -102,16 +102,17 @@ class UserViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=['GET'])
     def activity(self, request, *args, **kwargs):
-        user = request.user
+        user = self.get_object()
         activities = Activity.objects.filter(user_owner=user)
-        #activity_list = serializers.serialize('json', activities)
-        return Response([Activity.title for Activity in activities])
-    
+        serializer = ActivitySerializer(activities, many=True)
+        return Response(serializer.data)
+
     @action(detail=True, methods=['GET'])
     def organization(self, request, *args, **kwargs):
-        user = request.user
-        organizations = Organization.objects.filter(user_member=user)
-        return Response([Organization.name for Organization in organizations])
+        user = self.get_object()
+        organizations = Organization.objects.filter(user_member__id=user.id)
+        serializer = OrganizationSerializer(organizations, many=True)
+        return Response(serializer.data)
     #filter_backends = [filters.SearchFilter]
     #search_fields = ['first_name', 'last_name', 'username', 'email']
     #filterset_class = UserFilter
