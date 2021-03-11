@@ -9,6 +9,8 @@ from rest_framework import viewsets
 from rest_framework import permissions
 from .serializers import OrganizationSerializer, ActivitySerializer, UserSerializer, EquipmentSerializer, CategorySerializer
 from rest_framework import filters
+from rest_framework.response import Response
+from rest_framework.decorators import action
 #from django_filters import rest_framework as filters
 
 
@@ -97,6 +99,19 @@ class UserViewSet(viewsets.ModelViewSet):
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+    @action(detail=True, methods=['GET'])
+    def activity(self, request, *args, **kwargs):
+        user = request.user
+        activities = Activity.objects.filter(user_owner=user)
+        #activity_list = serializers.serialize('json', activities)
+        return Response([Activity.title for Activity in activities])
+    
+    @action(detail=True, methods=['GET'])
+    def organization(self, request, *args, **kwargs):
+        user = request.user
+        organizations = Organization.objects.filter(user_member=user)
+        return Response([Organization.name for Organization in organizations])
     #filter_backends = [filters.SearchFilter]
     #search_fields = ['first_name', 'last_name', 'username', 'email']
     #filterset_class = UserFilter
