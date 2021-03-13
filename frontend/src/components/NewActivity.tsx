@@ -74,7 +74,7 @@ const ErrorMessage = styled.div`
 `;
 
 interface NewActivityProps {
-  onExitFunc: () => void;
+  onExitFunc: (submit: boolean) => void;
 }
 
 const findDictValueInList = (allDicts: { id: number, name: string }[], values: string[]) => {
@@ -207,18 +207,22 @@ const NewActivity = ({ onExitFunc }: NewActivityProps) => {
               orgId,
               user.id,
               user.token))
-            onExitFunc()
+            onExitFunc(true)
           }
         }
       }
     }
   }
 
+  const handleCloseButton = () => {
+    onExitFunc(false)
+  }
+
   if (currUserLoading) return <Loading />
 
   return (
     <WidgetWrapper>
-      <CloseButton onClick={onExitFunc} >X </CloseButton>
+      <CloseButton onClick={handleCloseButton} >X </CloseButton>
       <ActivityExpandHeader>
         &nbsp; &nbsp; Legg til et arrangement
       </ActivityExpandHeader>
