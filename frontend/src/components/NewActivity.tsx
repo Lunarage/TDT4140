@@ -7,7 +7,7 @@ import { State } from '../store/types';
 import { getCategories, getCurrentUser, getEquipment, postEvent, getOrgs } from '../store/actionCreators';
 import { Dropdown, Input, StrictDropdownDividerProps, TextArea } from 'semantic-ui-react';
 import { CustomButton, TextWrapper } from './Button';
-import { allDigits, isIsoDate, parseIntWithUndefined } from '../functions';
+import { allDigits, isFutureIsoDate, parseIntWithUndefined } from '../functions';
 import Loading from './Loading';
 
 
@@ -118,18 +118,14 @@ const NewActivity = ({ onExitFunc }: NewActivityProps) => {
   const [selectedEquipment, setSelectedEquipment] = useState<string>("");
   const [selectedOrgName, setSelectedOrgName] = useState<string>("");
 
-  const [connectedOrgsName, setConnectedOrgsName] = useState<string>("")
-
   const {
     categories: categoriesData,
     isLoading: categoriesLoading,
-    errorMessage: categoriesError,
   } = useSelector((state: State) => state.categoriesReducer);
 
   const {
     equipment: equipmentData,
     isLoading: equipmentLoading,
-    errorMessage: equipmentError,
   } = useSelector((state: State) => state.equipmentReducer);
 
   const {
@@ -144,7 +140,6 @@ const NewActivity = ({ onExitFunc }: NewActivityProps) => {
   const {
     organizations,
     isLoading: orgsLoading,
-    errorMessage: orgsError,
   } = useSelector((state: State) => state.orgsReducer);
 
   useEffect(() => {
@@ -190,14 +185,9 @@ const NewActivity = ({ onExitFunc }: NewActivityProps) => {
           orgs.push({ key: org.id, value: org.name, text: org.name })
         }
         setOrgsDropdown(orgs)
-        setConnectedOrgsName(nameList.toString())
       })
     }
   }, [organizations, currentUser]);
-
-  if (categoriesError) throw categoriesError;
-  if (equipmentError) throw equipmentError;
-  if (orgsError) throw orgsError;
 
   const handleSubmit = () => {
     setEmptyFields(false)
@@ -224,8 +214,8 @@ const NewActivity = ({ onExitFunc }: NewActivityProps) => {
             orgId = org.key
           }
         })
-        if (!isIsoDate(fullDate)) {
-          setInvalidFields("dato")
+        if (!isFutureIsoDate(fullDate)) {
+          setInvalidFields("dato eller starttid")
         } else {
           if (user) {
             dispatch(postEvent(title,
