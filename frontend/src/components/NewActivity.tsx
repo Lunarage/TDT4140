@@ -89,7 +89,7 @@ const HeaderItemUnderlined = styled(HeaderItem)`
 `;
 
 interface NewActivityProps {
-  onExitFunc: () => void;
+  onExitFunc: (submit: boolean) => void;
 }
 
 const findDictValueInList = (allDicts: { id: number, name: string }[], values: string[]) => {
@@ -229,7 +229,7 @@ const NewActivity = ({ onExitFunc }: NewActivityProps) => {
               orgId,
               user.id,
               user.token))
-            onExitFunc()
+            onExitFunc(true)
           }
         }
       }
@@ -248,6 +248,10 @@ const NewActivity = ({ onExitFunc }: NewActivityProps) => {
         onExitFunc()
       }
     }
+  }
+
+  const handleCloseButton = () => {
+    onExitFunc(false)
   }
 
   if (currUserLoading) return <Loading />
