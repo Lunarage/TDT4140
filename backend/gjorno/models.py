@@ -72,6 +72,7 @@ class Activity(models.Model):
     date = models.DateTimeField(null=True, blank=True, help_text="Start time of the event")
     description = models.TextField(blank=True, default="In depth description")
     location = models.CharField(max_length=80, default="Location")  # TODO: Implement map?
+    activity_image = models.ImageField(null=True, blank=True, upload_to="images/")
     max_participants = models.IntegerField(
         default=0,
         validators=[MinValueValidator(0)],
