@@ -46,14 +46,14 @@ export const postUser = (
 
 export const postEvent = (
     title: string,
-    date: string,
+    date: string | undefined,
     description: string,
     location: string,
-    categories: number[],
-    equipment_used: number[],
+    categories: number[] | undefined,
+    equipment_used: number[] | undefined,
     max_participants: number | undefined,
     activity_level: number | undefined,
-    organization_owner: number,
+    organization_owner: number | undefined,
     user_owner: number,
     token: string
 ) => {
