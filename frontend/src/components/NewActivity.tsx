@@ -73,6 +73,21 @@ const ErrorMessage = styled.div`
   justify-content: center;
 `;
 
+const Header = styled(ActivityExpandHeader)`
+  flex-direction: row;
+  justify-content: space-evenly;
+`;
+
+const HeaderItem = styled.div`
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const HeaderItemUnderlined = styled(HeaderItem)`
+    text-decoration: underline;
+`;
+
 interface NewActivityProps {
   onExitFunc: () => void;
 }
@@ -85,6 +100,8 @@ const findDictValueInList = (allDicts: { id: number, name: string }[], values: s
 
 const NewActivity = ({ onExitFunc }: NewActivityProps) => {
   const dispatch = useDispatch();
+
+  const [createEvent, setCreateEvent] = useState<boolean>(true)
 
   const [emptyFields, setEmptyFields] = useState<boolean>(false)
   const [invalidFields, setInvalidFields] = useState<string | null>(null)
@@ -185,27 +202,32 @@ const NewActivity = ({ onExitFunc }: NewActivityProps) => {
   const handleSubmit = () => {
     setEmptyFields(false)
     setInvalidFields(null)
-    if (!title || !location || !date || !description || !time || !selectedOrgName) {
+    let categoriesIdList
+    let equipmentIdList
+    if (categoriesData && equipmentData) {
+      categoriesIdList = findDictValueInList(categoriesData, selectedCategories.split(","))
+      equipmentIdList = findDictValueInList(equipmentData, selectedEquipment.split(","))
+    }
+    if (!title || !location || !description || (createEvent && (!time || !selectedOrgName || !date))) {
       setEmptyFields(true)
     } else {
-      const fullDate = date + "T" + time + ":00Z"
-      let orgId
-      orgsDropdown.forEach(org => {
-        if (org.value === selectedOrgName) {
-          orgId = org.key
-        }
-      })
-      if (orgId) {
+      if (!allDigits(maxParticipants)) {
+        setInvalidFields("maks deltakere")
+      } else if (activityLevel && (!allDigits(activityLevel) || (0 >= parseInt(activityLevel)) || (5 < parseInt(activityLevel)))) {
+        setInvalidFields("aktivitetsnivå")
+      }
+      else if (createEvent) {
+        const fullDate = date + "T" + time + ":00Z"
+        let orgId
+        orgsDropdown.forEach(org => {
+          if (org.value === selectedOrgName) {
+            orgId = org.key
+          }
+        })
         if (!isIsoDate(fullDate)) {
           setInvalidFields("dato")
-        } else if (!allDigits(maxParticipants)) {
-          setInvalidFields("maks deltakere")
-        } else if (activityLevel && (!allDigits(activityLevel) || (0 >= parseInt(activityLevel)) || (5 < parseInt(activityLevel)))) {
-          setInvalidFields("aktivitetsnivå")
         } else {
-          if (categoriesData && equipmentData && user) {
-            const categoriesIdList = findDictValueInList(categoriesData, selectedCategories.split(","))
-            const equipmentIdList = findDictValueInList(equipmentData, selectedEquipment.split(","))
+          if (user) {
             dispatch(postEvent(title,
               fullDate,
               description,
@@ -221,6 +243,20 @@ const NewActivity = ({ onExitFunc }: NewActivityProps) => {
           }
         }
       }
+      else if (!createEvent && user) {
+        dispatch(postEvent(title,
+          undefined,
+          description,
+          location,
+          categoriesIdList,
+          equipmentIdList,
+          parseIntWithUndefined(maxParticipants),
+          parseIntWithUndefined(activityLevel),
+          undefined,
+          user.id,
+          user.token))
+        onExitFunc()
+      }
     }
   }
 
@@ -228,10 +264,17 @@ const NewActivity = ({ onExitFunc }: NewActivityProps) => {
 
   return (
     <WidgetWrapper>
-      <CloseButton onClick={onExitFunc} >X </CloseButton>
-      <ActivityExpandHeader>
-        &nbsp; &nbsp; Legg til et arrangement
-      </ActivityExpandHeader>
+      <CloseButton onClick={onExitFunc} > X </CloseButton>
+      <Header>
+        {createEvent ?
+          <HeaderItemUnderlined> Arrangement </HeaderItemUnderlined> :
+          <HeaderItem onClick={() => setCreateEvent(true)}> Arrangement </HeaderItem>
+        }
+        {createEvent ?
+          <HeaderItem onClick={() => setCreateEvent(false)}> Aktivitet </HeaderItem> :
+          <HeaderItemUnderlined> Aktivitet </HeaderItemUnderlined>
+        }
+      </Header>
       <Wrapper>
         <TextContentWrapper>
           <LineWrapper>
@@ -248,22 +291,22 @@ const NewActivity = ({ onExitFunc }: NewActivityProps) => {
               onChange={(event) => setLocation(event.target.value)}
             />
           </LineWrapper>
-          <LineWrapper>
+          {createEvent && <LineWrapper>
             <BoldText>Dato*: </BoldText>
             <Input
               size="mini"
               placeholder="YYYY-MM-DD"
               onChange={(event) => setDate(event.target.value)}
             />
-          </LineWrapper>
-          <LineWrapper>
+          </LineWrapper>}
+          {createEvent && <LineWrapper>
             <BoldText>Starttid*: </BoldText>
             <Input
               size="mini"
               placeholder="hh:mm"
               onChange={(event) => setTime(event.target.value)}
             />
-          </LineWrapper>
+          </LineWrapper>}
           <LineWrapper>
             <BoldText>Maks deltakere: </BoldText>
             <Input
@@ -281,7 +324,7 @@ const NewActivity = ({ onExitFunc }: NewActivityProps) => {
           </LineWrapper>
         </TextContentWrapper>
         <TextContentWrapper>
-          <LineWrapper>
+          {createEvent && <LineWrapper>
             <BoldText>Organisasjon*: </BoldText>
             {!orgsLoading ? (
               <Dropdown
@@ -296,7 +339,7 @@ const NewActivity = ({ onExitFunc }: NewActivityProps) => {
             ) : (
               "loading..."
             )}
-          </LineWrapper>
+          </LineWrapper>}
           <LineWrapper>
             <BoldText>Kategorier: </BoldText>
             {!categoriesLoading ? (
