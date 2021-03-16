@@ -11,6 +11,7 @@ from .serializers import OrganizationSerializer, ActivitySerializer, UserSeriali
 from rest_framework import filters
 from rest_framework.response import Response
 from rest_framework.decorators import action
+from rest_framework import permissions
 #from django_filters import rest_framework as filters
 
 
@@ -100,14 +101,14 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
-    @action(detail=True, methods=['GET'])
+    @action(detail=True, methods=['GET'], permission_classes=[permissions.IsAuthenticated],)
     def activity(self, request, *args, **kwargs):
         user = self.get_object()
         activities = Activity.objects.filter(user_owner=user)
         serializer = ActivitySerializer(activities, many=True)
         return Response(serializer.data)
 
-    @action(detail=True, methods=['GET'])
+    @action(detail=True, methods=['GET'], permission_classes=[permissions.IsAuthenticated],)
     def organization(self, request, *args, **kwargs):
         user = self.get_object()
         organizations = Organization.objects.filter(user_member__id=user.id)
