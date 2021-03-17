@@ -17,4 +17,9 @@ class Migration(migrations.Migration):
             name='signed_up',
             field=models.ManyToManyField(blank=True, help_text='List of users signed up for the activity', related_name='signed_up', to=settings.AUTH_USER_MODEL),
         ),
+        migrations.AlterField(
+            model_name='activity',
+            name='tagged',
+            field=models.ManyToManyField(blank=True, help_text='What users have tagged (like/favourite) the activity.', related_name='tags', to=settings.AUTH_USER_MODEL),
+        ),
     ]

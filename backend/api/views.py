@@ -153,6 +153,20 @@ class UserViewSet(viewsets.ModelViewSet):
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+    @action(detail=True, methods=['GET'], permission_classes=[permissions.IsAuthenticated],)
+    def activity(self, request, *args, **kwargs):
+        user = self.get_object()
+        activities = Activity.objects.filter(user_owner=user)
+        serializer = ActivitySerializer(activities, many=True)
+        return Response(serializer.data)
+
+    @action(detail=True, methods=['GET'], permission_classes=[permissions.IsAuthenticated],)
+    def organization(self, request, *args, **kwargs):
+        user = self.get_object()
+        organizations = Organization.objects.filter(user_member__id=user.id)
+        serializer = OrganizationSerializer(organizations, many=True)
+        return Response(serializer.data)
     #filter_backends = [filters.SearchFilter]
     #search_fields = ['first_name', 'last_name', 'username', 'email']
     #filterset_class = UserFilter
