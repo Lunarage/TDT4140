@@ -5,14 +5,13 @@ import { redHexColor, redHexColorHover } from "../consts";
 interface ButtonProps {
   text: string;
   onClickFunc?: () => void;
+  colorInvert?: boolean;
 }
 
 export const CustomButton = styled.div`
   min-width: 8em;
   height: 2.5em;
-  color: white;
   margin: 10px;
-  background-color: ${redHexColor};
   padding: 3px 15px;
   outline: 0;
   transition: ease backgroundcolor 250ms;
@@ -25,6 +24,7 @@ export const CustomButton = styled.div`
   &:hover {
     cursor: pointer;
     background-color: ${redHexColorHover};
+    color: white;
   }
 `;
 
@@ -33,10 +33,17 @@ export const TextWrapper = styled.div`
   vertical-align: middle;
 `;
 
-const Button = ({ text, onClickFunc }: ButtonProps) => (
-  <CustomButton onClick={onClickFunc}>
+const Button = ({ text, onClickFunc, colorInvert }: ButtonProps) => { 
+  let backgroundcolor = redHexColor;
+  let textcolor = "white";
+  if (colorInvert) {
+    backgroundcolor = "white";
+    textcolor = redHexColor;
+  }
+  return (
+  <CustomButton onClick={onClickFunc} style={{color: textcolor, backgroundColor: backgroundcolor}}>
     <TextWrapper>{text}</TextWrapper>
   </CustomButton>
-);
+)}
 
 export default Button;
