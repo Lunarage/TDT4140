@@ -1,5 +1,5 @@
 import fetch, { Response } from "node-fetch";
-import { Credentials, AuthenticationResponse } from "./types";
+import { Credentials, AuthenticationResponse, CustomError } from "./types";
 
 /**
  * A custom error for response codes that are not 2xx
@@ -43,7 +43,7 @@ class HttpClient {
      */
     public getUserToken(
         credentials: Credentials
-    ): Promise<AuthenticationResponse> {
+    ): Promise<AuthenticationResponse | CustomError> {
         return this.post<AuthenticationResponse>(
             "/api/token-auth",
             credentials
@@ -78,7 +78,7 @@ class HttpClient {
      * @param {string} url - The url to send the request to
      * @return {Promise<T>} The promise of a response
      */
-    public get<T>(url: string): Promise<T> {
+    public get<T>(url: string): Promise<CustomError | T> {
         return fetch(this.baseURL + url, {
             method: "GET",
             headers: this.headers,
@@ -87,6 +87,15 @@ class HttpClient {
             .then((response: any) => response.json())
             .then((response: any) => {
                 return response as T;
+            })
+            .catch((err) => {
+                return {
+                    error: {
+                        name: err.name,
+                        message: err.message,
+                        statusCode: err.statusCode,
+                    },
+                };
             });
     }
 
@@ -101,7 +110,7 @@ class HttpClient {
      * @param {string} url - The url to send the request to
      * @return {Promise<T>} The promise of a response
      */
-    public delete<T>(url: string): Promise<T> {
+    public delete<T>(url: string): Promise<CustomError | T> {
         return fetch(this.baseURL + url, {
             method: "DELETE",
             headers: this.headers,
@@ -110,6 +119,15 @@ class HttpClient {
             .then((response: any) => response.json())
             .then((response: any) => {
                 return response as T;
+            })
+            .catch((err) => {
+                return {
+                    error: {
+                        name: err.name,
+                        message: err.message,
+                        statusCode: err.statusCode,
+                    },
+                };
             });
     }
 
@@ -124,7 +142,7 @@ class HttpClient {
      * @param {string} url - The url to send the request to
      * @return {Promise<T>} The promise of a response
      */
-    public post<T>(url: string, body: any): Promise<T> {
+    public post<T>(url: string, body: any): Promise<CustomError | T> {
         return fetch(this.baseURL + url, {
             method: "POST",
             body: JSON.stringify(body),
@@ -134,6 +152,15 @@ class HttpClient {
             .then((response: any) => response.json())
             .then((response: any) => {
                 return response as T;
+            })
+            .catch((err) => {
+                return {
+                    error: {
+                        name: err.name,
+                        message: err.message,
+                        statusCode: err.statusCode,
+                    },
+                };
             });
     }
 
@@ -148,7 +175,7 @@ class HttpClient {
      * @param {string} url - The url to send the request to
      * @return {Promise<T>} The promise of a response
      */
-    public put<T>(url: string, body: any): Promise<T> {
+    public put<T>(url: string, body: any): Promise<CustomError | T> {
         return fetch(this.baseURL + url, {
             method: "PUT",
             headers: this.headers,
@@ -157,6 +184,15 @@ class HttpClient {
             .then((response: any) => response.json())
             .then((response: any) => {
                 return response as T;
+            })
+            .catch((err) => {
+                return {
+                    error: {
+                        name: err.name,
+                        message: err.message,
+                        statusCode: err.statusCode,
+                    },
+                };
             });
     }
 }
