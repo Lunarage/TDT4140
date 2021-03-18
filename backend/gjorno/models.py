@@ -121,10 +121,10 @@ class Activity(models.Model):
     def __str__(self):
         return self.title
 
-     def clean_fields(self, exclude=None):
+    def clean_fields(self, exclude=None):
         if self.organization_owner is not None and self.user_owner not in self.organization_owner.user_member.all():
             raise ValidationError({"user_owner": ["User owner does not match the orgaization"]})
-        
+
     def is_organized(self):
         if self.organization_owner:
             return True
