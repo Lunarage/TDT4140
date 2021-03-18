@@ -5,10 +5,17 @@ DOCSTRING HERE!
 from api import perms
 from gjorno.models import Organization, Activity, Equipment, Category
 from django.contrib.auth.models import User
-from rest_framework import viewsets
-from rest_framework import permissions
-from .serializers import OrganizationSerializer, ActivitySerializer, UserSerializer, EquipmentSerializer, CategorySerializer
-from rest_framework import filters
+from rest_framework import viewsets, permissions, filters, status
+from rest_framework.response import Response
+from rest_framework.decorators import action
+from .serializers import (
+    OrganizationSerializer,
+    ActivitySerializer,
+    UserSerializer,
+    EquipmentSerializer,
+    CategorySerializer,
+)
+
 #from django_filters import rest_framework as filters
 
 
@@ -91,12 +98,75 @@ class ActivityViewSet(viewsets.ModelViewSet):  # pylint: disable=too-many-ancest
     #Search on different params: ['description', 'user_owner__username', 'organization_owner__name', 'location', 'activity_level', 'equipment_used__name', 'categories__name', 'max_participants']
     #filterset_class = ActivityFilter
 
+    @action(
+        methods=['put', 'delete'],
+        detail=True,
+        permission_classes=[permissions.IsAuthenticated],
+    )
+    def signup(self, request, *args, **kwargs):  # pylint: disable=unused-argument
+        """
+        Signs up or withdraws the authorized user for/from the specified activity.
+        """
+        user = request.user
+        activity = self.get_object()
+        if activity.is_organized():
+            if request.method == 'PUT':
+                if not activity.is_full():
+                    activity.signed_up.add(user)
+                    return Response(status=status.HTTP_204_NO_CONTENT)
+                else:
+                    return Response(status=status.HTTP_400_BAD_REQUEST)
+            elif request.method == 'DELETE':
+                activity.signed_up.remove(user)
+                return Response(status=status.HTTP_204_NO_CONTENT)
+            else:
+                # This should never be run
+                return Response(status=status.HTTP_418_IM_A_TEAPOT)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+    @action(
+        methods=['put', 'delete'],
+        detail=True,
+        permission_classes=[permissions.IsAuthenticated],
+    )
+    def star(self, request, *args, **kwargs):  # pylint: disable=unused-argument
+        """
+        Stars or unstars the activity for the authorized user.
+        """
+        user = request.user
+        activity = self.get_object()
+        if request.method == 'PUT':
+            activity.tagged.add(user)
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        elif request.method == 'DELETE':
+            activity.tagged.remove(user)
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        else:
+            # This should never be run
+            return Response(status=status.HTTP_418_IM_A_TEAPOT)
+
+
 class UserViewSet(viewsets.ModelViewSet):
     """
     API endpoint for User model.
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+    @action(detail=True, methods=['GET'], permission_classes=[permissions.IsAuthenticated],)
+    def activity(self, request, *args, **kwargs):
+        user = self.get_object()
+        activities = Activity.objects.filter(user_owner=user)
+        serializer = ActivitySerializer(activities, many=True)
+        return Response(serializer.data)
+
+    @action(detail=True, methods=['GET'], permission_classes=[permissions.IsAuthenticated],)
+    def organization(self, request, *args, **kwargs):
+        user = self.get_object()
+        organizations = Organization.objects.filter(user_member__id=user.id)
+        serializer = OrganizationSerializer(organizations, many=True)
+        return Response(serializer.data)
     #filter_backends = [filters.SearchFilter]
     #search_fields = ['first_name', 'last_name', 'username', 'email']
     #filterset_class = UserFilter

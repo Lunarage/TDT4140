@@ -8,3 +8,7 @@ export interface Credentials {
 export interface AuthenticationResponse extends User {
     token: string;
 }
+
+export type CustomError = {
+    error: { name: string; message: string; statusCode: number };
+};

@@ -107,6 +107,12 @@ class Activity(models.Model):
         help_text="What users have tagged (like/favourite) the activity.",
         blank=True
     )
+    signed_up = models.ManyToManyField(
+        settings.AUTH_USER_MODEL,
+        related_name="signed_up",
+        help_text="List of users signed up for the activity",
+        blank=True,
+    )
 
     class Meta:
         verbose_name = "Activity"
@@ -118,6 +124,15 @@ class Activity(models.Model):
      def clean_fields(self, exclude=None):
         if self.organization_owner is not None and self.user_owner not in self.organization_owner.user_member.all():
             raise ValidationError({"user_owner": ["User owner does not match the orgaization"]})
+        
+    def is_organized(self):
+        if self.organization_owner:
+            return True
+        else:
+            return False
+
+    def is_full(self):
+        return self.signed_up.all().count() >= self.max_participants
 
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)

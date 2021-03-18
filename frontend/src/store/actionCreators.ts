@@ -28,13 +28,13 @@ export const postUser = (
                 password,
                 email,
             })
+            .then((r) => handleError(r))
             .then((response) => {
                 dispatch({
                     type: ActionTypes.POST_USER_FINISHED,
                     payload: response,
                 });
             })
-            .then((r) => handleError(r))
             .catch((error) => {
                 dispatch({
                     type: ActionTypes.POST_USER_ERROR,
@@ -46,14 +46,14 @@ export const postUser = (
 
 export const postEvent = (
     title: string,
-    date: string,
+    date: string | undefined,
     description: string,
     location: string,
-    categories: number[],
-    equipment_used: number[],
+    categories: number[] | undefined,
+    equipment_used: number[] | undefined,
     max_participants: number | undefined,
     activity_level: number | undefined,
-    organization_owner: number,
+    organization_owner: number | undefined,
     user_owner: number,
     token: string
 ) => {
@@ -73,13 +73,13 @@ export const postEvent = (
                 equipment_used,
                 max_participants,
             })
+            .then((r) => handleError(r))
             .then((response) => {
                 dispatch({
                     type: ActionTypes.POST_EVENT_FINISHED,
                     payload: response,
                 });
             })
-            .then((r) => handleError(r))
             .catch((error) => {
                 dispatch({
                     type: ActionTypes.POST_EVENT_ERROR,
@@ -95,13 +95,13 @@ export const getUser = (username: string, password: string) => {
         let client = new HttpClient(baseUrl);
         return client
             .post("api/token-auth", { username, password })
+            .then((r) => handleError(r))
             .then((response) => {
                 dispatch({
                     type: ActionTypes.GET_USER_FINISHED,
                     payload: response,
                 });
             })
-            .then((r) => handleError(r))
             .catch((error) => {
                 dispatch({
                     type: ActionTypes.GET_USER_ERROR,
@@ -117,13 +117,13 @@ export const getCurrentUser = (token: string) => {
         let client = new HttpClient(baseUrl, token);
         return client
             .get("api/current_user")
+            .then((r) => handleError(r))
             .then((response) => {
                 dispatch({
                     type: ActionTypes.GET_CURRENT_USER_FINISHED,
                     payload: response,
                 });
             })
-            .then((r) => handleError(r))
             .catch((error) => {
                 dispatch({
                     type: ActionTypes.GET_CURRENT_USER_ERROR,
@@ -139,13 +139,13 @@ export const getEvents = () => {
         let client = new HttpClient(baseUrl);
         return client
             .get("api/activity")
+            .then((r) => handleError(r))
             .then((response) => {
                 dispatch({
                     type: ActionTypes.EVENTS_FINISHED,
                     payload: response,
                 });
             })
-            .then((r) => handleError(r))
             .catch((error) =>
                 dispatch({ type: ActionTypes.EVENTS_ERROR, payload: error })
             );
@@ -158,13 +158,13 @@ export const getOrgs = () => {
         let client = new HttpClient(baseUrl);
         return client
             .get("api/organization")
+            .then((r) => handleError(r))
             .then((response) => {
                 dispatch({
                     type: ActionTypes.ORGS_FINISHED,
                     payload: response,
                 });
             })
-            .then((r) => handleError(r))
             .catch((error) =>
                 dispatch({ type: ActionTypes.ORGS_ERROR, payload: error })
             );
@@ -177,13 +177,13 @@ export const getCategories = () => {
         let client = new HttpClient(baseUrl);
         return client
             .get("api/category")
+            .then((r) => handleError(r))
             .then((response) => {
                 dispatch({
                     type: ActionTypes.CATEGORIES_FINISHED,
                     payload: response,
                 });
             })
-            .then((r) => handleError(r))
             .catch((error) =>
                 dispatch({ type: ActionTypes.CATEGORIES_ERROR, payload: error })
             );
@@ -196,13 +196,13 @@ export const getEquipment = () => {
         let client = new HttpClient(baseUrl);
         return client
             .get("api/equipment")
+            .then((r) => handleError(r))
             .then((response) => {
                 dispatch({
                     type: ActionTypes.EQUIPMENT_FINISHED,
                     payload: response,
                 });
             })
-            .then((r) => handleError(r))
             .catch((error) =>
                 dispatch({ type: ActionTypes.EQUIPMENT_ERROR, payload: error })
             );
