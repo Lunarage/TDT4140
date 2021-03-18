@@ -9,6 +9,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
+from django.core.exceptions import ValidationError
 
 
 class Organization(models.Model):
@@ -113,6 +114,10 @@ class Activity(models.Model):
 
     def __str__(self):
         return self.title
+
+     def clean_fields(self, exclude=None):
+        if self.organization_owner is not None and self.user_owner not in self.organization_owner.user_member.all():
+            raise ValidationError({"user_owner": ["User owner does not match the orgaization"]})
 
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
