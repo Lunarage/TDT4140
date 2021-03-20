@@ -231,6 +231,7 @@ const NewActivity = ({ onExitFunc }: NewActivityProps) => {
               parseIntWithUndefined(activityLevel),
               orgId,
               user.id,
+              undefined,
               user.token))
             onExitFunc(true)
           }
@@ -247,8 +248,9 @@ const NewActivity = ({ onExitFunc }: NewActivityProps) => {
           parseIntWithUndefined(activityLevel),
           undefined,
           user.id,
+          undefined,
           user.token))
-        onExitFunc()
+        onExitFunc(true)
       }
     }
   }
@@ -261,7 +263,7 @@ const NewActivity = ({ onExitFunc }: NewActivityProps) => {
 
   return (
     <WidgetWrapper>
-      <CloseButton onClick={onExitFunc} > X </CloseButton>
+      <CloseButton onClick={handleCloseButton} > X </CloseButton>
       <Header>
         {createEvent ?
           <HeaderItemUnderlined> Arrangement </HeaderItemUnderlined> :
