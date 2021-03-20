@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { ActivityExpandHeader, CloseButton, Wrapper as BaseWrapper } from './ActivityExpand';
 import { redHexColor } from '../consts';
 import { useDispatch, useSelector } from 'react-redux';
 import { State } from '../store/types';
 import { getCategories, getCurrentUser, getEquipment, postEvent, getOrgs } from '../store/actionCreators';
-import { Dropdown, Input, StrictDropdownDividerProps, TextArea } from 'semantic-ui-react';
+import { Dropdown, Input, TextArea } from 'semantic-ui-react';
 import { CustomButton, TextWrapper } from './Button';
-import { allDigits, isFutureIsoDate, parseIntWithUndefined } from '../functions';
+import { allDigits, isIsoDate, parseIntWithUndefined, isFutureDate } from '../functions';
 import Loading from './Loading';
 
 
@@ -105,6 +105,7 @@ const NewActivity = ({ onExitFunc }: NewActivityProps) => {
 
   const [emptyFields, setEmptyFields] = useState<boolean>(false)
   const [invalidFields, setInvalidFields] = useState<string | null>(null)
+  const [futureDate, setFutureDate] = useState<boolean>(true)
 
   const [title, setTitle] = useState<string>()
   const [description, setDescription] = useState<string>()
@@ -214,8 +215,10 @@ const NewActivity = ({ onExitFunc }: NewActivityProps) => {
             orgId = org.key
           }
         })
-        if (!isFutureIsoDate(fullDate)) {
+        if (!isIsoDate(fullDate)) {
           setInvalidFields("dato eller starttid")
+        } else if (!isFutureDate(fullDate)) {
+          setFutureDate(false)
         } else {
           if (user) {
             dispatch(postEvent(title,
@@ -380,6 +383,7 @@ const NewActivity = ({ onExitFunc }: NewActivityProps) => {
       </Wrapper >
       {emptyFields && <ErrorMessage>Fyll ut alle feltene merket med *</ErrorMessage>}
       {invalidFields && <ErrorMessage>Feltet {invalidFields} er ikke gyldig</ErrorMessage>}
+      {!futureDate && <ErrorMessage> Tidspunkt må være i fremtiden </ErrorMessage>}
     </WidgetWrapper>
   );
 }

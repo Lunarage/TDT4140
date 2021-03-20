@@ -56,7 +56,7 @@ export const Logo = styled.div`
 const NewActivityResponse = styled.div`
   background-color: ${redHexColor};
   border: solid;
-  border-radius: 3px;
+  border-radius: 10px;
   border-color: white;
   width: auto;
   min-width: 150px;
