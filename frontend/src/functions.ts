@@ -14,7 +14,7 @@ export const isoToDateList = (date: string) => {
     return dateList;
 };
 
-export const isIsoDate = (str: string) => {
+export const isFutureIsoDate = (str: string) => {
     if (!/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z/.test(str)) return false;
     const date_seconds = Date.parse(str);
     if (!date_seconds) return false;
