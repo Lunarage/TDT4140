@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from 'react-redux';
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
@@ -95,6 +95,13 @@ const Header = () => {
     errorMessage: eventError,
   } = useSelector((state: State) => state.postEventReducer);
 
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem("token", user.token)
+      localStorage.setItem("id", user.id.toString())
+    }
+  }, [user]);
+
   const setUrl = (tab: string) => {
     history.push(tab);
   };
@@ -109,6 +116,11 @@ const Header = () => {
       setShowSuccess(true)
       setTimeout(() => setShowSuccess(false), 4000)
     }
+  }
+
+  const handleLogOut = () => {
+    setUrl("/")
+    localStorage.clear()
   }
 
   if (eventLoading) return <Loading />
@@ -130,15 +142,20 @@ const Header = () => {
           >
             {Type.arrangementer}
           </Tab>
-          {user && <Button
+          {localStorage.getItem("token") && <Button
             text="Lag ny"
             onClickFunc={() => setShowCreateNew(true)}
           />}
         </TabsWrapper>
-        {user ? (
-          <UserButton onClick={() => setUrl("/mypage")}>
-            Min side
+        {localStorage.getItem("token") ? (
+          <TabsWrapper>
+            <UserButton onClick={() => setUrl("/mypage")}>
+              Min side
           </UserButton>
+            <UserButton onClick={handleLogOut}>
+              Logg ut
+            </UserButton>
+          </TabsWrapper>
         ) : (
           <UserButton onClick={() => setUrl("/login")}>
             Logg inn

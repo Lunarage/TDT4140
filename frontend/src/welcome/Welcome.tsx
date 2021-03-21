@@ -37,10 +37,6 @@ const Welcome = () => {
     history.push(url);
   };
 
-  const {
-    user,
-  } = useSelector((state: State) => state.getUserReducer);
-
   return (
     <PageWrapper>
       <Header />
@@ -52,7 +48,8 @@ const Welcome = () => {
           text="Utforsk"
           onClickFunc={() => setUrl("/browse?type=arrangementer")}
         />
-        {!user && <Button text="Logg inn" onClickFunc={() => setUrl("/login")} />}
+        {!localStorage.getItem("token") &&
+          <Button text="Logg inn" onClickFunc={() => setUrl("/login")} />}
       </ContentWrapper>
     </PageWrapper>
   );
