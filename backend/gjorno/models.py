@@ -9,6 +9,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
+from django.core.exceptions import ValidationError
 
 
 class Organization(models.Model):
@@ -28,6 +29,7 @@ class Organization(models.Model):
     )
     user_member = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
+        blank=True,
         help_text="List of users that are members of organization"
     )
 
@@ -71,8 +73,10 @@ class Activity(models.Model):
     date = models.DateTimeField(null=True, blank=True, help_text="Start time of the event")
     description = models.TextField(blank=True, default="In depth description")
     location = models.CharField(max_length=80, default="Location")  # TODO: Implement map?
+    activity_image = models.ImageField(null=True, blank=True, upload_to="images/")
     max_participants = models.IntegerField(
-        default=None,
+        default=0,
+        validators=[MinValueValidator(0)],
         null=True,
         blank=True,
         help_text="For organization organized events. Maximum number of sign ups"
@@ -116,6 +120,10 @@ class Activity(models.Model):
 
     def __str__(self):
         return self.title
+
+    def clean_fields(self, exclude=None):
+        if self.organization_owner is not None and self.user_owner not in self.organization_owner.user_member.all():
+            raise ValidationError({"user_owner": ["User owner does not match the orgaization"]})
 
     def is_organized(self):
         if self.organization_owner:
