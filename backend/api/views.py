@@ -145,6 +145,19 @@ class ActivityViewSet(viewsets.ModelViewSet):  # pylint: disable=too-many-ancest
         else:
             # This should never be run
             return Response(status=status.HTTP_418_IM_A_TEAPOT)
+    
+    @action(
+        methods=['GET'],
+        detail=False,
+        permission_classes=[permissions.IsAuthenticated],
+    )
+    def organization(self, request, *args, **kwargs):
+        """
+        Get all activities with an organization_owner
+        """
+        activities = Activity.objects.filter(organization_owner__id__isnull=False)
+        serializer = ActivitySerializer(activities, many=True)
+        return Response(serializer.data)
 
 
 class UserViewSet(viewsets.ModelViewSet):
