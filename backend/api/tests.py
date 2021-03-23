@@ -18,27 +18,32 @@ class APIActivityCase(TestCase):
     def setUp(self):
         test_user1 = User(username="test")
         test_user2 = User(username="test2")
-        test_organization = Organization(name="TestOrg")
-        test_user2.save()
+        test_organization1 = Organization(name="TestOrg1")
+        test_organization2 = Organization(name="TestOrg2")
         test_user1.save()
-        test_organization.save()
+        test_user2.save()
+        test_organization1.save()
+        test_organization2.save()
+        test_organization1.user_member.add(test_user1)
+        test_organization1.user_member.add(test_user2)
+        test_organization2.user_member.add(test_user1)
         test_activity = Activity(
             title="Tur i skogen",
             date="2021-02-28T14:30Z",
             user_owner=test_user1,
-            organization_owner=test_organization
+            organization_owner=test_organization1
         )
         test_activity2 = Activity(
             title="Basketball",
             date="2021-03-28T14:30Z",
-            user_owner=test_user2,
-            organization_owner=test_organization
+            user_owner=test_user1,
+            organization_owner=test_organization1
         )
         test_activity3 = Activity(
             title="Ekstrembasketball",
             date="2021-03-28T14:30Z",
             user_owner=test_user2,
-            organization_owner=test_organization
+            organization_owner=test_organization1
         )
         test_activity.save()
         test_activity2.save()
@@ -100,6 +105,52 @@ class APIActivityCase(TestCase):
         for equipment in response.json():
             assert "id" in equipment
             assert "title" in equipment
+    
+    def test_get_user_activity(self):
+        user = User.objects.get(username="test") # Authorized
+        user2 = User.objects.get(username="test2") # Not authorized
+        token = Token.objects.get(user__username=user.username)
+        client = APIClient()
+        client2 = APIClient()
+        client.credentials(HTTP_AUTHORIZATION="Token " + token.key)
+        response = client.get('/api/user/1/activity/', HTTP_ACCEPT='application/json')
+        response2 = client2.get('/api/user/2/activity/', HTTP_ACCEPT='application/json')
+        assert response.status_code == 200
+        assert response2.status_code == 401
+        for activity in response.json():
+            assert "id" in activity
+            assert "title" in activity
+            assert "date" in activity
+            assert "organization_owner" in activity
+            assert "user_owner" in activity
+            assert "activity_level" in activity
+            assert "max_participants" in activity
+            assert "description" in activity
+            assert "categories" in activity
+            assert "equipment_used" in activity
+            #assert "image" in activity
+            assert "location" in activity
+            self.assertTrue("tur i skogen" in activity["title"].lower() or "basketball" in activity["title"].lower())
+    
+    def test_get_user_organization(self):
+        user = User.objects.get(username="test") # Authorized
+        user2 = User.objects.get(username="test2") # Not authorized
+        token = Token.objects.get(user__username=user.username)
+        client = APIClient()
+        client2 = APIClient()
+        client.credentials(HTTP_AUTHORIZATION="Token " + token.key)
+        response = client.get('/api/user/1/organization/', HTTP_ACCEPT='application/json')
+        response2 = client2.get('/api/user/2/organization/', HTTP_ACCEPT='application/json')
+        assert response.status_code == 200
+        assert response2.status_code == 401
+        for organization in response.json():
+            assert "id" in organization
+            assert "name" in organization
+            assert "description" in organization
+            #assert "image" in organization
+            assert "external_link" in organization
+            assert "user_member" in organization
+            self.assertTrue("testorg1" in organization["name"].lower() or "testorg2" in organization["name"].lower())
 
     def test_filter_activity(self):
         client = APIClient()

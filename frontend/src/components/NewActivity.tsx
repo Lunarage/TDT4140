@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { ActivityExpandHeader, CloseButton, Wrapper as BaseWrapper } from './ActivityExpand';
 import { redHexColor } from '../consts';
 import { useDispatch, useSelector } from 'react-redux';
 import { State } from '../store/types';
 import { getCategories, getCurrentUser, getEquipment, postEvent, getOrgs } from '../store/actionCreators';
-import { Dropdown, Input, StrictDropdownDividerProps, TextArea } from 'semantic-ui-react';
+import { Dropdown, Input, TextArea } from 'semantic-ui-react';
 import { CustomButton, TextWrapper } from './Button';
-import { allDigits, isIsoDate, parseIntWithUndefined } from '../functions';
+import { allDigits, isIsoDate, parseIntWithUndefined, isFutureDate } from '../functions';
 import Loading from './Loading';
 
 
@@ -73,8 +73,23 @@ const ErrorMessage = styled.div`
   justify-content: center;
 `;
 
+const Header = styled(ActivityExpandHeader)`
+  flex-direction: row;
+  justify-content: space-evenly;
+`;
+
+const HeaderItem = styled.div`
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const HeaderItemUnderlined = styled(HeaderItem)`
+    text-decoration: underline;
+`;
+
 interface NewActivityProps {
-  onExitFunc: () => void;
+  onExitFunc: (submit: boolean) => void;
 }
 
 const findDictValueInList = (allDicts: { id: number, name: string }[], values: string[]) => {
@@ -86,8 +101,11 @@ const findDictValueInList = (allDicts: { id: number, name: string }[], values: s
 const NewActivity = ({ onExitFunc }: NewActivityProps) => {
   const dispatch = useDispatch();
 
+  const [createEvent, setCreateEvent] = useState<boolean>(true)
+
   const [emptyFields, setEmptyFields] = useState<boolean>(false)
   const [invalidFields, setInvalidFields] = useState<string | null>(null)
+  const [futureDate, setFutureDate] = useState<boolean>(true)
 
   const [title, setTitle] = useState<string>()
   const [description, setDescription] = useState<string>()
@@ -101,23 +119,15 @@ const NewActivity = ({ onExitFunc }: NewActivityProps) => {
   const [selectedEquipment, setSelectedEquipment] = useState<string>("");
   const [selectedOrgName, setSelectedOrgName] = useState<string>("");
 
-  const [connectedOrgsName, setConnectedOrgsName] = useState<string>("")
-
   const {
     categories: categoriesData,
     isLoading: categoriesLoading,
-    errorMessage: categoriesError,
   } = useSelector((state: State) => state.categoriesReducer);
 
   const {
     equipment: equipmentData,
     isLoading: equipmentLoading,
-    errorMessage: equipmentError,
   } = useSelector((state: State) => state.equipmentReducer);
-
-  const {
-    user,
-  } = useSelector((state: State) => state.getUserReducer);
 
   const {
     currentUser,
@@ -127,12 +137,12 @@ const NewActivity = ({ onExitFunc }: NewActivityProps) => {
   const {
     organizations,
     isLoading: orgsLoading,
-    errorMessage: orgsError,
   } = useSelector((state: State) => state.orgsReducer);
 
   useEffect(() => {
-    if (user) {
-      !currentUser && dispatch(getCurrentUser(user.token));
+    const token = localStorage.getItem("token")
+    if (token) {
+      !currentUser && dispatch(getCurrentUser(token));
     }
     !organizations && dispatch(getOrgs());
   }, [dispatch]);
@@ -173,39 +183,43 @@ const NewActivity = ({ onExitFunc }: NewActivityProps) => {
           orgs.push({ key: org.id, value: org.name, text: org.name })
         }
         setOrgsDropdown(orgs)
-        setConnectedOrgsName(nameList.toString())
       })
     }
   }, [organizations, currentUser]);
 
-  if (categoriesError) throw categoriesError;
-  if (equipmentError) throw equipmentError;
-  if (orgsError) throw orgsError;
-
   const handleSubmit = () => {
     setEmptyFields(false)
     setInvalidFields(null)
-    if (!title || !location || !date || !description || !time || !selectedOrgName) {
+    let categoriesIdList
+    let equipmentIdList
+    if (categoriesData && equipmentData) {
+      categoriesIdList = findDictValueInList(categoriesData, selectedCategories.split(","))
+      equipmentIdList = findDictValueInList(equipmentData, selectedEquipment.split(","))
+    }
+    if (!title || !location || !description || (createEvent && (!time || !selectedOrgName || !date))) {
       setEmptyFields(true)
     } else {
-      const fullDate = date + "T" + time + ":00Z"
-      let orgId
-      orgsDropdown.forEach(org => {
-        if (org.value === selectedOrgName) {
-          orgId = org.key
-        }
-      })
-      if (orgId) {
+      const userToken = localStorage.getItem("token")
+      let userId = parseIntWithUndefined(localStorage.getItem("id"))
+      if (!allDigits(maxParticipants)) {
+        setInvalidFields("maks deltakere")
+      } else if (activityLevel && (!allDigits(activityLevel) || (0 >= parseInt(activityLevel)) || (5 < parseInt(activityLevel)))) {
+        setInvalidFields("aktivitetsnivå")
+      }
+      else if (createEvent) {
+        const fullDate = date + "T" + time + ":00Z"
+        let orgId
+        orgsDropdown.forEach(org => {
+          if (org.value === selectedOrgName) {
+            orgId = org.key
+          }
+        })
         if (!isIsoDate(fullDate)) {
-          setInvalidFields("dato")
-        } else if (!allDigits(maxParticipants)) {
-          setInvalidFields("maks deltakere")
-        } else if (activityLevel && (!allDigits(activityLevel) || (0 >= parseInt(activityLevel)) || (5 < parseInt(activityLevel)))) {
-          setInvalidFields("aktivitetsnivå")
+          setInvalidFields("dato eller starttid")
+        } else if (!isFutureDate(fullDate)) {
+          setFutureDate(false)
         } else {
-          if (categoriesData && equipmentData && user) {
-            const categoriesIdList = findDictValueInList(categoriesData, selectedCategories.split(","))
-            const equipmentIdList = findDictValueInList(equipmentData, selectedEquipment.split(","))
+          if (userToken && userId) {
             dispatch(postEvent(title,
               fullDate,
               description,
@@ -215,23 +229,50 @@ const NewActivity = ({ onExitFunc }: NewActivityProps) => {
               parseIntWithUndefined(maxParticipants),
               parseIntWithUndefined(activityLevel),
               orgId,
-              user.id,
-              user.token))
-            onExitFunc()
+              userId,
+              undefined,
+              userToken))
+            onExitFunc(true)
           }
         }
       }
+      else if (!createEvent && userId && userToken) {
+        dispatch(postEvent(title,
+          undefined,
+          description,
+          location,
+          categoriesIdList,
+          equipmentIdList,
+          parseIntWithUndefined(maxParticipants),
+          parseIntWithUndefined(activityLevel),
+          undefined,
+          userId,
+          undefined,
+          userToken))
+        onExitFunc(true)
+      }
     }
+  }
+
+  const handleCloseButton = () => {
+    onExitFunc(false)
   }
 
   if (currUserLoading) return <Loading />
 
   return (
     <WidgetWrapper>
-      <CloseButton onClick={onExitFunc} >X </CloseButton>
-      <ActivityExpandHeader>
-        &nbsp; &nbsp; Legg til et arrangement
-      </ActivityExpandHeader>
+      <CloseButton onClick={handleCloseButton} > X </CloseButton>
+      <Header>
+        {createEvent ?
+          <HeaderItemUnderlined> Arrangement </HeaderItemUnderlined> :
+          <HeaderItem onClick={() => setCreateEvent(true)}> Arrangement </HeaderItem>
+        }
+        {createEvent ?
+          <HeaderItem onClick={() => setCreateEvent(false)}> Aktivitet </HeaderItem> :
+          <HeaderItemUnderlined> Aktivitet </HeaderItemUnderlined>
+        }
+      </Header>
       <Wrapper>
         <TextContentWrapper>
           <LineWrapper>
@@ -248,22 +289,22 @@ const NewActivity = ({ onExitFunc }: NewActivityProps) => {
               onChange={(event) => setLocation(event.target.value)}
             />
           </LineWrapper>
-          <LineWrapper>
+          {createEvent && <LineWrapper>
             <BoldText>Dato*: </BoldText>
             <Input
               size="mini"
               placeholder="YYYY-MM-DD"
               onChange={(event) => setDate(event.target.value)}
             />
-          </LineWrapper>
-          <LineWrapper>
+          </LineWrapper>}
+          {createEvent && <LineWrapper>
             <BoldText>Starttid*: </BoldText>
             <Input
               size="mini"
               placeholder="hh:mm"
               onChange={(event) => setTime(event.target.value)}
             />
-          </LineWrapper>
+          </LineWrapper>}
           <LineWrapper>
             <BoldText>Maks deltakere: </BoldText>
             <Input
@@ -281,7 +322,7 @@ const NewActivity = ({ onExitFunc }: NewActivityProps) => {
           </LineWrapper>
         </TextContentWrapper>
         <TextContentWrapper>
-          <LineWrapper>
+          {createEvent && <LineWrapper>
             <BoldText>Organisasjon*: </BoldText>
             {!orgsLoading ? (
               <Dropdown
@@ -296,7 +337,7 @@ const NewActivity = ({ onExitFunc }: NewActivityProps) => {
             ) : (
               "loading..."
             )}
-          </LineWrapper>
+          </LineWrapper>}
           <LineWrapper>
             <BoldText>Kategorier: </BoldText>
             {!categoriesLoading ? (
@@ -343,6 +384,7 @@ const NewActivity = ({ onExitFunc }: NewActivityProps) => {
       </Wrapper >
       {emptyFields && <ErrorMessage>Fyll ut alle feltene merket med *</ErrorMessage>}
       {invalidFields && <ErrorMessage>Feltet {invalidFields} er ikke gyldig</ErrorMessage>}
+      {!futureDate && <ErrorMessage> Tidspunkt må være i fremtiden </ErrorMessage>}
     </WidgetWrapper>
   );
 }

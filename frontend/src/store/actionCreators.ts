@@ -46,15 +46,16 @@ export const postUser = (
 
 export const postEvent = (
     title: string,
-    date: string,
+    date: string | undefined,
     description: string,
     location: string,
-    categories: number[],
-    equipment_used: number[],
+    categories: number[] | undefined,
+    equipment_used: number[] | undefined,
     max_participants: number | undefined,
     activity_level: number | undefined,
-    organization_owner: number,
+    organization_owner: number | undefined,
     user_owner: number,
+    activity_image: string | undefined,
     token: string
 ) => {
     return (dispatch: DispatchType) => {
@@ -72,6 +73,7 @@ export const postEvent = (
                 activity_level,
                 equipment_used,
                 max_participants,
+                activity_image,
             })
             .then((r) => handleError(r))
             .then((response) => {
