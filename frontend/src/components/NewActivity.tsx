@@ -130,10 +130,6 @@ const NewActivity = ({ onExitFunc }: NewActivityProps) => {
   } = useSelector((state: State) => state.equipmentReducer);
 
   const {
-    user,
-  } = useSelector((state: State) => state.getUserReducer);
-
-  const {
     currentUser,
     isLoading: currUserLoading,
   } = useSelector((state: State) => state.getCurrentUserReducer);
@@ -144,8 +140,9 @@ const NewActivity = ({ onExitFunc }: NewActivityProps) => {
   } = useSelector((state: State) => state.orgsReducer);
 
   useEffect(() => {
-    if (user) {
-      !currentUser && dispatch(getCurrentUser(user.token));
+    const token = localStorage.getItem("token")
+    if (token) {
+      !currentUser && dispatch(getCurrentUser(token));
     }
     !organizations && dispatch(getOrgs());
   }, [dispatch]);
@@ -202,6 +199,8 @@ const NewActivity = ({ onExitFunc }: NewActivityProps) => {
     if (!title || !location || !description || (createEvent && (!time || !selectedOrgName || !date))) {
       setEmptyFields(true)
     } else {
+      const userToken = localStorage.getItem("token")
+      let userId = parseIntWithUndefined(localStorage.getItem("id"))
       if (!allDigits(maxParticipants)) {
         setInvalidFields("maks deltakere")
       } else if (activityLevel && (!allDigits(activityLevel) || (0 >= parseInt(activityLevel)) || (5 < parseInt(activityLevel)))) {
@@ -220,7 +219,7 @@ const NewActivity = ({ onExitFunc }: NewActivityProps) => {
         } else if (!isFutureDate(fullDate)) {
           setFutureDate(false)
         } else {
-          if (user) {
+          if (userToken && userId) {
             dispatch(postEvent(title,
               fullDate,
               description,
@@ -230,14 +229,14 @@ const NewActivity = ({ onExitFunc }: NewActivityProps) => {
               parseIntWithUndefined(maxParticipants),
               parseIntWithUndefined(activityLevel),
               orgId,
-              user.id,
+              userId,
               undefined,
-              user.token))
+              userToken))
             onExitFunc(true)
           }
         }
       }
-      else if (!createEvent && user) {
+      else if (!createEvent && userId && userToken) {
         dispatch(postEvent(title,
           undefined,
           description,
@@ -247,9 +246,9 @@ const NewActivity = ({ onExitFunc }: NewActivityProps) => {
           parseIntWithUndefined(maxParticipants),
           parseIntWithUndefined(activityLevel),
           undefined,
-          user.id,
+          userId,
           undefined,
-          user.token))
+          userToken))
         onExitFunc(true)
       }
     }

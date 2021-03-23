@@ -33,7 +33,7 @@ export const allDigits = (str: string | undefined) => {
     return false;
 };
 
-export const parseIntWithUndefined = (str: string | undefined) => {
+export const parseIntWithUndefined = (str: string | undefined | null) => {
     if (!str) return undefined;
     return parseInt(str);
 };
