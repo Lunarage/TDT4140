@@ -16,6 +16,15 @@ export const isoToDateList = (date: string) => {
 
 export const isIsoDate = (str: string) => {
     if (!/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z/.test(str)) return false;
+    const date_seconds = Date.parse(str);
+    if (!date_seconds) return false;
+    return true;
+};
+
+export const isFutureDate = (str: string) => {
+    const date = new Date(str);
+    const now = new Date();
+    if (date < now) return false;
     return true;
 };
 
