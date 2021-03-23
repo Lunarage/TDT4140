@@ -4,8 +4,6 @@
 
 GET `/api/activity`
 
-
-
 **Response**
 
 Name | Type | Description
@@ -156,6 +154,7 @@ either due to the activity not being organized
 or the activity is full.
 
 PUT `/api/activity/{id}/star`
+
 DELETE `/api/activity/{id}/star`
 
 Stars an activity for the logged in user.
@@ -166,7 +165,23 @@ Name | Type | Description
 -----|------|------------
 id | integer | Unique id of activity
 
+**Response**
+
 Returns status code 204 on success with no content.
+
+GET `/api/user/{id}/starred`
+
+Gets list of all activities starred by a given user.
+
+**Parameters**
+
+Name | Type | Description
+-----|------|------------
+id | integer | Unique id of user
+
+**Response**
+
+Same as `/api/activity`
 
 ## Organization
 
