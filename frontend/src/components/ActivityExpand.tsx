@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { redHexColor } from '../consts';
 import { isoToDateList } from '../functions';
 import { Event } from '../store/types';
+import Button from "../components/Button";
 
 export const Wrapper = styled.div`
   background-color: ${redHexColor};
@@ -18,6 +19,12 @@ export const Wrapper = styled.div`
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+`;
+
+const ButtonsWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
 `;
 
 export const ActivityExpandHeader = styled.h1`
@@ -142,6 +149,18 @@ const ActivityExpand = ({ data, onExitFunc }: ActivityExpandProps) => {
             {<h2>Om organisasjonen</h2>
             <div>National Aeronautics and Space Administration (NASA) er en amerikansk føderal etat med oppgaver knyttet til romfart og luftfart. Etaten ble opprettet i 1958 som en direkte følge av Sovjetunionens oppskytning av Sputnik 1. NASA har omkring 18 000 ansatte og hovedkontor i Washington, DC. NASA står bak store bragder, for eksempel Apollo-programmet som sendte mennesker til månen for første gang. NASA sto også bak Mercury-programmet og Gemini-programmet.</div> 
           </TextContent>*/}
+          <ButtonsWrapper>
+          <Button
+            text='Meld deg på'
+            colorInvert={true}
+            //onClickFunc={() => { setMethod(Method.register); resetMessages() }}
+          />
+          <Button
+             text='Legg til i liste'
+             colorInvert={true}
+            //onClickFunc={() => { setMethod(Method.login); resetMessages() }}
+          />
+        </ButtonsWrapper>
         </TextContentWrapper>
       </Content >
     </Wrapper >

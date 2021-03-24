@@ -23,8 +23,8 @@ export const CustomButton = styled.div`
 
   &:hover {
     cursor: pointer;
-    background-color: ${redHexColorHover};
-    color: white;
+    transition: box-shadow 0.2s;
+    box-shadow: 0 0 15px rgba(33, 33, 33, 0.7);
   }
 `;
 
@@ -33,7 +33,7 @@ export const TextWrapper = styled.div`
   vertical-align: middle;
 `;
 
-const Button = ({ text, onClickFunc, colorInvert }: ButtonProps) => { 
+const Button = ({ text, onClickFunc, colorInvert }: ButtonProps) => {
   let backgroundcolor = redHexColor;
   let textcolor = "white";
   if (colorInvert) {
@@ -41,9 +41,10 @@ const Button = ({ text, onClickFunc, colorInvert }: ButtonProps) => {
     textcolor = redHexColor;
   }
   return (
-  <CustomButton onClick={onClickFunc} style={{color: textcolor, backgroundColor: backgroundcolor}}>
-    <TextWrapper>{text}</TextWrapper>
-  </CustomButton>
-)}
+    <CustomButton onClick={onClickFunc} style={{ color: textcolor, backgroundColor: backgroundcolor }}>
+      <TextWrapper>{text}</TextWrapper>
+    </CustomButton>
+  )
+}
 
 export default Button;

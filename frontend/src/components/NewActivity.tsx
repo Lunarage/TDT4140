@@ -1,33 +1,21 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { ActivityExpandHeader, CloseButton, Wrapper as BaseWrapper } from './ActivityExpand';
-import { redHexColor } from '../consts';
 import { useDispatch, useSelector } from 'react-redux';
 import { State } from '../store/types';
 import { getCategories, getCurrentUser, getEquipment, postEvent, getOrgs } from '../store/actionCreators';
 import { Dropdown, Input, TextArea } from 'semantic-ui-react';
-import { CustomButton, TextWrapper } from './Button';
 import { allDigits, isIsoDate, parseIntWithUndefined, isFutureDate } from '../functions';
 import Loading from './Loading';
+import Button from './Button';
 
 
 type Dropdown = { key: number, value: string, text: string }[]
 
-const Button = styled(CustomButton)`
-  background-color: white;
-  max-width: 5em;
+const ButtonWrapper = styled.div`
   position: absolute;
   right: 1em;
   bottom: 0.5em;
-
-  &:hover {
-    cursor: pointer;
-    background-color: #ddd;
-  }
-`;
-
-const ButtonTextWrapper = styled(TextWrapper)`
-  color: ${redHexColor};
 `;
 
 const Wrapper = styled.div`
@@ -378,9 +366,9 @@ const NewActivity = ({ onExitFunc }: NewActivityProps) => {
             onChange={(event) => setDescription(event.target.value)}
           />
         </TextContentWrapper>
-        <Button onClick={() => handleSubmit()}>
-          <ButtonTextWrapper>Publiser</ButtonTextWrapper>
-        </Button>
+        <ButtonWrapper>
+          <Button text="Publiser" onClickFunc={() => handleSubmit()} colorInvert={true} />
+        </ButtonWrapper>
       </Wrapper >
       {emptyFields && <ErrorMessage>Fyll ut alle feltene merket med *</ErrorMessage>}
       {invalidFields && <ErrorMessage>Feltet {invalidFields} er ikke gyldig</ErrorMessage>}
