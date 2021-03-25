@@ -85,14 +85,12 @@ const Browse = () => {
 
   useEffect(() => {
     dispatch(getEvents());
-  }, [dispatch]);
+  }, [dispatch, type]);
 
   const handleActivityClick = (num: number) => {
     setShowExpanded(true)
     setActivityNum(num)
   }
-
-  if (eventsError) throw eventsError;
 
   return (
     <>
