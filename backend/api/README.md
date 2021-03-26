@@ -168,6 +168,18 @@ id | integer | Unique id of activity
 
 Returns status code 204 on success with no content.
 
+GET `/api/activity/user/`
+
+**Response**
+
+Returns all activities that does not have any organization_owner.
+
+GET `/api/activity/organization/`
+
+**Response**
+
+Returns all activities that have an organization_owner.
+
 ## Organization
 
 GET `/api/organization`
