@@ -205,6 +205,13 @@ class CurrentUserViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         user = self.request.user.id
         return User.objects.filter(id=user)
+    
+    @action(detail=False, methods=['GET'], permission_classes=[permissions.IsAuthenticated],)
+    def activity(self, request, *args, **kwargs):
+        user = self.request.user.id
+        activities = Activity.objects.filter(user_owner__id=user)
+        serializer = ActivitySerializer(activities, many=True)
+        return Response(serializer.data)
 
 class EquipmentViewSet(viewsets.ModelViewSet):
     """

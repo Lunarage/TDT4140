@@ -421,6 +421,12 @@ Example response
 ]
 ```
 
+GET `/api/current_user/activity`
+
+**Response**
+
+Gets all activities where the current logged in user is user_owner.
+
 ## Category
 
 GET `/api/category`
