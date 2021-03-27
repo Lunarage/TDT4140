@@ -143,9 +143,8 @@ class ActivityViewSet(viewsets.ModelViewSet):  # pylint: disable=too-many-ancest
         if request.method == 'DELETE':
             activity.tagged.remove(user)
             return Response(status=status.HTTP_204_NO_CONTENT)
-        else:
-            # This should never be run
-            return Response(status=status.HTTP_418_IM_A_TEAPOT)
+        # This should never be run
+        return Response(status=status.HTTP_418_IM_A_TEAPOT)
     
     @action(
         methods=['GET'],
