@@ -5,12 +5,12 @@ Should check that the API responds correctly according to the documentation.
 from django.test import TestCase
 from django.contrib.auth.models import User
 from rest_framework import status
-from rest_framework.test import APIClient
+from rest_framework.test import APIClient, APITestCase
 from rest_framework.authtoken.models import Token
 from gjorno.models import Activity, Organization
 
 
-class APITestCase(TestCase):
+class APIActivityCase(TestCase):
     """
     A test for the API.
     """
@@ -251,7 +251,7 @@ class APISignupCase(TestCase):
         self.assertTrue(response.status_code == status.HTTP_400_BAD_REQUEST)
 
 
-class APIStarCase(TestCase):
+class APIStarCase(APITestCase):
     """
     A test for the star function of the API.
     """
@@ -270,9 +270,8 @@ class APIStarCase(TestCase):
         Try to star an activity without being logged in.
         We expect to receive forbidden 401 because we don't provide any credentials.
         """
-        client = APIClient()
-        response = client.put("/api/activity/1/star/", HTTP_ACCEPT="application/json")
-        self.assertTrue(response.status_code == status.HTTP_401_UNAUTHORIZED)
+        response = self.client.put("/api/activity/1/star/", HTTP_ACCEPT="application/json")
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     def test_star_put_and_delete(self):
         """
@@ -283,12 +282,28 @@ class APIStarCase(TestCase):
         """
         user = User.objects.get(username="test")
         token = Token.objects.get(user__username=user.username)
-        client = APIClient()
-        client.credentials(HTTP_AUTHORIZATION="Token " + token.key)
-        response = client.put("/api/activity/1/star/", HTTP_ACCEPT="application/json")
+        self.client.credentials(HTTP_AUTHORIZATION="Token " + token.key)
+
+        response = self.client.put("/api/activity/1/star/", HTTP_ACCEPT="application/json")
         self.assertTrue(response.status_code == status.HTTP_204_NO_CONTENT)
+
         activity = Activity.objects.get(pk=1)
         self.assertTrue(user in activity.tagged.all())
-        response = client.delete("/api/activity/1/star/", HTTP_ACCEPT="application/json")
-        self.assertTrue(response.status_code == status.HTTP_204_NO_CONTENT)
+
+        response = self.client.delete("/api/activity/1/star/", HTTP_ACCEPT="application/json")
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertTrue(user not in activity.tagged.all())
+
+    def test_starred(self):
+        """
+        Star activity for a user and check that the list is not empty.
+        """
+        user = User.objects.get(username="test")
+        token = Token.objects.get(user__username=user.username)
+        self.client.credentials(HTTP_AUTHORIZATION="Token " + token.key)
+
+        response1 = self.client.put("/api/activity/1/star/", HTTP_ACCEPT="application/json")
+        self.assertEqual(response1.status_code, status.HTTP_204_NO_CONTENT)
+
+        response2 = self.client.get("/api/user/1/starred/", HTTP_ACCEPT="application/json")
+        self.assertEqual(len(response2.data), 1)

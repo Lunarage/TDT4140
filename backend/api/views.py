@@ -83,6 +83,7 @@ class OrganizationViewSet(viewsets.ModelViewSet):  # pylint: disable=too-many-an
     search_fields = ['name', 'description']
     filterset_class = OrganizationFilter
 
+
 class ActivityViewSet(viewsets.ModelViewSet):  # pylint: disable=too-many-ancestors
     """
     API endpoint for Activity model.
@@ -139,12 +140,11 @@ class ActivityViewSet(viewsets.ModelViewSet):  # pylint: disable=too-many-ancest
         if request.method == 'PUT':
             activity.tagged.add(user)
             return Response(status=status.HTTP_204_NO_CONTENT)
-        elif request.method == 'DELETE':
+        if request.method == 'DELETE':
             activity.tagged.remove(user)
             return Response(status=status.HTTP_204_NO_CONTENT)
-        else:
-            # This should never be run
-            return Response(status=status.HTTP_418_IM_A_TEAPOT)
+        # This should never be run
+        return Response(status=status.HTTP_418_IM_A_TEAPOT)
     
     @action(
         methods=['GET'],
@@ -160,7 +160,7 @@ class ActivityViewSet(viewsets.ModelViewSet):  # pylint: disable=too-many-ancest
         return Response(serializer.data)
 
 
-class UserViewSet(viewsets.ModelViewSet):
+class UserViewSet(viewsets.ModelViewSet):  # pylint: disable=too-many-ancestors
     """
     API endpoint for User model.
     """
@@ -184,16 +184,33 @@ class UserViewSet(viewsets.ModelViewSet):
     search_fields = ['first_name', 'last_name', 'username', 'email']
     filterset_class = UserFilter
 
-class CurrentUserViewSet(viewsets.ModelViewSet):
+    @action(
+        methods=['get'],
+        detail=True,
+        # Permission classes?
+    )
+    def starred(self, request, *args, **kwargs):  # pylint: disable=unused-argument
+        """
+        Retreives a list of starred activities for the specified user.
+        """
+        user = self.get_object()
+        activities = Activity.objects.filter(tagged__id=user.id)
+        serializer = ActivitySerializer(activities, many=True)
+        return Response(serializer.data)
+
+
+class CurrentUserViewSet(viewsets.ModelViewSet):  # pylint: disable=too-many-ancestors
     """
     API endpoint for the currently logged in user.
     """
     serializer_class = UserSerializer
+
     def get_queryset(self):
         user = self.request.user.id
         return User.objects.filter(id=user)
 
-class EquipmentViewSet(viewsets.ModelViewSet):
+
+class EquipmentViewSet(viewsets.ModelViewSet):  # pylint: disable=too-many-ancestors
     """
     API endpoint for Equipment model.
     """
@@ -203,7 +220,8 @@ class EquipmentViewSet(viewsets.ModelViewSet):
     search_fields = ['name']
     filterset_class = EquipmentFilter
 
-class CategoryViewSet(viewsets.ModelViewSet):
+
+class CategoryViewSet(viewsets.ModelViewSet):  # pylint: disable=too-many-ancestors
     """
     API endpoint for Category model.
     """
