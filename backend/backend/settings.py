@@ -56,10 +56,13 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     ],
     'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',),
+<<<<<<< backend/backend/settings.py
     # 'DEFAULT_PERMISSION_CLASSES': [
     #     'rest_framework.permissions.IsAuthenticatedOrReadOnly',
     # ]
     'TEST_REQUEST_DEFAULT_FORMAT': 'json',
+=======
+>>>>>>> backend/backend/settings.py
 }
 
 MIDDLEWARE = [

@@ -503,3 +503,19 @@ Example response
   }
 ]
 ```
+
+## Filters
+Returns the objects that fits the search parameter/parameters
+
+**Search field**
+GET `/api/{view}/?search={search parameter}`
+
+***Example**
+GET `/api/activity/?search=basketball`
+
+**Search a specific field**
+GET `/api/{view}/?{field}__icontains={search parameter}&{field}icontains={search parameter}&...`
+
+***Example***
+This request only search on the field "title", the rest of the search parameters are empty.
+GET `/api/activity/?title__icontains=basketball&organization_owner__name__icontains=&user_owner__username__icontains=&description__icontains=&location__icontains=&categories__name__icontains=&activity_level__icontains=&equipment_used__name__icontains=mat&max_participants__icontains=&date__iexact=&date__lte=&date__gte=`

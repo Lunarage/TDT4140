@@ -15,62 +15,63 @@ from .serializers import (
     EquipmentSerializer,
     CategorySerializer,
 )
+from django_filters import rest_framework as filters
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import SearchFilter, OrderingFilter
 
-#from django_filters import rest_framework as filters
 
+class OrganizationFilter(filters.FilterSet):
 
-# class OrganizationFilter(filters.FilterSet):
+    class Meta:
+        model = Organization
+        fields = {
+            'name': ['icontains'],
+            'description': ['icontains']
+        }
 
-#     class Meta:
-#         model = Organization
-#         fields = {
-#             'name': ['icontains'],
-#             'description': ['icontains']
-#         }
+class ActivityFilter(filters.FilterSet):
 
-# class ActivityFilter(filters.FilterSet):
+    class Meta:
+        model = Activity
+        fields = {
+            'title': ['icontains'],
+            'organization_owner__name': ['icontains'],
+            'user_owner__username': ['icontains'],
+            'description': ['icontains'],
+            'location': ['icontains'],
+            'categories__name': ['icontains'],
+            'activity_level': ['icontains'],
+            'equipment_used__name': ['icontains'],
+            'max_participants': ['icontains'],
+            'date': ['iexact', 'lte', 'gte']
+        }
 
-#     class Meta:
-#         model = Activity
-#         fields = {
-#             'title': ['icontains'],
-#             'organization_owner__name': ['icontains'],
-#             'user_owner__username': ['icontains'],
-#             'description': ['icontains'],
-#             'location': ['icontains'],
-#             'categories': ['icontains'],
-#             'activity_level': ['icontains'],
-#             'equipment_used': ['icontains'],
-#             'max_participants': ['icontains'],
-#             'date': ['iexact', 'lte', 'gte']
-#         }
+class UserFilter(filters.FilterSet):
 
-# class UserFilter(filters.FilterSet):
+    class Meta:
+        model = User
+        fields = {
+            'first_name': ['icontains'],
+            'last_name': ['icontains'],
+            'username': ['icontains'],
+            'email': ['icontains']
+        }
 
-#     class Meta:
-#         model = User
-#         fields = {
-#             'first_name': ['icontains'],
-#             'last_name': ['icontains'],
-#             'username': ['icontains'],
-#             'email': ['icontains']
-#         }
+class CategoryFilter(filters.FilterSet):
 
-# class CategoryFilter(filters.FilterSet):
+    class Meta:
+        model = Category
+        fields = {
+            'name': ['icontains'],
+        }
 
-#     class Meta:
-#         model = Category
-#         fields = {
-#             'name': ['icontains'],
-#         }
+class EquipmentFilter(filters.FilterSet):
 
-# class EquipmentFilter(filters.FilterSet):
-
-#     class Meta:
-#         model = Equipment
-#         fields = {
-#             'name': ['icontains'],
-#         }
+    class Meta:
+        model = Equipment
+        fields = {
+            'name': ['icontains'],
+        }
 
 class OrganizationViewSet(viewsets.ModelViewSet):  # pylint: disable=too-many-ancestors
     """
@@ -78,9 +79,9 @@ class OrganizationViewSet(viewsets.ModelViewSet):  # pylint: disable=too-many-an
     """
     queryset = Organization.objects.all()
     serializer_class = OrganizationSerializer
-    #filter_backends = [filters.SearchFilter]
-    #search_fields = ['name', 'description']
-    #filterset_class = OrganizationFilter
+    filter_backends = [SearchFilter, DjangoFilterBackend]
+    search_fields = ['name', 'description']
+    filterset_class = OrganizationFilter
 
 
 class ActivityViewSet(viewsets.ModelViewSet):  # pylint: disable=too-many-ancestors
@@ -94,10 +95,9 @@ class ActivityViewSet(viewsets.ModelViewSet):  # pylint: disable=too-many-ancest
     ]
     queryset = Activity.objects.all()
     serializer_class = ActivitySerializer
-    filter_backends = [filters.SearchFilter]
-    search_fields = ['title']
-    #Search on different params: ['description', 'user_owner__username', 'organization_owner__name', 'location', 'activity_level', 'equipment_used__name', 'categories__name', 'max_participants']
-    #filterset_class = ActivityFilter
+    filter_backends = [SearchFilter, DjangoFilterBackend]
+    search_fields = ['title', 'description', 'user_owner__username', 'organization_owner__name', 'location', 'activity_level', 'equipment_used__name', 'categories__name', 'max_participants']
+    filterset_class = ActivityFilter
 
     @action(
         methods=['put', 'delete'],
@@ -143,8 +143,22 @@ class ActivityViewSet(viewsets.ModelViewSet):  # pylint: disable=too-many-ancest
         if request.method == 'DELETE':
             activity.tagged.remove(user)
             return Response(status=status.HTTP_204_NO_CONTENT)
-        # This should never be run
-        return Response(status=status.HTTP_418_IM_A_TEAPOT)
+        else:
+            # This should never be run
+            return Response(status=status.HTTP_418_IM_A_TEAPOT)
+    
+    @action(
+        methods=['GET'],
+        detail=False,
+        permission_classes=[permissions.IsAuthenticated],
+    )
+    def organization(self, request, *args, **kwargs):
+        """
+        Get all activities with an organization_owner
+        """
+        activities = Activity.objects.filter(organization_owner__id__isnull=False)
+        serializer = ActivitySerializer(activities, many=True)
+        return Response(serializer.data)
 
 
 class UserViewSet(viewsets.ModelViewSet):  # pylint: disable=too-many-ancestors
@@ -167,9 +181,9 @@ class UserViewSet(viewsets.ModelViewSet):  # pylint: disable=too-many-ancestors
         organizations = Organization.objects.filter(user_member__id=user.id)
         serializer = OrganizationSerializer(organizations, many=True)
         return Response(serializer.data)
-    #filter_backends = [filters.SearchFilter]
-    #search_fields = ['first_name', 'last_name', 'username', 'email']
-    #filterset_class = UserFilter
+    filter_backends = [SearchFilter, DjangoFilterBackend]
+    search_fields = ['first_name', 'last_name', 'username', 'email']
+    filterset_class = UserFilter
 
     @action(
         methods=['get'],
@@ -203,9 +217,9 @@ class EquipmentViewSet(viewsets.ModelViewSet):  # pylint: disable=too-many-ances
     """
     queryset = Equipment.objects.all()
     serializer_class = EquipmentSerializer
-    #filter_backends = [filters.SearchFilter]
-    #search_fields = ['name']
-    #filterset_class = EquipmentFilter
+    filter_backends = [SearchFilter, DjangoFilterBackend]
+    search_fields = ['name']
+    filterset_class = EquipmentFilter
 
 
 class CategoryViewSet(viewsets.ModelViewSet):  # pylint: disable=too-many-ancestors
@@ -214,6 +228,6 @@ class CategoryViewSet(viewsets.ModelViewSet):  # pylint: disable=too-many-ancest
     """
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
-    #filter_backends = [filters.SearchFilter]
-    #search_fields = ['name']
-    #filterset_class = CategoryFilter
+    filter_backends = [SearchFilter, DjangoFilterBackend]
+    search_fields = ['name']
+    filterset_class = CategoryFilter
