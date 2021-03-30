@@ -210,3 +210,16 @@ export const getEquipment = () => {
             );
     };
 };
+
+export const signUpUser = (id: string, token: string) => {
+    let client = new HttpClient(baseUrl, token);
+    return client
+        .put("api/activity/" + id + "/signup/", { id })
+        .then((r) => handleError(r))
+        .then((response) => {
+            return { status: response };
+        })
+        .catch((error) => {
+            return { errorStatus: error };
+        });
+};

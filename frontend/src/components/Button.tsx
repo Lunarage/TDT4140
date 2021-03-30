@@ -1,6 +1,5 @@
-import React from "react";
 import styled from "styled-components";
-import { redHexColor, redHexColorHover } from "../consts";
+import { redHexColor } from "../consts";
 
 interface ButtonProps {
   text: string;

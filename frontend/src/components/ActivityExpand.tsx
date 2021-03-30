@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components';
 import { redHexColor } from '../consts';
 import { isoToDateList } from '../functions';
 import { Event } from '../store/types';
 import Button from "../components/Button";
+import { signUpUser } from '../store/actionCreators';
 
 export const Wrapper = styled.div`
   background-color: ${redHexColor};
@@ -111,13 +112,31 @@ interface ActivityExpandProps {
 const ActivityExpand = ({ data, onExitFunc }: ActivityExpandProps) => {
   const [year, month, day, hour, minute] = isoToDateList(data.date)
 
+  const [signUp, setSignUp] = useState<any>()
+
+  useEffect(() => {
+    setSignUp(false)
+  }, []);
+
+  const handleSave = () => {
+
+  }
+
+  const handleSignUp = () => {
+    const token = localStorage.getItem("token")
+    if (token) {
+      let promise = signUpUser(data.id.toString(), token).then(r => { return r })
+      promise.then(r => { setSignUp(r) })
+    }
+  }
+
   return (
     <Wrapper>
       <CloseButton onClick={onExitFunc} >X </CloseButton>
       {data.title ? <ActivityExpandHeader>
         &nbsp; &nbsp; {data.title}
       </ActivityExpandHeader> : <ActivityExpandHeader>
-          &nbsp; &nbsp; EVENT
+        &nbsp; &nbsp; EVENT
     </ActivityExpandHeader>}
 
       <Content>
@@ -144,23 +163,19 @@ const ActivityExpand = ({ data, onExitFunc }: ActivityExpandProps) => {
             <br />
             {data.organization_owner_name ? <div>Organisasjon: {data.organization_owner_name}</div> : data.user_owner_username && <div>User: {data.user_owner_username}</div>}
           </TextContent>
-          {/* <TextContent>
-            <br></br>
-            {<h2>Om organisasjonen</h2>
-            <div>National Aeronautics and Space Administration (NASA) er en amerikansk føderal etat med oppgaver knyttet til romfart og luftfart. Etaten ble opprettet i 1958 som en direkte følge av Sovjetunionens oppskytning av Sputnik 1. NASA har omkring 18 000 ansatte og hovedkontor i Washington, DC. NASA står bak store bragder, for eksempel Apollo-programmet som sendte mennesker til månen for første gang. NASA sto også bak Mercury-programmet og Gemini-programmet.</div> 
-          </TextContent>*/}
+          < br />
           <ButtonsWrapper>
-          <Button
-            text='Meld deg på'
-            colorInvert={true}
-            //onClickFunc={() => { setMethod(Method.register); resetMessages() }}
-          />
-          <Button
-             text='Legg til i liste'
-             colorInvert={true}
-            //onClickFunc={() => { setMethod(Method.login); resetMessages() }}
-          />
-        </ButtonsWrapper>
+            {data.organization_owner_name && <Button
+              text='Meld deg på'
+              colorInvert={true}
+              onClickFunc={() => handleSignUp()}
+            />}
+            <Button
+              text='Lagre'
+              colorInvert={true}
+              onClickFunc={() => handleSave()}
+            />
+          </ButtonsWrapper>
         </TextContentWrapper>
       </Content >
     </Wrapper >
