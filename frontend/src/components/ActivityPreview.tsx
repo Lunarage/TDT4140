@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { redHexColor, redHexColorHover } from "../consts";
 import { isoToDateList } from '../functions';
@@ -21,6 +20,7 @@ const Wrapper = styled.div`
 
   &:hover {
     cursor: pointer;
+    transition: box-shadow 0.2s;
     box-shadow: 1px 1px 20px 4px rgba(0, 0, 0, 0.5);
     background-color: ${redHexColorHover};
   }

@@ -8,12 +8,12 @@ import Loading from '../components/Loading';
 import { logoColor, redHexColor } from '../consts';
 import { toUpperCase } from '../functions';
 import { getEvents } from '../store/actionCreators';
-import { State } from '../store/types';
+import { Event, State } from '../store/types';
 
 const PageWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 100%;
   width: 100%;
 `;
 
@@ -25,6 +25,7 @@ export const ContentWrapper = styled.div`
 `;
 
 export const SideBar = styled.div`
+  min-height: 100vh;
   height: auto;
   width: 220px;
   background-color: ${redHexColor};
@@ -49,8 +50,10 @@ export const FilterWrapper = styled.div`
 export const ActivityWrapper = styled.div`
   padding: 15px 15px 0 15px;
   display: flex;
-  justify-content: space-around;
-  width: auto;
+  flex-flow: row wrap;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 100%;
 `;
 
 export const PageHeader = styled.h1`
@@ -61,7 +64,7 @@ export const PageHeader = styled.h1`
 export const ExpandWrapper = styled.div`
   height: 100%;
   width: 100%;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   background-color: rgba(0, 0, 0, 0.75);
@@ -72,7 +75,8 @@ const Browse = () => {
   const dispatch = useDispatch();
 
   const [showExpanded, setShowExpanded] = useState<boolean>(false);
-  const [activityNum, setActivityNum] = useState<number>(0)
+  const [curEvent, setCurEvent] = useState<Event>()
+  const [eventComponents, setEventComponents] = useState<JSX.Element[]>()
 
   const url = new URL(window.location.href)
   const type = url.searchParams.get("type")
@@ -87,14 +91,22 @@ const Browse = () => {
     dispatch(getEvents());
   }, [dispatch, type]);
 
-  const handleActivityClick = (num: number) => {
+  useEffect(() => {
+    let tempEventComponents: JSX.Element[] = [];
+    if (events) {
+      events.forEach(event => tempEventComponents.push(<ActivityPreview data={event} onClickFunc={() => handleActivityClick(event)} />))
+    }
+    setEventComponents(tempEventComponents)
+  }, [dispatch, events]);
+
+  const handleActivityClick = (event: Event) => {
     setShowExpanded(true)
-    setActivityNum(num)
+    setCurEvent(event)
   }
 
   return (
     <>
-      {showExpanded && events && <ExpandWrapper > <ActivityExpand data={events[activityNum]} onExitFunc={() => setShowExpanded(false)} /></ExpandWrapper>}
+      {showExpanded && curEvent && <ExpandWrapper > <ActivityExpand data={curEvent} onExitFunc={() => setShowExpanded(false)} /></ExpandWrapper>}
       <PageWrapper >
         <Header />
         <ContentWrapper>
@@ -106,10 +118,7 @@ const Browse = () => {
             </FilterWrapper>
             {eventsLoading || !events ? <Loading /> :
               <ActivityWrapper>
-                {events[0] && <ActivityPreview data={events[0]} onClickFunc={() => handleActivityClick(0)} />}
-                {events[1] && <ActivityPreview data={events[1]} onClickFunc={() => handleActivityClick(1)} />}
-                {events[2] && <ActivityPreview data={events[2]} onClickFunc={() => handleActivityClick(2)} />}
-                {events[3] && <ActivityPreview data={events[3]} onClickFunc={() => handleActivityClick(3)} />}
+                {eventComponents}
               </ActivityWrapper>}
           </RightWrapper>
         </ContentWrapper>
