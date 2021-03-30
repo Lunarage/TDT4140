@@ -194,6 +194,20 @@ id | integer | Unique id of user
 
 Same as `/api/activity`
 
+GET `/api/user/{id}/signup`
+
+Gets list of all activities a given user has signed up to.
+
+**Parameters**
+
+Name | Type | Description
+-----|------|------------
+id | integer | Unique id of user
+
+**Response**
+
+Same as `/api/activity`
+
 ## Organization
 
 GET `/api/organization`

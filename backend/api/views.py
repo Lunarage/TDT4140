@@ -200,7 +200,7 @@ class UserViewSet(viewsets.ModelViewSet):  # pylint: disable=too-many-ancestors
     @action(
         methods=['get'],
         detail=True,
-        # Permission classes?
+        permission_classes=[permissions.IsAuthenticated],
     )
     def starred(self, request, *args, **kwargs):  # pylint: disable=unused-argument
         """
@@ -208,6 +208,20 @@ class UserViewSet(viewsets.ModelViewSet):  # pylint: disable=too-many-ancestors
         """
         user = self.get_object()
         activities = Activity.objects.filter(tagged__id=user.id)
+        serializer = ActivitySerializer(activities, many=True)
+        return Response(serializer.data)
+    
+    @action(
+        methods=['get'],
+        detail=True,
+        permission_classes=[permissions.IsAuthenticated],
+    )
+    def signup(self, request, *args, **kwargs):  # pylint: disable=unused-argument
+        """
+        Retreives a list of every activity that a specific user is signed up to.
+        """
+        user = self.get_object()
+        activities = Activity.objects.filter(signed_up__id=user.id)
         serializer = ActivitySerializer(activities, many=True)
         return Response(serializer.data)
 
