@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components';
 import { redHexColor } from '../consts';
 import { isoToDateList } from '../functions';
-import { Event } from '../store/types';
+import { Event, State } from '../store/types';
 import Button from "../components/Button";
-import { signUpUser } from '../store/actionCreators';
+import { getSignUps, getStarred, revokeSignUpUser, revokeStarUser, signUpUser, starUser } from '../store/actionCreators';
+import { useDispatch, useSelector } from 'react-redux';
+import Loading from './Loading';
 
 export const Wrapper = styled.div`
   background-color: ${redHexColor};
@@ -110,39 +112,85 @@ interface ActivityExpandProps {
 }
 
 const ActivityExpand = ({ data, onExitFunc }: ActivityExpandProps) => {
+  const dispatch = useDispatch();
+
+  const token = localStorage.getItem("token")
+  const id = localStorage.getItem("id")
+
   const [year, month, day, hour, minute] = isoToDateList(data.date)
 
   const [signUpResponse, setSignUpResponse] = useState<any>()
-  const [signedUp, setSignedUp] = useState<boolean>(false)
+  const [isSignedUp, setIsSignedUp] = useState<boolean>(false)
 
-  const [saveResponse, setSaveResponse] = useState<any>()
-  const [saved, setSaved] = useState<boolean>(false)
+  const [starResponse, setStarResponse] = useState<any>()
+  const [isStarred, setIsStarred] = useState<boolean>(false)
 
-  useEffect(() => {
-    setSignedUp(false)
-  }, []);
+  const {
+    signUps,
+    isLoading: signUpsIsLoading,
+  } = useSelector((state: State) => state.signUpsReducer);
 
-  const handleSave = () => {
+  const {
+    starred,
+    isLoading: starredIsLoading,
+  } = useSelector((state: State) => state.starredReducer);
 
-  }
-
-  const handleSignUp = () => {
-    const token = localStorage.getItem("token")
-    if (token) {
-      let promise = signUpUser(data.id.toString(), token).then(r => { return r })
-      promise.then(r => { setSignUpResponse(r) })
+  const fetchSignUps = () => {
+    if (id && token) {
+      dispatch(getSignUps(id, token))
     }
   }
 
+  const fetchStarred = () => {
+    if (id && token) {
+      dispatch(getStarred(id, token))
+    }
+  }
+
+  useEffect(() => {
+    if (signUps || signUps == []) {
+      setIsSignedUp(signUps.some(e => e.id == data.id))
+    }
+  }, [signUps]);
+
+  useEffect(() => {
+    if (starred || starred == []) {
+      setIsStarred(starred.some(e => e.id == data.id))
+    }
+  }, [starred]);
+
+  const handleSignUp = (signUp: boolean) => {
+    if (token) {
+      if (signUp) {
+        let promise = signUpUser(data.id.toString(), token).then(r => { return r })
+        promise.then(r => { setSignUpResponse(r); fetchSignUps() })
+      } else {
+        let promise = revokeSignUpUser(data.id.toString(), token).then(r => { return r })
+        promise.then(r => { setSignUpResponse(r); fetchSignUps() })
+      }
+    }
+  }
+
+  const handleStar = (starred: boolean) => {
+    if (token) {
+      if (starred) {
+        let promise = starUser(data.id.toString(), token).then(r => { return r })
+        promise.then(r => { setStarResponse(r); fetchStarred() })
+      } else {
+        let promise = revokeStarUser(data.id.toString(), token).then(r => { return r })
+        promise.then(r => { setSignUpResponse(r); fetchStarred() })
+      }
+    }
+  }
+
+  if (signUpsIsLoading || starredIsLoading) return <Loading />
+
   return (
     <Wrapper>
-      <CloseButton onClick={onExitFunc} >X </CloseButton>
-      {data.title ? <ActivityExpandHeader>
+      <CloseButton onClick={onExitFunc} > X </CloseButton>
+      {data.title && <ActivityExpandHeader>
         &nbsp; &nbsp; {data.title}
-      </ActivityExpandHeader> : <ActivityExpandHeader>
-        &nbsp; &nbsp; EVENT
-    </ActivityExpandHeader>}
-
+      </ActivityExpandHeader>}
       <Content>
         <ImageWrapper> <Image src="static/22858269.jpg" />
         </ImageWrapper>
@@ -169,17 +217,29 @@ const ActivityExpand = ({ data, onExitFunc }: ActivityExpandProps) => {
           </TextContent>
           < br />
           <ButtonsWrapper>
-            {data.organization_owner_name && <Button
-              text='Meld deg på'
-              colorInvert={true}
-              onClickFunc={() => handleSignUp()}
-            />}
-            <Button
-              text='Lagre'
-              colorInvert={true}
-              onClickFunc={() => handleSave()}
-            />
+            {token && data.organization_owner_name && (isSignedUp ?
+              <Button
+                text='Meld deg av'
+                colorInvert={true}
+                onClickFunc={() => handleSignUp(false)}
+              /> : <Button
+                text='Meld deg på'
+                colorInvert={true}
+                onClickFunc={() => handleSignUp(true)}
+              />)}
+            {token && data.organization_owner_name && (isStarred ?
+              <Button
+                text='Fjern lagring'
+                colorInvert={true}
+                onClickFunc={() => handleStar(false)}
+              /> : <Button
+                text='Lagre'
+                colorInvert={true}
+                onClickFunc={() => handleStar(true)}
+              />)}
           </ButtonsWrapper>
+          {signUpResponse && signUpResponse.error && (signUpResponse.error.statusCode == 400 ? <div>Ikke ledig plass</div> : <div>Noe gikk feil med oppmelding</div>)}
+          {starResponse && starResponse.error && <div>Noe gikk feil med lagring av aktiviteten</div>}
         </TextContentWrapper>
       </Content >
     </Wrapper >

@@ -1,14 +1,12 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import styled from "styled-components";
 import Button from "../components/Button";
 import Header from "../components/Header";
 import InputField from "../components/InputField";
 import WelcomeLogo from "../welcome/WelcomeLogo";
-import { State } from '../store/types';
 import { useHistory } from 'react-router-dom';
 import { getSignUps, getStarred, getUser, postUser } from '../store/actionCreators';
-import Loading from '../components/Loading';
 
 const PageWrapper = styled.div`
   display: flex;
@@ -116,7 +114,6 @@ const Login = () => {
     if (postUserResponse) {
       if (postUserResponse.error) {
         setRegError(true)
-
       }
       else if (postUserResponse) {
         resetMessages()

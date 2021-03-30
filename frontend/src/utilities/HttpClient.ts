@@ -116,7 +116,7 @@ class HttpClient {
             headers: this.headers,
         })
             .then(this.checkStatus)
-            .then((response: any) => response.json())
+            .then((response: any) => response.status)
             .then((response: any) => {
                 return response as T;
             })

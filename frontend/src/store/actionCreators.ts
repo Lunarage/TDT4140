@@ -199,10 +199,49 @@ export const signUpUser = (id: string, token: string) => {
         .put("api/activity/" + id + "/signup/", { id })
         .then((r) => handleError(r))
         .then((response) => {
-            return { status: response };
+            return response;
         })
         .catch((error) => {
-            return { errorStatus: error };
+            return { error: error };
+        });
+};
+
+export const revokeSignUpUser = (id: string, token: string) => {
+    let client = new HttpClient(baseUrl, token);
+    return client
+        .delete("api/activity/" + id + "/signup/")
+        .then((r) => handleError(r))
+        .then((response) => {
+            return response;
+        })
+        .catch((error) => {
+            return { error: error };
+        });
+};
+
+export const starUser = (id: string, token: string) => {
+    let client = new HttpClient(baseUrl, token);
+    return client
+        .put("api/activity/" + id + "/star/", { id })
+        .then((r) => handleError(r))
+        .then((response) => {
+            return response;
+        })
+        .catch((error) => {
+            return { error: error };
+        });
+};
+
+export const revokeStarUser = (id: string, token: string) => {
+    let client = new HttpClient(baseUrl, token);
+    return client
+        .delete("api/activity/" + id + "/star/")
+        .then((r) => handleError(r))
+        .then((response) => {
+            return response;
+        })
+        .catch((error) => {
+            return { error: error };
         });
 };
 
