@@ -169,6 +169,17 @@ id | integer | Unique id of activity
 
 Returns status code 204 on success with no content.
 
+GET `/api/activity/user/`
+
+**Response**
+
+Returns all activities that does not have any organization_owner.
+
+GET `/api/activity/organization/`
+
+**Response**
+
+Returns all activities that have an organization_owner.
 GET `/api/user/{id}/starred`
 
 Gets list of all activities starred by a given user.
@@ -423,6 +434,12 @@ Example response
   }
 ]
 ```
+
+GET `/api/current_user/activity`
+
+**Response**
+
+Gets all activities where the current logged in user is user_owner.
 
 ## Category
 

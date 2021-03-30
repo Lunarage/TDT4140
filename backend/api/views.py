@@ -158,6 +158,19 @@ class ActivityViewSet(viewsets.ModelViewSet):  # pylint: disable=too-many-ancest
         activities = Activity.objects.filter(organization_owner__id__isnull=False)
         serializer = ActivitySerializer(activities, many=True)
         return Response(serializer.data)
+    
+    @action(
+        methods=['GET'],
+        detail=False,
+        permission_classes=[permissions.IsAuthenticated],
+    )
+    def user(self, request, *args, **kwargs):
+        """
+        Get all activities with an organization_owner
+        """
+        activities = Activity.objects.filter(organization_owner__isnull=True)
+        serializer = ActivitySerializer(activities, many=True)
+        return Response(serializer.data)
 
 
 class UserViewSet(viewsets.ModelViewSet):  # pylint: disable=too-many-ancestors
@@ -208,6 +221,13 @@ class CurrentUserViewSet(viewsets.ModelViewSet):  # pylint: disable=too-many-anc
     def get_queryset(self):
         user = self.request.user.id
         return User.objects.filter(id=user)
+    
+    @action(detail=False, methods=['GET'], permission_classes=[permissions.IsAuthenticated],)
+    def activity(self, request, *args, **kwargs):
+        user = self.request.user.id
+        activities = Activity.objects.filter(user_owner__id=user)
+        serializer = ActivitySerializer(activities, many=True)
+        return Response(serializer.data)
 
 
 class EquipmentViewSet(viewsets.ModelViewSet):  # pylint: disable=too-many-ancestors
