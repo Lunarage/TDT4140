@@ -14,12 +14,12 @@ import { Action, State } from "./store/types";
 import {
   eventsReducer,
   orgsReducer,
-  getUserReducer,
-  postUserReducer,
   categoriesReducer,
   equipmentReducer,
   postEventReducer,
-  getCurrentUserReducer
+  getCurrentUserReducer,
+  signUpsReducer,
+  starredReducer
 } from "./store/reducers";
 import 'semantic-ui-css/semantic.min.css'
 
@@ -29,10 +29,10 @@ const allReducers: Reducer<State, Action> = combineReducers({
   orgsReducer,
   categoriesReducer,
   equipmentReducer,
-  getUserReducer,
   getCurrentUserReducer,
-  postUserReducer,
-  postEventReducer
+  postEventReducer,
+  starredReducer,
+  signUpsReducer,
 });
 
 export const store = createStore(allReducers, applyMiddleware(thunk));

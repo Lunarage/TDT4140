@@ -112,10 +112,14 @@ interface ActivityExpandProps {
 const ActivityExpand = ({ data, onExitFunc }: ActivityExpandProps) => {
   const [year, month, day, hour, minute] = isoToDateList(data.date)
 
-  const [signUp, setSignUp] = useState<any>()
+  const [signUpResponse, setSignUpResponse] = useState<any>()
+  const [signedUp, setSignedUp] = useState<boolean>(false)
+
+  const [saveResponse, setSaveResponse] = useState<any>()
+  const [saved, setSaved] = useState<boolean>(false)
 
   useEffect(() => {
-    setSignUp(false)
+    setSignedUp(false)
   }, []);
 
   const handleSave = () => {
@@ -126,7 +130,7 @@ const ActivityExpand = ({ data, onExitFunc }: ActivityExpandProps) => {
     const token = localStorage.getItem("token")
     if (token) {
       let promise = signUpUser(data.id.toString(), token).then(r => { return r })
-      promise.then(r => { setSignUp(r) })
+      promise.then(r => { setSignUpResponse(r) })
     }
   }
 

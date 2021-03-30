@@ -1,5 +1,4 @@
 import { Activity, Category, Equipment, User } from "../types/APITypes";
-import { AuthenticationResponse } from "../utilities/types";
 
 export type Action = {
     type: string;
@@ -13,10 +12,10 @@ export type State = {
     orgsReducer: OrgsState;
     categoriesReducer: CategoriesState;
     equipmentReducer: EquipmentState;
-    getUserReducer: GetUserState;
     getCurrentUserReducer: GetCurrentUserState;
-    postUserReducer: PostUserState;
     postEventReducer: PostEventState;
+    starredReducer: StarredState;
+    signUpsReducer: SignUpsState;
 };
 
 type BaseState = {
@@ -28,16 +27,8 @@ export type EventsState = BaseState & {
     events?: Event[];
 };
 
-export type GetUserState = BaseState & {
-    user?: AuthenticationResponse;
-};
-
 export type GetCurrentUserState = BaseState & {
     currentUser?: User[];
-};
-
-export type PostUserState = BaseState & {
-    user?: User;
 };
 
 export type PostEventState = BaseState & {
@@ -54,6 +45,14 @@ export type CategoriesState = BaseState & {
 
 export type EquipmentState = BaseState & {
     equipment?: Equipment[];
+};
+
+export type StarredState = BaseState & {
+    starred?: Event[];
+};
+
+export type SignUpsState = BaseState & {
+    signUps?: Event[];
 };
 
 export type Organization = BaseState & {

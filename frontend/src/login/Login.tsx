@@ -7,7 +7,7 @@ import InputField from "../components/InputField";
 import WelcomeLogo from "../welcome/WelcomeLogo";
 import { State } from '../store/types';
 import { useHistory } from 'react-router-dom';
-import { getUser, postUser } from '../store/actionCreators';
+import { getSignUps, getStarred, getUser, postUser } from '../store/actionCreators';
 import Loading from '../components/Loading';
 
 const PageWrapper = styled.div`
@@ -93,40 +93,42 @@ const Login = () => {
   const [loginError, setLoginError] = useState<boolean>(false);
   const [regError, setRegError] = useState<boolean>(false);
 
-  const {
-    user,
-    isLoading: userLoading,
-    errorMessage: userError,
-  } = useSelector((state: State) => state.getUserReducer);
-
-  const {
-    user: postedUser,
-    isLoading: postLoading,
-    errorMessage: postError
-  } = useSelector((state: State) => state.postUserReducer);
+  const [postUserResponse, setPostUserResponse] = useState<any>()
+  const [getUserResponse, setGetUserResponse] = useState<any>()
 
   useEffect(() => {
-    if (user) {
-      history.push("/");
+    if (getUserResponse) {
+      if (getUserResponse.error) {
+        setLoginError(true)
+      }
+      else if (getUserResponse) {
+        resetMessages()
+        localStorage.setItem("token", getUserResponse.token)
+        localStorage.setItem("id", getUserResponse.id.toString())
+        dispatch(getStarred(getUserResponse.id.toString(), getUserResponse.token))
+        dispatch(getSignUps(getUserResponse.id.toString(), getUserResponse.token))
+        history.push("/");
+      }
     }
-    if (userError) {
-      setLoginError(true)
-    }
-  }, [user, userError]);
+  }, [getUserResponse]);
 
   useEffect(() => {
-    if (postedUser) {
-      resetMessages()
-      setSucessfullRegister(true)
+    if (postUserResponse) {
+      if (postUserResponse.error) {
+        setRegError(true)
+
+      }
+      else if (postUserResponse) {
+        resetMessages()
+        setSucessfullRegister(true)
+      }
     }
-    if (postError) {
-      setRegError(true)
-    }
-  }, [postedUser]);
+  }, [postUserResponse]);
 
   const handleSubmit = () => {
     if (method === Method.login && username && password) {
-      dispatch(getUser(username, password))
+      let promise = getUser(username, password).then(r => { return r })
+      promise.then(r => { setGetUserResponse(r) })
       setMissingInfo(false)
       setPasswordMatch(true)
     } else if (method === Method.register && firstName && lastName && username && password && email) {
@@ -134,7 +136,8 @@ const Login = () => {
       if (password !== confPassword) {
         setPasswordMatch(false)
       } else {
-        dispatch(postUser(firstName, lastName, username, password, email))
+        let promise = postUser(firstName, lastName, username, password, email).then(r => { return r })
+        promise.then(r => { setPostUserResponse(r) })
       }
     }
     else {
@@ -149,10 +152,7 @@ const Login = () => {
     setPasswordMatch(true);
     setLoginError(false);
     setRegError(false);
-
   }
-
-  if (postLoading || userLoading) return <Loading />
 
   return (
     <PageWrapper>
@@ -173,7 +173,7 @@ const Login = () => {
               <InputField name="Confirm passord" onChangeFunc={(val) => setConfPassword(val)} />
             )}
           </InputWrapper>
-          {loginError && (userError.statusCode === 400 ? <div>Feil brukernavn eller passord</div> : ErrorMessage)}
+          {loginError && (getUserResponse?.error?.statusCode === 400 ? <div>Feil brukernavn eller passord</div> : ErrorMessage)}
           {regError && ErrorMessage}
           {missingInfo && <div>Fyll inn alle feltene</div>}
           {!passwordMatch && <div>Passordene er ikke like</div>}

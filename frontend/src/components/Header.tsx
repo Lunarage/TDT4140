@@ -86,21 +86,10 @@ const Header = () => {
   const [showSuccess, setShowSuccess] = useState<boolean>(false);
 
   const {
-    user,
-  } = useSelector((state: State) => state.getUserReducer);
-
-  const {
     event,
     isLoading: eventLoading,
     errorMessage: eventError,
   } = useSelector((state: State) => state.postEventReducer);
-
-  useEffect(() => {
-    if (user) {
-      localStorage.setItem("token", user.token)
-      localStorage.setItem("id", user.id.toString())
-    }
-  }, [user]);
 
   const setUrl = (tab: string) => {
     history.push(tab);
