@@ -80,11 +80,6 @@ const ImageWrapper = styled.div`
     box-shadow: 1px 1px 20px 4px rgba(0, 0, 0, 0.25);
 `;
 
-const Logo = styled.img`
-    width: 110px;
-    height: 110px;
-`;
-
 export const CloseButton = styled.button`
   padding: none;
   border: navajowhite;
@@ -232,14 +227,14 @@ const ActivityExpand = ({ data, onExitFunc }: ActivityExpandProps) => {
                 colorInvert={true}
                 onClickFunc={() => handleSignUp(true)}
               />)}
-            {token && data.organization_owner_name && (isStarred ?
+            {token && (isStarred ?
               <Button
-                image="/static/star_border-24px.svg"
+                image='/static/star-24px.svg'
                 colorInvert={true}
                 onClickFunc={() => handleStar(false)}
                 autoWidth={true}
               /> : <Button
-                image='/static/star-24px.svg'
+                image="/static/star_border-24px.svg"
                 colorInvert={true}
                 onClickFunc={() => handleStar(true)}
                 autoWidth={true}

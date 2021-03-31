@@ -55,7 +55,7 @@ export const TextContentWrapper = styled.div`
   padding: 23px;
 `;
 
-const ErrorMessage = styled.div`
+export const ErrorMessage = styled.div`
   padding-left: 0.8em;
   display: flex;
   justify-content: center;
