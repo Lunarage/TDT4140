@@ -2,13 +2,14 @@ import styled from "styled-components";
 import { redHexColor } from "../consts";
 
 interface ButtonProps {
-  text: string;
+  text?: string;
   onClickFunc?: () => void;
   colorInvert?: boolean;
+  image?: string;
+  autoWidth?: boolean;
 }
 
 export const CustomButton = styled.div`
-  min-width: 8em;
   height: 2.5em;
   margin: 10px;
   padding: 3px 15px;
@@ -30,18 +31,34 @@ export const CustomButton = styled.div`
 export const TextWrapper = styled.div`
   display: table-cell;
   vertical-align: middle;
+  text-align: center;
+  height: 100%;
 `;
 
-const Button = ({ text, onClickFunc, colorInvert }: ButtonProps) => {
+export const ImageWrapper = styled.img`
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+`;
+
+
+const Button = ({ text, onClickFunc, colorInvert, image, autoWidth = false }: ButtonProps) => {
+
   let backgroundcolor = redHexColor;
   let textcolor = "white";
   if (colorInvert) {
     backgroundcolor = "white";
     textcolor = redHexColor;
   }
+
+  let minwidth = "8em"
+  if (autoWidth) {
+    minwidth = "0em"
+  }
+
   return (
-    <CustomButton onClick={onClickFunc} style={{ color: textcolor, backgroundColor: backgroundcolor }}>
-      <TextWrapper>{text}</TextWrapper>
+    <CustomButton onClick={onClickFunc} style={{ color: textcolor, backgroundColor: backgroundcolor, minWidth: minwidth }}>
+      {image ? <TextWrapper> <ImageWrapper src={image} /> </TextWrapper> : <TextWrapper>{text}</TextWrapper>}
     </CustomButton>
   )
 }

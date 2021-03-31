@@ -196,7 +196,7 @@ const ActivityExpand = ({ data, onExitFunc }: ActivityExpandProps) => {
         </ImageWrapper>
         <TextContentWrapper>
           <TextContent>
-            <br />{data.description && <b>{data.description}</b>}
+            {data.description && <b>{data.description}</b>}
           </TextContent>
           <TextContent>
             <br />
@@ -229,13 +229,15 @@ const ActivityExpand = ({ data, onExitFunc }: ActivityExpandProps) => {
               />)}
             {token && data.organization_owner_name && (isStarred ?
               <Button
-                text='Fjern lagring'
+                image="/static/star_border-24px.svg"
                 colorInvert={true}
                 onClickFunc={() => handleStar(false)}
+                autoWidth={true}
               /> : <Button
-                text='Lagre'
+                image='/static/star-24px.svg'
                 colorInvert={true}
                 onClickFunc={() => handleStar(true)}
+                autoWidth={true}
               />)}
           </ButtonsWrapper>
           {signUpResponse && signUpResponse.error && (signUpResponse.error.statusCode == 400 ? <div>Ikke ledig plass</div> : <div>Noe gikk feil med oppmelding</div>)}
