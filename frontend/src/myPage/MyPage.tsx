@@ -28,8 +28,9 @@ const MyPage = () => {
         <ContentWrapper>
           <SideBar></SideBar>
           <RightWrapper>
+            <PageHeader>Mine favoritter</PageHeader>
             <ListNameWrapper>
-              <PageHeader>Mine favoritter</PageHeader>
+
             </ListNameWrapper>
             <ActivityWrapper>
             </ActivityWrapper>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import styled from 'styled-components';
 import { redHexColor } from '../consts';
 import { isoToDateList } from '../functions';
@@ -106,6 +106,12 @@ export const CloseButton = styled.button`
   }
 `;
 
+const ErrorMessage = styled.div`
+  padding-left: 0.8em;
+  display: flex;
+  justify-content: center;
+`;
+
 interface ActivityExpandProps {
   data: Event
   onExitFunc: () => void;
@@ -200,7 +206,6 @@ const ActivityExpand = ({ data, onExitFunc }: ActivityExpandProps) => {
           </TextContent>
           <TextContent>
             <br />
-            {/* <h2>Utendørs</h2> */}
             {data.location && <h2>Sted: {data.location}</h2>}
             {year && month && day && hour && minute && <h2>Dato: {day}/{month} {year} - {hour}:{minute}</h2>}
           </TextContent>
@@ -240,8 +245,10 @@ const ActivityExpand = ({ data, onExitFunc }: ActivityExpandProps) => {
                 autoWidth={true}
               />)}
           </ButtonsWrapper>
-          {signUpResponse && signUpResponse.error && (signUpResponse.error.statusCode == 400 ? <div>Ikke ledig plass</div> : <div>Noe gikk feil med oppmelding</div>)}
-          {starResponse && starResponse.error && <div>Noe gikk feil med lagring av aktiviteten</div>}
+          {signUpResponse && signUpResponse.error && (signUpResponse.error.statusCode == 400 ?
+            <ErrorMessage>Ikke ledig plass</ErrorMessage> :
+            <ErrorMessage>Noe gikk feil med oppmelding</ErrorMessage>)}
+          {starResponse && starResponse.error && <ErrorMessage>Noe gikk feil med lagring av aktiviteten</ErrorMessage>}
         </TextContentWrapper>
       </Content >
     </Wrapper >
