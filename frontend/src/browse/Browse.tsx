@@ -47,6 +47,7 @@ export const FilterWrapper = styled.div`
 
 export const PageHeader = styled.h1`
   margin-left: 30px;
+  margin-right: 30px;
   color: ${logoColor};
 `;
 

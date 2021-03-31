@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import styled from "styled-components";
 import {
-  ContentWrapper,
-  PageHeader,
+  PageHeader as BasePageHeader,
   RightWrapper,
-  SideBar,
   FilterWrapper,
   PageWrapper,
 } from "../browse/Browse";
@@ -16,6 +14,10 @@ import { getMyActivities, getStarred, getSignUps } from '../store/actionCreators
 import { State } from '../store/types';
 import { Event } from '../store/types';
 import { redHexColor } from '../consts';
+
+const PageHeader = styled(BasePageHeader)`
+  text-align: center;
+`;
 
 const TabsWrapper = styled(FilterWrapper)`
   display: flex;
@@ -119,16 +121,13 @@ const MyPage = () => {
   return (
     <PageWrapper>
       <Header />
-      <ContentWrapper>
-        <SideBar></SideBar>
-        <RightWrapper>
-          <PageHeader>Min side</PageHeader>
-          <TabsWrapper>
-            {tabComponents}
-          </TabsWrapper>
-          <ActivityDashboard events={events} isLoading={isLoading} error={error} />
-        </RightWrapper>
-      </ContentWrapper>
+      <RightWrapper>
+        <PageHeader>Min side</PageHeader>
+        <TabsWrapper>
+          {tabComponents}
+        </TabsWrapper>
+        <ActivityDashboard events={events} isLoading={isLoading} error={error} />
+      </RightWrapper>
     </PageWrapper>
   );
 };
