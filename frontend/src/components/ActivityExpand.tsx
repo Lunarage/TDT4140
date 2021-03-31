@@ -149,6 +149,18 @@ const ActivityExpand = ({ data, onExitFunc }: ActivityExpandProps) => {
   }
 
   useEffect(() => {
+    if (!signUps && signUps != []) {
+      fetchSignUps()
+    }
+  }, [signUps]);
+
+  useEffect(() => {
+    if (!starred && starred != []) {
+      fetchStarred()
+    }
+  }, [starred]);
+
+  useEffect(() => {
     if (signUps || signUps == []) {
       setIsSignedUp(signUps.some(e => e.id == data.id))
     }

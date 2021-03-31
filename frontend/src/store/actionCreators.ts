@@ -193,6 +193,28 @@ export const getSignUps = (id: string, token: string) => {
     };
 };
 
+export const getMyActivities = (id: string, token: string) => {
+    return (dispatch: DispatchType) => {
+        dispatch({ type: ActionTypes.MYACTIVITIES_LOADING, payload: [] });
+        let client = new HttpClient(baseUrl, token);
+        return client
+            .get("api/user/" + id + "/activity/")
+            .then((r) => handleError(r))
+            .then((response) => {
+                dispatch({
+                    type: ActionTypes.MYACTIVITIES_FINISHED,
+                    payload: response,
+                });
+            })
+            .catch((error) =>
+                dispatch({
+                    type: ActionTypes.MYACTIVITIES_ERROR,
+                    payload: error,
+                })
+            );
+    };
+};
+
 export const signUpUser = (id: string, token: string) => {
     let client = new HttpClient(baseUrl, token);
     return client

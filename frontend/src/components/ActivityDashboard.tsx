@@ -8,7 +8,7 @@ import { Event } from '../store/types';
 import { ErrorMessage } from './NewActivity';
 
 
-export const ActivityWrapper = styled.div`
+const ActivityWrapper = styled.div`
   padding: 15px 15px 0 15px;
   display: flex;
   flex-flow: row wrap;
@@ -43,7 +43,7 @@ const ActivityDashboard = ({ events, isLoading, error }: ActivityDashboardProps)
   useEffect(() => {
     let tempEventComponents: JSX.Element[] = [];
     if (events) {
-      events.forEach(event => tempEventComponents.push(<ActivityPreview data={event} onClickFunc={() => handleActivityClick(event)} />))
+      events.forEach((event, i) => tempEventComponents.push(<ActivityPreview key={i} data={event} onClickFunc={() => handleActivityClick(event)} />))
     }
     setEventComponents(tempEventComponents)
   }, [dispatch, events]);
@@ -53,7 +53,7 @@ const ActivityDashboard = ({ events, isLoading, error }: ActivityDashboardProps)
     setCurEvent(event)
   }
 
-  if (error) return <ErrorMessage></ErrorMessage>
+  if (error) return <ErrorMessage>Noe gikk galt</ErrorMessage>
 
   return (
     <>

@@ -8,7 +8,7 @@ import { toUpperCase } from '../functions';
 import { getEvents } from '../store/actionCreators';
 import { State } from '../store/types';
 
-const PageWrapper = styled.div`
+export const PageWrapper = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;

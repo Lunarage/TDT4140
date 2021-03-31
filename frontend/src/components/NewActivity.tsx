@@ -66,13 +66,13 @@ const Header = styled(ActivityExpandHeader)`
   justify-content: space-evenly;
 `;
 
-const HeaderItem = styled.div`
+export const HeaderItem = styled.div`
   &:hover {
     cursor: pointer;
   }
 `;
 
-const HeaderItemUnderlined = styled(HeaderItem)`
+export const HeaderItemUnderlined = styled(HeaderItem)`
     text-decoration: underline;
 `;
 
@@ -253,12 +253,12 @@ const NewActivity = ({ onExitFunc }: NewActivityProps) => {
       <CloseButton onClick={handleCloseButton} > X </CloseButton>
       <Header>
         {createEvent ?
-          <HeaderItemUnderlined> Arrangement </HeaderItemUnderlined> :
-          <HeaderItem onClick={() => setCreateEvent(true)}> Arrangement </HeaderItem>
-        }
-        {createEvent ?
           <HeaderItem onClick={() => setCreateEvent(false)}> Aktivitet </HeaderItem> :
           <HeaderItemUnderlined> Aktivitet </HeaderItemUnderlined>
+        }
+        {createEvent ?
+          <HeaderItemUnderlined> Arrangement </HeaderItemUnderlined> :
+          <HeaderItem onClick={() => setCreateEvent(true)}> Arrangement </HeaderItem>
         }
       </Header>
       <Wrapper>

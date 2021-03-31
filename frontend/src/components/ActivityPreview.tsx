@@ -62,7 +62,7 @@ const ActivityPreview = ({ data, onClickFunc }: ActivityPreviewProps) => {
   const [year, month, day] = isoToDateList(data.date)
 
   return (
-    <Wrapper onClick={onClickFunc}>
+    <Wrapper onClick={onClickFunc} >
       <ImageWrapper>
         <Image src="static/Red-Rocks_horizontal.jpg" />
       </ImageWrapper>

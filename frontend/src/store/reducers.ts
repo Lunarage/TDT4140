@@ -9,6 +9,7 @@ import {
     StarredState,
     SignUpsState,
     GetCurrentUserState,
+    MyActivitiesState,
 } from "./types";
 
 const initialState = {
@@ -178,6 +179,29 @@ export const signUpsReducer = (
         case ActionTypes.SIGNUPS_LOADING:
             return { ...state, isLoading: true };
         case ActionTypes.SIGNUPS_ERROR:
+            return {
+                ...state,
+                isLoading: false,
+                errorMessage: action.payload,
+            };
+    }
+    return state;
+};
+
+export const myActivitiesReducer = (
+    state: MyActivitiesState = initialState,
+    action: Action
+) => {
+    switch (action.type) {
+        case ActionTypes.MYACTIVITIES_FINISHED:
+            return {
+                ...state,
+                isLoading: false,
+                myActivities: action.payload,
+            };
+        case ActionTypes.MYACTIVITIES_LOADING:
+            return { ...state, isLoading: true };
+        case ActionTypes.MYACTIVITIES_ERROR:
             return {
                 ...state,
                 isLoading: false,

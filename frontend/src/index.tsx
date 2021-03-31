@@ -19,7 +19,8 @@ import {
   postEventReducer,
   getCurrentUserReducer,
   signUpsReducer,
-  starredReducer
+  starredReducer,
+  myActivitiesReducer
 } from "./store/reducers";
 import 'semantic-ui-css/semantic.min.css'
 
@@ -33,6 +34,7 @@ const allReducers: Reducer<State, Action> = combineReducers({
   postEventReducer,
   starredReducer,
   signUpsReducer,
+  myActivitiesReducer,
 });
 
 export const store = createStore(allReducers, applyMiddleware(thunk));

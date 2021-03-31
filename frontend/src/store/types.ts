@@ -16,6 +16,7 @@ export type State = {
     postEventReducer: PostEventState;
     starredReducer: StarredState;
     signUpsReducer: SignUpsState;
+    myActivitiesReducer: MyActivitiesState;
 };
 
 type BaseState = {
@@ -53,6 +54,10 @@ export type StarredState = BaseState & {
 
 export type SignUpsState = BaseState & {
     signUps?: Event[];
+};
+
+export type MyActivitiesState = BaseState & {
+    myActivities?: Event[];
 };
 
 export type Organization = BaseState & {
