@@ -1,46 +1,84 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { redHexColor, redHexColorHover } from "../consts";
 
-export const Wrapper = styled.div`
+const FilterWrapper = styled.div`
   background-color: #c91801;
-  width: 326px;
   height: 962px;
-  box-shadow: 1px 1px 20px 4px rgba(0, 0, 0, 0.25);
-  color: black;
-  font-style: normal;
-  mix-blend-mode: normal;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  width: 326px;
+  border-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: flex-start;
+  align-content: space-between;
+  margin-left: 20px;
+  `;
+
+const FilterHeader = styled.h2`
+  font-weight: bold;
+  font-size: 30px;
+  color: white;
+  text-shadow: 4px 4px 4px darkred;
+  padding: 2% 2% 0% 3%;
+  `;
+
+const FilterSearchInput = styled.div`
+  width: 100% inherit;
+  height: 30px inherit;
+  background-color: #ffc6c6;
+  margin: 0 4% 4% 4%;
+  padding: 2% 2% 2% 3%;
+  vertical-align: middle;
+  color: #313131;
 `;
 
-const TextWrapper = styled.div`
-  padding: 10px;
+const CheckBoxWrap = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-top: 4%;
+  padding-left: 4%;
 `;
 
-const Header = styled.h1`
-  font-size: 24px;
-  font-style: bold;
-  color: black;
-  margin-top: 0;
+const CheckBox = styled.div`
+  width: 20px;
+  height: 20px;
+  border-style: solid;
+  border-color: white;
+  opacity: 1;
+  box-shadow: 4px 4px 4px #8b0000;
 `;
 
-interface FilterProps {
-  text: string;
-  onClickFunc?: () => void;
+const CheckBoxTittel = styled.div`
+  font-weight: 600;
+  font-size: 20px;
+  color: white;
+  padding-left: 4%;
+`;
+
+interface CheckBoxProps {
+  tittel: string;
+
 }
+const CheckBoxes = ({tittel}: CheckBoxProps) => {
+  return (
+    <CheckBoxWrap>
+      <CheckBox />
+      <CheckBoxTittel>{tittel}</CheckBoxTittel>
+    </CheckBoxWrap>
+  );
+}
+
+
 
 export const Filter = () => {
   return (
-    <Wrapper>
-      <Header>
-        <div>
-          <h1>Søk: </h1>
-        </div>
-      </Header>
-    </Wrapper>
+    <FilterWrapper>
+      <FilterHeader> Søk etter aktiviteter: </FilterHeader>
+      <FilterSearchInput> Skriv inn søkeørd ... </FilterSearchInput>
+      <CheckBoxes tittel="Innendørs" />
+      <CheckBoxes tittel="Utendørs" />
+    </FilterWrapper>
   )
 }
 

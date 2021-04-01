@@ -6,7 +6,7 @@ import Button from "../components/Button";
 import Header from "../components/Header";
 import { State } from '../store/types';
 import WelcomeLogo from "./WelcomeLogo";
-import Filter from '../components/Filter' //
+import Filter from "../components/Filter";
 
 const PageWrapper = styled.div`
     width: 100%;
@@ -51,8 +51,8 @@ const Welcome = () => {
         />
         {!localStorage.getItem("token") &&
           <Button text="Logg inn" onClickFunc={() => setUrl("/login")} />}
+          <Filter />
       </ContentWrapper>
-      <Filter></Filter>
     </PageWrapper>
   );
 };
