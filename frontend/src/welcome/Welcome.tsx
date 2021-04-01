@@ -6,6 +6,7 @@ import Button from "../components/Button";
 import Header from "../components/Header";
 import { State } from '../store/types';
 import WelcomeLogo from "./WelcomeLogo";
+import Filter from '../components/Filter' //
 
 const PageWrapper = styled.div`
     width: 100%;
@@ -54,6 +55,7 @@ const Welcome = () => {
         />
         {!user && <Button text="Logg inn" onClickFunc={() => setUrl("/login")} />}
       </ContentWrapper>
+      <Filter></Filter>
     </PageWrapper>
   );
 };
