@@ -55,6 +55,7 @@ export const postEvent = (
     activity_level: number | undefined,
     organization_owner: number | undefined,
     user_owner: number,
+    activity_image: string | undefined,
     token: string
 ) => {
     return (dispatch: DispatchType) => {
@@ -72,6 +73,7 @@ export const postEvent = (
                 activity_level,
                 equipment_used,
                 max_participants,
+                activity_image,
             })
             .then((r) => handleError(r))
             .then((response) => {

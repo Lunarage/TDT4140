@@ -4,8 +4,6 @@
 
 GET `/api/activity`
 
-
-
 **Response**
 
 Name | Type | Description
@@ -138,7 +136,77 @@ Example response
 ]
 ```
 
+PUT `/api/activity/{id}/signup`
+DELETE `/api/activity/{id}/signup`
+
+Signs up/withdraws the logged in user for/from the given activity.
+
+**Parameters**
+
+Name | Type | Description
+-----|------|------------
+id | integer | Unique id of activity
+
+Returns status code 204 on success with no content.
+
+Returns status code 400 on failure
+either due to the activity not being organized
+or the activity is full.
+
+PUT `/api/activity/{id}/star`
+
+DELETE `/api/activity/{id}/star`
+
+Stars an activity for the logged in user.
+
+**Parameters**
+
+Name | Type | Description
+-----|------|------------
+id | integer | Unique id of activity
+
 **Response**
+
+Returns status code 204 on success with no content.
+
+GET `/api/activity/user/`
+
+**Response**
+
+Returns all activities that does not have any organization_owner.
+
+GET `/api/activity/organization/`
+
+**Response**
+
+Returns all activities that have an organization_owner.
+GET `/api/user/{id}/starred`
+
+Gets list of all activities starred by a given user.
+
+**Parameters**
+
+Name | Type | Description
+-----|------|------------
+id | integer | Unique id of user
+
+**Response**
+
+Same as `/api/activity`
+
+GET `/api/user/{id}/signup`
+
+Gets list of all activities a given user has signed up to.
+
+**Parameters**
+
+Name | Type | Description
+-----|------|------------
+id | integer | Unique id of user
+
+**Response**
+
+Same as `/api/activity`
 
 ## Organization
 
@@ -254,7 +322,103 @@ Example response
 ]
 ```
 
+GET `/api/user/3/activity`
+
 **Response**
+
+Name | Type | Description
+-----|------|------------
+id | integer | Unique id of activity
+title | string | Title of the activity
+date | string | YYYY-MM-DDThh:mm:ssZ (ISO 8601)
+description | string | description
+categories | [integer] | id of categories
+categories_names | [string] | strings of categories
+equipment_used | [integer] | id of equipments
+equipment_used_names | [string] | string of equipments
+image | string | link to static file
+location | string | description of location
+max_participants | integer | maximum number of participants
+activity_level | integer | 1-5
+organization_owner | integer | organization id
+organization_owner_name | string | organization name
+user_owner | integer | user id
+user_owner_username | string | users username
+
+Example response
+```json
+[
+  {
+  "id": 1,
+  "title": "Tur i skogen",
+  "date": "2021-02-28T14:30:00Z",
+  "organization_owner": 1,
+  "organization_owner_name": "Amnesty",
+  "user_owner": 3,
+  "user_owner_username": "Nilsern",
+  "description": "Bærplukking",
+  "location": "Bymarka",
+  "categories": [2, 3],
+  "categories_names": ["Tur", "Bærplukking"],
+  "activity_level": 2,
+  "equipment_used": [1],
+  "equipment_used_names": ["Bærplukker"],
+  "max_participants": 20
+  },
+  {
+  "id": 2,
+  "title": "Basketball",
+  "date": "2021-02-28T14:30:00Z",
+  "organization_owner": 1,
+  "organization_owner_name": "Amnesty",
+  "user_owner": 3,
+  "user_owner_username": "Nilsern",
+  "description": "Basketball",
+  "location": "Munkvollhallen",
+  "categories": [1],
+  "categories_names": ["Sport"],
+  "activity_level": 4,
+  "equipment_used": [1],
+  "equipment_used_names": ["Basketball"],
+  "max_participants": 10
+  }
+]
+```
+
+GET `/api/user/3/organization`
+
+**Response**
+
+Name | Type | Description
+-----|------|------------
+id | integer | unique id of organization
+name | string | name of the organization
+description | string | further information
+image | string | link to static file
+external_link | string | link to organization homepage
+user_member | [integer] | ids of users
+
+Example response
+```json
+[
+  {
+  "id": 1,
+  "name": "Amnesty",
+  "description": "Bærplukking",
+  "image": "link",
+  "external_link": "https://amnesty.no/",
+  "user_member": ["User1", "User3"]
+  }
+  {
+  "id": 2,
+  "name": "Rosenborg",
+  "description": "Fotballklubb",
+  "image": "link",
+  "external_link": "https://rbk.no/",
+  "user_member": ["User3"]
+  }
+]
+```
 
 ## CurrentUser
 
@@ -284,6 +448,12 @@ Example response
   }
 ]
 ```
+
+GET `/api/current_user/activity`
+
+**Response**
+
+Gets all activities where the current logged in user is user_owner.
 
 ## Category
 
@@ -364,3 +534,19 @@ Example response
   }
 ]
 ```
+
+## Filters
+Returns the objects that fits the search parameter/parameters
+
+**Search field**
+GET `/api/{view}/?search={search parameter}`
+
+***Example**
+GET `/api/activity/?search=basketball`
+
+**Search a specific field**
+GET `/api/{view}/?{field}__icontains={search parameter}&{field}icontains={search parameter}&...`
+
+***Example***
+This request only search on the field "title", the rest of the search parameters are empty.
+GET `/api/activity/?title__icontains=basketball&organization_owner__name__icontains=&user_owner__username__icontains=&description__icontains=&location__icontains=&categories__name__icontains=&activity_level__icontains=&equipment_used__name__icontains=mat&max_participants__icontains=&date__iexact=&date__lte=&date__gte=`
