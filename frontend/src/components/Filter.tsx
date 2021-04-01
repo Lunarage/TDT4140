@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { redHexColorHover } from '../consts';
 import Button from './Button';
 
 const FilterWrapper = styled.div`
@@ -36,8 +37,8 @@ const CheckBoxWrap = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding-top: 4%;
   padding-left: 4%;
+  margin: 4% 4% 4% 0;
 `;
 
 const CheckBox = styled.div`
@@ -47,6 +48,10 @@ const CheckBox = styled.div`
   border-color: white;
   opacity: 1;
   box-shadow: 4px 4px 4px #8b0000;
+
+  &:hover {
+    background-color: white;
+  }
 `;
 
 const CheckBoxTittel = styled.div`
@@ -68,6 +73,10 @@ const DropDown = styled.div`
   padding-left: 4%;
   margin: 4% 4% 0% 0%;
   text-shadow: 4px 4px 4px #8b0000;
+
+  &:hover{
+    background-color: rgba(255,78,55);
+  }
 `;
 
 const SelectedFiltersWrap = styled.div`
