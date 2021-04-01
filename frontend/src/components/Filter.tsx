@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import Button from './Button';
 
 const FilterWrapper = styled.div`
   background-color: #c91801;
@@ -11,7 +12,6 @@ const FilterWrapper = styled.div`
   align-items: left;
   justify-content: flex-start;
   align-content: space-between;
-  margin-left: 20px;
   `;
 
 const FilterHeader = styled.h2`
@@ -56,10 +56,35 @@ const CheckBoxTittel = styled.div`
   padding-left: 4%;
 `;
 
+const DropDown = styled.div`
+  background-color: rgba(255,78,55,0.31);
+  background-blend-mode: saturation;
+  width: 187px;
+  height: 35px;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.75;
+  color: white;
+  padding-left: 4%;
+  margin: 4% 4% 0% 0%;
+  text-shadow: 4px 4px 4px #8b0000;
+`;
+
+const SelectedFiltersWrap = styled.div`
+  background-color: rgba(255,78,55,0.31);
+  width = 100% inherit;
+  height: 390px;
+  margin: 40px 4% 0 4%;
+  padding = 2%;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  color: white;
+`;
+
 interface CheckBoxProps {
   tittel: string;
-
 }
+
 const CheckBoxes = ({tittel}: CheckBoxProps) => {
   return (
     <CheckBoxWrap>
@@ -69,15 +94,41 @@ const CheckBoxes = ({tittel}: CheckBoxProps) => {
   );
 }
 
+interface SelectedFiltersProps {
+  tittel: string;
+  filters: Array<String>;
+}
+
+const SelectedFilters = ({tittel}: SelectedFiltersProps) => {
+  return (
+    <SelectedFiltersWrap>
+      <p>{tittel}</p>
+      <Button text="test1" onClickFunc={() => null} ></Button> 
+      <Button text="test2" onClickFunc={() => null} ></Button>
+      <Button text="Laaaaaaaaaang Test" onClickFunc={() => null} ></Button>
+    </SelectedFiltersWrap>
+  );
+}
+
+
+
 
 
 export const Filter = () => {
+  const filters = ["Sykkel", "Utendørs"];
+
   return (
     <FilterWrapper>
       <FilterHeader> Søk etter aktiviteter: </FilterHeader>
       <FilterSearchInput> Skriv inn søkeørd ... </FilterSearchInput>
       <CheckBoxes tittel="Innendørs" />
       <CheckBoxes tittel="Utendørs" />
+      <DropDown> Kategori </DropDown>
+      <DropDown> Utstyr </DropDown>
+      <DropDown> Organisasjon </DropDown>
+      <DropDown> Intensistet </DropDown>
+      <DropDown> Pris </DropDown>
+      <SelectedFilters tittel="Utvalgte filtre: " filters={filters} />
     </FilterWrapper>
   )
 }
