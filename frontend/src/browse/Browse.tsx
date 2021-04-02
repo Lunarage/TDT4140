@@ -9,6 +9,7 @@ import { logoColor, redHexColor } from '../consts';
 import { toUpperCase } from '../functions';
 import { getEvents } from '../store/actionCreators';
 import { State } from '../store/types';
+import Filter from '../components/Filter';
 
 const PageWrapper = styled.div`
   display: flex;
@@ -99,6 +100,7 @@ const Browse = () => {
         <Header />
         <ContentWrapper>
           <SideBar>
+            <Filter />
           </SideBar>
           <RightWrapper>
             <PageHeader>{toUpperCase(type)}</PageHeader>

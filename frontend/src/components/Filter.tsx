@@ -6,7 +6,7 @@ import Button from './Button';
 const FilterWrapper = styled.div`
   background-color: #c91801;
   height: 962px;
-  width: 326px;
+  width: inherit;
   border-style: none;
   display: flex;
   flex-direction: column;
@@ -17,10 +17,11 @@ const FilterWrapper = styled.div`
 
 const FilterHeader = styled.h2`
   font-weight: bold;
-  font-size: 30px;
+  font-size: 21px;
   color: white;
   text-shadow: 4px 4px 4px darkred;
-  padding: 2% 2% 0% 3%;
+  padding: 5% 2% 0% 4%;
+  
   `;
 
 const FilterSearchInput = styled.div`
@@ -56,7 +57,7 @@ const CheckBox = styled.div`
 
 const CheckBoxTittel = styled.div`
   font-weight: 600;
-  font-size: 20px;
+  font-size: 17px;
   color: white;
   padding-left: 4%;
 `;
@@ -82,8 +83,8 @@ const DropDown = styled.div`
 const SelectedFiltersWrap = styled.div`
   background-color: rgba(255,78,55,0.31);
   width = 100% inherit;
-  height: 390px;
-  margin: 40px 4% 0 4%;
+  height: inherit;
+  margin: 40px 4% 4% 4%;
   padding = 2%;
   flex-wrap: wrap;
   justify-content: flex-start;
