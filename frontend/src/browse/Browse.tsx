@@ -10,6 +10,7 @@ import { toUpperCase } from '../functions';
 import { getEvents } from '../store/actionCreators';
 import { State } from '../store/types';
 import Filter from '../components/Filter';
+//import FilterSearch from '../components/FilterSearch';
 
 const PageWrapper = styled.div`
   display: flex;

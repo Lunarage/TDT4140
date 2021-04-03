@@ -107,36 +107,59 @@ const CheckBoxes = ({tittel}: CheckBoxProps) => {
 
 interface SelectedFiltersProps {
   tittel: string;
-  filters: string[];
+  filters: Array<string>;
 }
 
-const SelectedFilters = ({tittel}: SelectedFiltersProps, {filters}: SelectedFiltersProps ) => {
+const SelectedFilters = ( props: SelectedFiltersProps) => {
+  
+  const renderButtons =  (list: Array<string>) => {
+    for (let i=0; i<list.length; i++) {
+      <h1>"test"</h1>;
+    }
+  }
+
+  const l = ["Sykkel", "Utendørs"];
+
   return (
+    
     <SelectedFiltersWrap>
-      <p>{tittel}</p>
-      <Button text={"Test"} />
+      <p>{props.tittel}</p>
+      
     </SelectedFiltersWrap>
   );
 }
 
 
-export const Filter = () => {
-  const filters = ["Sykkel", "Utendørs"];
+interface FilterProps {
+  filters: Array<string>;
+}
 
-  return (
-    <FilterWrapper>
-      <FilterHeader> Søk etter aktiviteter: </FilterHeader>
-      <FilterSearchInput> Skriv inn søkeørd ... </FilterSearchInput>
-      <CheckBoxes tittel="Innendørs" />
-      <CheckBoxes tittel="Utendørs" />
-      <DropDown> Kategori </DropDown>
-      <DropDown> Utstyr </DropDown>
-      <DropDown> Organisasjon </DropDown>
-      <DropDown> Intensistet </DropDown>
-      <DropDown> Pris </DropDown>
-      <SelectedFilters tittel="Utvalgte filtre: " filters={filters} />
-    </FilterWrapper>
-  )
+class Filter extends React.Component {
+  constructor(props: FilterProps) {
+    super(props);
+    this.state = {
+      filters: ["Sykkel", "Utendørs"]
+    }
+  }
+  handleClickOnBox() {
+
+  }
+  render () {
+    return (
+      <FilterWrapper>
+        <FilterHeader> Søk etter aktiviteter: </FilterHeader>
+        <FilterSearchInput> Skriv inn søkeørd ... </FilterSearchInput>
+        <CheckBoxes tittel="Innendørs" />
+        <CheckBoxes tittel="Utendørs" />
+        <DropDown> Kategori </DropDown>
+        <DropDown> Utstyr </DropDown>
+        <DropDown> Organisasjon </DropDown>
+        <DropDown> Intensistet </DropDown>
+        <DropDown> Pris </DropDown>
+        <SelectedFilters tittel="Utvalgte filtre: " filters={["Sykkel", "Utendørs"]} />
+      </FilterWrapper>
+    );
+  }
 }
 
 export default Filter;
