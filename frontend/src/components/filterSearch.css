@@ -1,0 +1,117 @@
+
+body {
+  font-family: "Noto Sans", sans-serif;
+  color: white; 
+}
+
+.filter-wrapper {
+  background-color: #c91801;
+  height: 962px;
+  width: 326px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-content: space-between;
+  margin-left: 20px;
+}
+
+.filter-header {
+  font-weight: bold;
+  font-size: 20px;
+  text-shadow: 4px 4px 4px darkred;
+  margin: 0% 4% 0% 4%;
+}
+
+.filter-search-input {
+  width: 100% inherit;
+  height: 20px;
+  background-color: #ffc6c6;
+  margin: 0% 4% 4% 4%;
+  padding: 2% 2% 2% 3%;
+  vertical-align: middle;
+}
+
+.filter-search-input-text {
+  color: #313131;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.filter-checkbox-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  margin: 4% 4% 4% 4%;
+}
+
+.filter-checkbox {
+  width: 10px;
+  height: 10px;
+  border-style: solid;
+  border-color: white;
+  opacity: 1;
+  box-shadow: 4px 4px 4px darkred;
+}
+
+.filter-checkbox:hover {background-color: white}
+
+.filter-checkbox-text {
+  font-weight: 600;
+  font-size: 20px;
+  text-shadow: 4px 4px 4px darkred;
+  padding-left: 20px;
+}
+
+.filter-dropdown {
+  background-color: rgba(255,78,55,0.31);
+  background-blend-mode: saturation;
+  width: 187px;
+  height: 35px;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.75;
+  padding-left: 4%;
+  padding-right: 4%;
+  margin: 4% 4% 0% 0%;
+  text-shadow: 4px 4px 4px darkred;
+  display: flex;
+  justify-content: space-between;
+  box-shadow: 4px 4px 4px darkred;
+}
+
+.filter-dropdown:hover {background-color: black}
+
+
+.selected-filters-wrapper {
+  background-color: rgba(255,78,55,0.31);
+  width: 100% inherit;
+  height: 390px;
+  margin: 40px 4% 0 4%;
+  padding: 4%;
+}
+
+.selected-filter-button {
+  width: fit-content;
+  height: 2.5em;
+  margin: 4% 0 0 0;
+  color: black;
+  background-color: white;
+  padding: 0 4% 0 4%;
+  outline: 0;
+  border-radius: 40px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  box-shadow: 4px 4px 4px darkred
+}
+
+.selected-filter-button-text {
+  vertical-align: middle;
+  line-height: 2.25;
+}
+
+.selected-filter-button-x {
+  padding-left: 20px;
+  vertical-align: middle;
+  line-height: 2.25;
+}

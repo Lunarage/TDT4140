@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { redHexColorHover } from '../consts';
-import Button from './Button';
+import Button, { CustomButton } from './Button';
 
 const FilterWrapper = styled.div`
   background-color: #c91801;
@@ -91,6 +91,7 @@ const SelectedFiltersWrap = styled.div`
   color: white;
 `;
 
+
 interface CheckBoxProps {
   tittel: string;
 }
@@ -106,22 +107,17 @@ const CheckBoxes = ({tittel}: CheckBoxProps) => {
 
 interface SelectedFiltersProps {
   tittel: string;
-  filters: Array<String>;
+  filters: string[];
 }
 
-const SelectedFilters = ({tittel}: SelectedFiltersProps) => {
+const SelectedFilters = ({tittel}: SelectedFiltersProps, {filters}: SelectedFiltersProps ) => {
   return (
     <SelectedFiltersWrap>
       <p>{tittel}</p>
-      <Button text="test1" onClickFunc={() => null} ></Button> 
-      <Button text="test2" onClickFunc={() => null} ></Button>
-      <Button text="Laaaaaaaaaang Test" onClickFunc={() => null} ></Button>
+      <Button text={"Test"} />
     </SelectedFiltersWrap>
   );
 }
-
-
-
 
 
 export const Filter = () => {

@@ -51,7 +51,7 @@ const Welcome = () => {
         />
         {!localStorage.getItem("token") &&
           <Button text="Logg inn" onClickFunc={() => setUrl("/login")} />}
-        
+          
       </ContentWrapper>
     </PageWrapper>
   );
