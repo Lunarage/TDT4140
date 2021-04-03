@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from 'react-redux';
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
-import { ExpandWrapper } from '../browse/Browse';
 import { logoColor, pageName, redHexColor } from "../consts";
 import { State } from '../store/types';
+import { ExpandWrapper } from './ActivityDashboard';
 import Button from './Button';
 import Loading from './Loading';
 import NewActivity from './NewActivity';
@@ -86,21 +86,10 @@ const Header = () => {
   const [showSuccess, setShowSuccess] = useState<boolean>(false);
 
   const {
-    user,
-  } = useSelector((state: State) => state.getUserReducer);
-
-  const {
     event,
     isLoading: eventLoading,
     errorMessage: eventError,
   } = useSelector((state: State) => state.postEventReducer);
-
-  useEffect(() => {
-    if (user) {
-      localStorage.setItem("token", user.token)
-      localStorage.setItem("id", user.id.toString())
-    }
-  }, [user]);
 
   const setUrl = (tab: string) => {
     history.push(tab);
