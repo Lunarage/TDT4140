@@ -65,7 +65,9 @@ const Browse = () => {
   } = useSelector((state: State) => state.eventsReducer);
 
   useEffect(() => {
-    dispatch(getEvents());
+    if (type == "aktiviteter") {
+      dispatch(getEvents("user"));
+    } else { dispatch(getEvents("organization")) }
   }, [dispatch, type]);
 
   return (

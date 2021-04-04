@@ -79,12 +79,12 @@ export const getCurrentUser = (token: string) => {
     };
 };
 
-export const getEvents = () => {
+export const getEvents = (type: string) => {
     return (dispatch: DispatchType) => {
         dispatch({ type: ActionTypes.EVENTS_LOADING, payload: [] });
         let client = new HttpClient(baseUrl);
         return client
-            .get("api/activity")
+            .get("api/activity/" + type + "/")
             .then((r) => handleError(r))
             .then((response) => {
                 dispatch({

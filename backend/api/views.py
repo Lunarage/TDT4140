@@ -149,7 +149,7 @@ class ActivityViewSet(viewsets.ModelViewSet):  # pylint: disable=too-many-ancest
     @action(
         methods=['GET'],
         detail=False,
-        permission_classes=[permissions.IsAuthenticated],
+        permission_classes=[],
     )
     def organization(self, request, *args, **kwargs):
         """
@@ -162,7 +162,7 @@ class ActivityViewSet(viewsets.ModelViewSet):  # pylint: disable=too-many-ancest
     @action(
         methods=['GET'],
         detail=False,
-        permission_classes=[permissions.IsAuthenticated],
+        permission_classes=[],
     )
     def user(self, request, *args, **kwargs):
         """
