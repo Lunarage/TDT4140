@@ -52,7 +52,7 @@ ReactDOM.render(
       </BrowserRouter>
     </Provider>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById('root') || document.createElement("div") //for testing purposes
 );
 
 // If you want to start measuring performance in your app, pass a function

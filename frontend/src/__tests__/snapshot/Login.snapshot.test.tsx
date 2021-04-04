@@ -1,18 +1,33 @@
-import React from "react";
-import { shallow } from "enzyme";
+import { mount } from "enzyme";
 import Enzyme from "enzyme";
-import Adapter from "enzyme-adapter-react-16";
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import toJSON from "enzyme-to-json";
 import Login from '../../login/Login';
+import { store } from '../..';
+import { Provider } from 'react-redux';
 
 Enzyme.configure({ adapter: new Adapter() });
 
+jest.mock("react-router-dom", () => ({
+  ...jest.requireActual('react-router-dom') as any,
+  useHistory: () => ({
+    push: jest.fn(),
+  }),
+}));
+
+const LoginWrapper = () => (
+  <Provider store={store}>
+    <Login />
+  </Provider>
+);
+
 describe("Login", () => {
   it("renders Login", () => {
-    shallow(<Login />);
+    mount(<LoginWrapper />);
   });
   it("Should match Login snapshot", () => {
-    const snap = shallow(<Login />);
-    expect(toJSON(snap)).toMatchSnapshot();
+    const comp = mount(<LoginWrapper />);
+    expect(toJSON(comp)).toMatchSnapshot();
   });
 });
+

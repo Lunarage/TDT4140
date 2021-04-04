@@ -74,7 +74,7 @@ export type Event = {
     title: string;
     date: string;
     organization_owner: number;
-    organization_owner_name: number;
+    organization_owner_name: string;
     user_owner: number;
     user_owner_username: string;
     description: string;

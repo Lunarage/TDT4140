@@ -9,10 +9,10 @@ Enzyme.configure({ adapter: new Adapter() });
 
 describe("InputField", () => {
   it("renders InputField", () => {
-    shallow(<InputField name="test" />);
+    shallow(<InputField name="test" onChangeFunc={() => { }} />);
   });
   it("Should match InputField snapshot", () => {
-    const snap = shallow(<InputField name="test" />);
+    const snap = shallow(<InputField name="test" onChangeFunc={() => { }} />);
     expect(toJSON(snap)).toMatchSnapshot();
   });
 });
