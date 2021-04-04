@@ -68,16 +68,25 @@ const TextContent = styled.div`
 
 
 const Image = styled.img`
-    height: 100%;
-    top: 27px;
-    margin-left: -50%;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
 `;
 
 const ImageWrapper = styled.div`
-    width: 298px;
-    height: 100%;
-    overflow: hidden;
-    box-shadow: 1px 1px 20px 4px rgba(0, 0, 0, 0.25);
+  width: 298px;
+  height: 100%;
+  overflow: hidden;
+  box-shadow: 1px 1px 20px 4px rgba(0, 0, 0, 0.25);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  :hover {
+    transition: box-shadow 0.2s;
+    box-shadow: 1px 1px 20px 4px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+  }
 `;
 
 export const CloseButton = styled.button`
@@ -96,7 +105,8 @@ export const CloseButton = styled.button`
   color: white;
 
   :hover {
-    box-shadow: none;
+    transition: box-shadow 0.2s;
+    box-shadow: 1px 1px 20px 4px rgba(0, 0, 0, 0.25);
     cursor: pointer;
   }
 `;
@@ -126,6 +136,15 @@ const ActivityExpand = ({ data, onExitFunc }: ActivityExpandProps) => {
   const [starResponse, setStarResponse] = useState<any>()
   const [isStarred, setIsStarred] = useState<boolean>(false)
 
+  const [image, setImage] = useState<string>("static/22858269.jpg") // default image
+
+  // sets image if there is one
+  useEffect(() => {
+    if (data.activity_image) {
+      setImage("http://127.0.0.1:8000" + data.activity_image)
+    }
+  }, [data])
+
   const {
     signUps,
     isLoading: signUpsIsLoading,
@@ -151,23 +170,15 @@ const ActivityExpand = ({ data, onExitFunc }: ActivityExpandProps) => {
   useEffect(() => {
     if (!signUps && signUps != []) {
       fetchSignUps()
+    } else {
+      setIsSignedUp(signUps.some(e => e.id == data.id))
     }
   }, [signUps]);
 
   useEffect(() => {
     if (!starred && starred != []) {
       fetchStarred()
-    }
-  }, [starred]);
-
-  useEffect(() => {
-    if (signUps || signUps == []) {
-      setIsSignedUp(signUps.some(e => e.id == data.id))
-    }
-  }, [signUps]);
-
-  useEffect(() => {
-    if (starred || starred == []) {
+    } else {
       setIsStarred(starred.some(e => e.id == data.id))
     }
   }, [starred]);
@@ -197,6 +208,14 @@ const ActivityExpand = ({ data, onExitFunc }: ActivityExpandProps) => {
     }
   }
 
+  // open image in a new tab to view whole image
+  const openImageTab = () => {
+    const newWindow = window.open(image, '_blank')
+    if (newWindow) {
+      newWindow.focus()
+    }
+  }
+
   if (signUpsIsLoading || starredIsLoading) return <Loading />
 
   return (
@@ -206,7 +225,7 @@ const ActivityExpand = ({ data, onExitFunc }: ActivityExpandProps) => {
         &nbsp; &nbsp; {data.title}
       </ActivityExpandHeader>}
       <Content>
-        <ImageWrapper> <Image src="static/22858269.jpg" />
+        <ImageWrapper onClick={() => openImageTab()}> <Image src={image} />
         </ImageWrapper>
         <TextContentWrapper>
           <TextContent>
@@ -219,10 +238,11 @@ const ActivityExpand = ({ data, onExitFunc }: ActivityExpandProps) => {
           </TextContent>
           <TextContent>
             <br />
-            {data.activity_level && <div>Intensitet: {data.activity_level}</div>}
+            {data.activity_level > 0 && <div>Intensitet: {data.activity_level}</div>}
             {data.equipment_used_names.length > 0 && <div>Required equipment: {data.equipment_used_names.toString()}</div>}
             {data.categories_names.length > 0 && <div>Kategori: {data.categories_names.toString()}</div>}
-            {data.max_participants && <div>Antall plasser: {data.max_participants}</div>}
+            {data.max_participants > 0 && <div>Antall plasser: {data.max_participants}</div>}
+            {data.activity_price > 0 && <div>Pris: {data.activity_price}</div>}
           </TextContent>
           <TextContent>
             <br />

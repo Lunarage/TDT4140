@@ -20,9 +20,18 @@ class HttpClient {
     private baseURL: string;
     private headers: {};
 
-    constructor(baseURL: string, userToken: string | null = null) {
+    constructor(
+        baseURL: string,
+        userToken: string | null = null,
+        formData: boolean = false
+    ) {
         this.baseURL = baseURL;
-        if (userToken != null) {
+        if (formData) {
+            // special case for http request with images
+            this.headers = {
+                Authorization: "Token " + userToken,
+            };
+        } else if (userToken != null) {
             this.headers = {
                 "Content-Type": "application/json",
                 "Authorization": "Token " + userToken,
@@ -146,6 +155,35 @@ class HttpClient {
         return fetch(this.baseURL + url, {
             method: "POST",
             body: JSON.stringify(body),
+            headers: this.headers,
+        })
+            .then(this.checkStatus)
+            .then((response: any) => response.json())
+            .then((response: any) => {
+                return response as T;
+            })
+            .catch((err) => {
+                return {
+                    error: {
+                        name: err.name,
+                        message: err.message,
+                        statusCode: err.statusCode,
+                    },
+                };
+            });
+    }
+
+    /**
+     * Same as above, but with formData because of image
+     *
+     * @template T - The expected type of the response
+     * @param {string} url - The url to send the request to
+     * @return {Promise<T>} The promise of a response
+     */
+    public postWithImage<T>(url: string, body: any): Promise<CustomError | T> {
+        return fetch(this.baseURL + url, {
+            method: "POST",
+            body: body,
             headers: this.headers,
         })
             .then(this.checkStatus)

@@ -43,6 +43,7 @@ class ActivityFilter(filters.FilterSet):
             'location': ['icontains'],
             'categories__name': ['icontains'],
             'activity_level': ['icontains'],
+            'activity_price': ['icontains'],
             'equipment_used__name': ['icontains'],
             'max_participants': ['icontains'],
             'date': ['iexact', 'lte', 'gte']

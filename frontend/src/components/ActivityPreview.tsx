@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import styled from "styled-components";
 import { redHexColor, redHexColorHover } from "../consts";
 import { isoToDateList } from '../functions';
@@ -33,6 +34,7 @@ const TextWrapper = styled.div`
 const Image = styled.img`
   width: 100%;
   height: 100%;
+  object-fit: cover;
   box-shadow: 1px 1px 20px 4px rgba(0, 0, 0, 0.25);
 `;
 
@@ -51,6 +53,9 @@ const ImageWrapper = styled.div`
   height: 50%;
   overflow: hidden;
   box-shadow: 1px 1px 20px 4px rgba(0, 0, 0, 0.25);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 interface ActivityPreviewProps {
@@ -61,10 +66,19 @@ interface ActivityPreviewProps {
 const ActivityPreview = ({ data, onClickFunc }: ActivityPreviewProps) => {
   const [year, month, day] = isoToDateList(data.date)
 
+  const [image, setImage] = useState<string>("static/Red-Rocks_horizontal.jpg") // default image
+
+  // sets image
+  useEffect(() => {
+    if (data.activity_image) {
+      setImage("http://127.0.0.1:8000" + data.activity_image)
+    }
+  }, [data])
+
   return (
     <Wrapper onClick={onClickFunc} >
       <ImageWrapper>
-        <Image src="static/Red-Rocks_horizontal.jpg" />
+        <Image src={image} />
       </ImageWrapper>
       <TextWrapper>
         {data.title ? <Header> {data.title} </Header> : <Header> ARRANGEMENT </Header>}
