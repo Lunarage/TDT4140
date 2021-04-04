@@ -60,6 +60,7 @@ const CheckBoxTittel = styled.div`
   font-size: 17px;
   color: white;
   padding-left: 4%;
+  text-shadow: 4px 4px 4px #8b0000;
 `;
 
 const DropDown = styled.div`
@@ -74,6 +75,7 @@ const DropDown = styled.div`
   padding-left: 4%;
   margin: 4% 4% 0% 0%;
   text-shadow: 4px 4px 4px #8b0000;
+  box-shadow: 4px 4px 4px #8b0000;
 
   &:hover{
     background-color: rgba(255,78,55);
