@@ -1,4 +1,3 @@
-import React from "react";
 import { Input } from "semantic-ui-react";
 import styled from 'styled-components';
 import { redHexColor } from "../consts";
@@ -24,6 +23,7 @@ interface InputFieldProps {
   onChangeFunc: (val: string) => void
 }
 
+// Used for login / register input fields
 const InputField = ({ name, password, text, onChangeFunc }: InputFieldProps) => {
   return (
     <LineWrapper>

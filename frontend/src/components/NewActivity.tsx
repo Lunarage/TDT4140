@@ -9,7 +9,7 @@ import { allDigits, isIsoDate, parseIntWithUndefined, isFutureDate } from '../fu
 import Loading from './Loading';
 import Button from './Button';
 
-
+// dropdown must recieve this type
 type Dropdown = { key: number, value: string, text: string }[]
 
 const ButtonWrapper = styled.div`
@@ -18,6 +18,7 @@ const ButtonWrapper = styled.div`
   bottom: 0.5em;
 `;
 
+// Wrapper for widget without header and close button
 const Wrapper = styled.div`
   display: flex;
   padding-top: 1em;
@@ -80,6 +81,7 @@ interface NewActivityProps {
   onExitFunc: (submit: boolean) => void;
 }
 
+// finds ids from names in equipment and categories lists. 
 const findDictValueInList = (allDicts: { id: number, name: string }[], values: string[]) => {
   let list: number[] = []
   allDicts.forEach(dict => { if (values.includes(dict.name)) { list.push(dict.id) } })
@@ -89,12 +91,15 @@ const findDictValueInList = (allDicts: { id: number, name: string }[], values: s
 const NewActivity = ({ onExitFunc }: NewActivityProps) => {
   const dispatch = useDispatch();
 
+  // false => create activity. true => create event
   const [createEvent, setCreateEvent] = useState<boolean>(true)
 
+  // states for invalid input
   const [emptyFields, setEmptyFields] = useState<boolean>(false)
   const [invalidFields, setInvalidFields] = useState<string | null>(null)
   const [futureDate, setFutureDate] = useState<boolean>(true)
 
+  // states for all fields
   const [title, setTitle] = useState<string>()
   const [description, setDescription] = useState<string>()
   const [location, setLocation] = useState<string>()
@@ -162,6 +167,7 @@ const NewActivity = ({ onExitFunc }: NewActivityProps) => {
   }, [equipmentData, dispatch]);
 
   useEffect(() => {
+    // find all organizations where user is a member
     if (organizations && currentUser) {
       organizations.forEach(org => {
         let nameList: string[] = []
@@ -175,6 +181,7 @@ const NewActivity = ({ onExitFunc }: NewActivityProps) => {
     }
   }, [organizations, currentUser]);
 
+  // checks if input is valid, and potentially posts the activity
   const handleSubmit = () => {
     setEmptyFields(false)
     setInvalidFields(null)
@@ -184,24 +191,29 @@ const NewActivity = ({ onExitFunc }: NewActivityProps) => {
       categoriesIdList = findDictValueInList(categoriesData, selectedCategories.split(","))
       equipmentIdList = findDictValueInList(equipmentData, selectedEquipment.split(","))
     }
+    // these are requiered fields. Some depending on if the user creates an activity or event
     if (!title || !location || !description || (createEvent && (!time || !selectedOrgName || !date))) {
       setEmptyFields(true)
     } else {
       const userToken = localStorage.getItem("token")
       let userId = parseIntWithUndefined(localStorage.getItem("id"))
+      // some checks for valid input
       if (!allDigits(maxParticipants)) {
         setInvalidFields("maks deltakere")
       } else if (activityLevel && (!allDigits(activityLevel) || (0 >= parseInt(activityLevel)) || (5 < parseInt(activityLevel)))) {
         setInvalidFields("aktivitetsnivå")
       }
+      // create event
       else if (createEvent) {
         const fullDate = date + "T" + time + ":00Z"
         let orgId
+        // finds org id from name
         orgsDropdown.forEach(org => {
           if (org.value === selectedOrgName) {
             orgId = org.key
           }
         })
+        // checks for date
         if (!isIsoDate(fullDate)) {
           setInvalidFields("dato eller starttid")
         } else if (!isFutureDate(fullDate)) {
@@ -224,6 +236,7 @@ const NewActivity = ({ onExitFunc }: NewActivityProps) => {
           }
         }
       }
+      // create activity
       else if (!createEvent && userId && userToken) {
         dispatch(postEvent(title,
           undefined,
@@ -252,7 +265,7 @@ const NewActivity = ({ onExitFunc }: NewActivityProps) => {
     <WidgetWrapper>
       <CloseButton onClick={handleCloseButton} > X </CloseButton>
       <Header>
-        {createEvent ?
+        {createEvent ? // underline selected tab
           <HeaderItem onClick={() => setCreateEvent(false)}> Aktivitet </HeaderItem> :
           <HeaderItemUnderlined> Aktivitet </HeaderItemUnderlined>
         }

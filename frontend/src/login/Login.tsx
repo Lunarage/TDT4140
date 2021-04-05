@@ -76,7 +76,10 @@ const Login = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
+  // login or register
   const [method, setMethod] = useState<Method>(Method.login);
+
+  // states for fields
   const [email, setEmail] = useState<string>();
   const [username, setUsername] = useState<string>();
   const [firstName, setFirstName] = useState<string>();
@@ -84,13 +87,16 @@ const Login = () => {
   const [password, setPassword] = useState<string>();
   const [confPassword, setConfPassword] = useState<string>();
 
+  // invalid input states
   const [missingInfo, setMissingInfo] = useState<boolean>(false);
   const [passwordMatch, setPasswordMatch] = useState<boolean>(true);
   const [sucessfullRegister, setSucessfullRegister] = useState<boolean>(false);
 
+  // error when login/register
   const [loginError, setLoginError] = useState<boolean>(false);
   const [regError, setRegError] = useState<boolean>(false);
 
+  // responses from post user and get user. (register and login)
   const [postUserResponse, setPostUserResponse] = useState<any>()
   const [getUserResponse, setGetUserResponse] = useState<any>()
 
@@ -123,16 +129,20 @@ const Login = () => {
   }, [postUserResponse]);
 
   const handleSubmit = () => {
+    // login
     if (method === Method.login && username && password) {
+      // get user
       let promise = getUser(username, password).then(r => { return r })
       promise.then(r => { setGetUserResponse(r) })
       setMissingInfo(false)
       setPasswordMatch(true)
-    } else if (method === Method.register && firstName && lastName && username && password && email) {
+    } else if (method === Method.register && firstName && lastName && username && password && email) { // register
       setMissingInfo(false)
+      // password match check
       if (password !== confPassword) {
         setPasswordMatch(false)
       } else {
+        // post user
         let promise = postUser(firstName, lastName, username, password, email).then(r => { return r })
         promise.then(r => { setPostUserResponse(r) })
       }
@@ -143,6 +153,7 @@ const Login = () => {
     }
   }
 
+  // removes error messages
   const resetMessages = () => {
     setSucessfullRegister(false);
     setMissingInfo(false);
@@ -170,7 +181,7 @@ const Login = () => {
               <InputField name="Confirm passord" onChangeFunc={(val) => setConfPassword(val)} />
             )}
           </InputWrapper>
-          {loginError && (getUserResponse?.error?.statusCode === 400 ? <div>Feil brukernavn eller passord</div> : ErrorMessage)}
+          {loginError && (getUserResponse?.error?.statusCode === 400 ? <div>Feil brukernavn eller passord</div> : ErrorMessage)} {/* statuscode 400 means password or username is wrong. All other possible scenario are tested in frontend. */}
           {regError && ErrorMessage}
           {missingInfo && <div>Fyll inn alle feltene</div>}
           {!passwordMatch && <div>Passordene er ikke like</div>}

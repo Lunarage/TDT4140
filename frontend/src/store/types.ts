@@ -1,5 +1,7 @@
 import { Activity, Category, Equipment, User } from "../types/APITypes";
 
+// types for action and store state.
+
 export type Action = {
     type: string;
     payload: any;
@@ -69,20 +71,21 @@ export type Organization = BaseState & {
     user_member: string[];
 };
 
+// event / activity
 export type Event = {
     id: number;
     title: string;
     date: string;
-    organization_owner: number;
+    organization_owner: number; // id
     organization_owner_name: string;
-    user_owner: number;
+    user_owner: number; // id
     user_owner_username: string;
     description: string;
     location: string;
     categories_names: string[];
-    categories: number[];
+    categories: number[]; // id
     activity_level: number;
-    equipment_used: number[];
+    equipment_used: number[]; // id
     equipment_used_names: string[];
     max_participants: number;
 };

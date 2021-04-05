@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import ActivityDashboard from '../components/ActivityDashboard';
@@ -29,6 +29,7 @@ export const SideBar = styled.div`
   background-color: ${redHexColor};
 `;
 
+// Wrapper for page header, filter and dashboard
 export const RightWrapper = styled.div`
   height: 100%;
   width: 100%;
@@ -56,7 +57,7 @@ const Browse = () => {
   const dispatch = useDispatch();
 
   const url = new URL(window.location.href)
-  const type = url.searchParams.get("type")
+  const type = url.searchParams.get("type") //aktiviteter or arrangementer
 
   const {
     events,
@@ -66,8 +67,8 @@ const Browse = () => {
 
   useEffect(() => {
     if (type == "aktiviteter") {
-      dispatch(getEvents("user"));
-    } else { dispatch(getEvents("organization")) }
+      dispatch(getEvents("user")); //get all activities
+    } else { dispatch(getEvents("organization")) } // get all events
   }, [dispatch, type]);
 
   return (

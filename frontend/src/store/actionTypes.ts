@@ -1,3 +1,4 @@
+// Types for the reducers to know what to do
 export enum ActionTypes {
     EVENTS_FINISHED = "EVENTS_FINISHED",
     EVENTS_LOADING = "EVENTS_LOADING",

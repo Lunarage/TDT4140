@@ -46,13 +46,13 @@ const Button = ({ text, onClickFunc, colorInvert, image, autoWidth = false }: Bu
 
   let backgroundcolor = redHexColor;
   let textcolor = "white";
-  if (colorInvert) {
+  if (colorInvert) { // Inverts color on red background
     backgroundcolor = "white";
     textcolor = redHexColor;
   }
 
   let minwidth = "8em"
-  if (autoWidth) {
+  if (autoWidth) { // sets 0 min width
     minwidth = "0em"
   }
 
