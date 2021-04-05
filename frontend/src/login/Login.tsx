@@ -103,9 +103,11 @@ const Login = () => {
   useEffect(() => {
     if (getUserResponse) {
       if (getUserResponse.error) {
+        // login error
         setLoginError(true)
       }
-      else if (getUserResponse) {
+      else {
+        // login success
         resetMessages()
         localStorage.setItem("token", getUserResponse.token)
         localStorage.setItem("id", getUserResponse.id.toString())
@@ -119,9 +121,11 @@ const Login = () => {
   useEffect(() => {
     if (postUserResponse) {
       if (postUserResponse.error) {
+        // register error
         setRegError(true)
       }
       else if (postUserResponse) {
+        // register success
         resetMessages()
         setSucessfullRegister(true)
       }
