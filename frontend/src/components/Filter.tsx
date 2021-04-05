@@ -5,6 +5,7 @@ import { redHexColorHover } from '../consts';
 import { getEvents } from '../store/actionCreators';
 import { State } from '../store/types';
 import { CustomButton, TextWrapper } from './Button';
+import Button from './Button';
 
 const FilterWrapper = styled.div`
   background-color: #c91801;
@@ -95,7 +96,7 @@ const SelectedFiltersWrap = styled.div`
   color: white;
 `;
 
-const Button = styled(CustomButton) `
+const FilterButton = styled(CustomButton) `
   background-color: white;
   width: fit-content;
   min-width: 5em;
@@ -108,13 +109,14 @@ const ButtonTextWrapper = styled(TextWrapper) `
 
 interface CheckBoxProps {
   tittel: string;
+  onClick: () => void;
 }
 
-const CheckBoxes = ({tittel}: CheckBoxProps) => {
+const CheckBoxes = (props: CheckBoxProps) => {
   return (
     <CheckBoxWrap>
-      <CheckBox />
-      <CheckBoxTittel>{tittel}</CheckBoxTittel>
+      <CheckBox onClick= {props.onClick}/>
+      <CheckBoxTittel>{props.tittel}</CheckBoxTittel>
     </CheckBoxWrap>
   );
 }
@@ -125,19 +127,19 @@ interface SelectedFiltersProps {
 }
 
 const SelectedFilters = ( props: SelectedFiltersProps) => {
-  const test = ["Innendørs", "Sykkel", "Skistøvler", "Helikopter"];
+  //const test = ["Innendørs", "Sykkel", "Skistøvler", "Helikopter"];
   const renderButtons =  (filter: string) => {
     return (
-      <Button>
+      <FilterButton>
         <ButtonTextWrapper>{filter}</ButtonTextWrapper>
-      </Button>
+      </FilterButton>
     );
   }
 
   return (
     <SelectedFiltersWrap>
       <p>{props.tittel}</p>
-      {test.map(renderButtons)}
+      {props.filters.map(renderButtons)}
     </SelectedFiltersWrap>
   );
 }
@@ -145,7 +147,7 @@ const SelectedFilters = ( props: SelectedFiltersProps) => {
 
 const Filter = () => {
   const dispatch = useDispatch();
-  const [selectedFilters, setSelectedFilters] = useState<string[]>([]);  
+  const [selectedFilters, setSelectedFilters] = useState<string[]>(["Det funker, yay!"]);  
 
   const {
     categories: categoriesData,
@@ -166,18 +168,29 @@ const Filter = () => {
     dispatch(getEvents());
   }, [dispatch]);
 
+
+  const handleOnClickSelect = (filter: string) => {
+    setSelectedFilters(selectedFilters.concat(filter));
+  }
+
+  const handleClear = () => {
+    setSelectedFilters([]);
+  }
+
+
   return (
     <FilterWrapper>
       <FilterHeader> Søk etter aktiviteter: </FilterHeader>
       <FilterSearchInput> Skriv inn søkeørd ... </FilterSearchInput>
-      <CheckBoxes tittel="Innendørs" />
-      <CheckBoxes tittel="Utendørs" />
+      <CheckBoxes tittel="Innendørs" onClick={() => handleOnClickSelect("Innendørs")}/>
+      <CheckBoxes tittel="Utendørs" onClick={() => handleOnClickSelect("Utendørs")}/>
       <DropDown> Kategori </DropDown>
       <DropDown> Utstyr </DropDown>
       <DropDown> Organisasjon </DropDown>
       <DropDown> Intensistet </DropDown>
       <DropDown> Pris </DropDown>
       <SelectedFilters tittel="Utvalgte filtre: " filters={selectedFilters} />
+      <Button text={"Klikk for å nulstille filtre"} onClickFunc={handleClear}/>
     </FilterWrapper>
   );
   }
