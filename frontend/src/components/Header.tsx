@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSelector } from 'react-redux';
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
@@ -80,6 +80,7 @@ export enum Type {
   arrangementer = "Arrangementer"
 }
 
+// General page header used on every page
 const Header = () => {
   const history = useHistory();
   const [showCreateNew, setShowCreateNew] = useState<boolean>(false);
@@ -96,7 +97,7 @@ const Header = () => {
   };
 
   const handleTypeClick = (tab: string, type: string) => {
-    history.push(tab + "?type=" + type);
+    history.push(tab + "?type=" + type); // adds aktiviteter or arrangementer to url
   };
 
   const handleNewActivityExit = (submit: boolean) => {
@@ -116,6 +117,7 @@ const Header = () => {
 
   return (
     <>
+      {/* displays successs or failure of creating new activity */}
       {showCreateNew && <ExpandWrapper > <NewActivity onExitFunc={handleNewActivityExit} /></ExpandWrapper>}
       {!showCreateNew && showSuccess && (eventError ?
         <NewActivityResponse>Klarte ikke å poste aktiviteten.</NewActivityResponse> :

@@ -30,6 +30,8 @@ const WelcomeLogoWrapper = styled.div`
 
 const Welcome = () => {
   const history = useHistory();
+
+  // redirecting 
   const setUrl = (url: string) => {
     history.push(url);
   };

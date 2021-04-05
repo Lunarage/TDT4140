@@ -3,12 +3,15 @@ import HttpClient from "../utilities/HttpClient";
 import { ActionTypes } from "./actionTypes";
 import { DispatchType } from "./types";
 
+// handles error for all action creators
 const handleError = (response: any) => {
     if (response?.error) {
         throw response.error;
     }
     return response;
 };
+
+// Action creators for all states in the redux-system. Also some functions that are not connected to redux at the bottom.
 
 export const postEvent = (
     title: string,
@@ -214,6 +217,8 @@ export const getMyActivities = (id: string, token: string) => {
             );
     };
 };
+
+// Those below is not connected to the redux system. They are generally only used once, and there is no need to store the response.
 
 export const signUpUser = (id: string, token: string) => {
     let client = new HttpClient(baseUrl, token);

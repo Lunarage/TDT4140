@@ -47,6 +47,7 @@ const MyPage = () => {
   const [currentTab, setCurrentTab] = useState<tab>(tab.myAct)
   const [tabComponents, setTabComponents] = useState<JSX.Element[]>()
 
+  // states for response from selected type of event
   const [events, setEvents] = useState<Event[] | undefined>()
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [error, setError] = useState<any>()
@@ -69,6 +70,7 @@ const MyPage = () => {
     errorMessage: myActivitiesError,
   } = useSelector((state: State) => state.myActivitiesReducer);
 
+  // gets starred, sign ups and my activities
   useEffect(() => {
     const token = localStorage.getItem("token")
     const id = localStorage.getItem("id")
@@ -86,6 +88,7 @@ const MyPage = () => {
     changeTab(currentTab)
   }, [starred, myActivities, signUps, currentTab]);
 
+  // change between showing my activities, starred and sign ups
   const changeTab = (newTab: tab) => {
     setCurrentTab(newTab);
     if (newTab == tab.starred) {
@@ -105,6 +108,7 @@ const MyPage = () => {
     }
   }
 
+  // underlines selected tab
   useEffect(() => {
     const tabList = [tab.myAct, tab.signUp, tab.starred]
     let tempTabComponents: JSX.Element[] = []

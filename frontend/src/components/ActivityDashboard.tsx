@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import ActivityExpand from '../components/ActivityExpand';
@@ -17,6 +17,7 @@ const ActivityWrapper = styled.div`
   width: 100%;
 `;
 
+// Grey background
 export const ExpandWrapper = styled.div`
   height: 100%;
   width: 100%;
@@ -57,7 +58,10 @@ const ActivityDashboard = ({ events, isLoading, error }: ActivityDashboardProps)
 
   return (
     <>
-      {showExpanded && curEvent && <ExpandWrapper > <ActivityExpand data={curEvent} onExitFunc={() => setShowExpanded(false)} /></ExpandWrapper>}
+      {showExpanded && curEvent &&
+        <ExpandWrapper > {/* Show expanded activity */}
+          <ActivityExpand data={curEvent} onExitFunc={() => setShowExpanded(false)} />
+        </ExpandWrapper>}
       {isLoading || !events ? <Loading /> :
         <ActivityWrapper>
           {eventComponents}

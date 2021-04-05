@@ -16,6 +16,8 @@ const initialState = {
     isLoading: false,
 };
 
+// reducers for all redux-states
+
 export const postEventReducer = (
     state: PostEventState = initialState,
     action: Action

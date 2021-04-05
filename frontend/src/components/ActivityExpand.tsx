@@ -175,10 +175,10 @@ const ActivityExpand = ({ data, onExitFunc }: ActivityExpandProps) => {
   const handleSignUp = (signUp: boolean) => {
     if (token) {
       if (signUp) {
-        let promise = signUpUser(data.id.toString(), token).then(r => { return r })
+        let promise = signUpUser(data.id.toString(), token).then(r => { return r }) // sign up for activity
         promise.then(r => { setSignUpResponse(r); fetchSignUps() })
       } else {
-        let promise = revokeSignUpUser(data.id.toString(), token).then(r => { return r })
+        let promise = revokeSignUpUser(data.id.toString(), token).then(r => { return r }) // revoke sign up
         promise.then(r => { setSignUpResponse(r); fetchSignUps() })
       }
     }
@@ -187,10 +187,10 @@ const ActivityExpand = ({ data, onExitFunc }: ActivityExpandProps) => {
   const handleStar = (starred: boolean) => {
     if (token) {
       if (starred) {
-        let promise = starUser(data.id.toString(), token).then(r => { return r })
+        let promise = starUser(data.id.toString(), token).then(r => { return r }) // star activity
         promise.then(r => { setStarResponse(r); fetchStarred() })
       } else {
-        let promise = revokeStarUser(data.id.toString(), token).then(r => { return r })
+        let promise = revokeStarUser(data.id.toString(), token).then(r => { return r }) // remove star activity
         promise.then(r => { setSignUpResponse(r); fetchStarred() })
       }
     }
@@ -225,7 +225,9 @@ const ActivityExpand = ({ data, onExitFunc }: ActivityExpandProps) => {
           </TextContent>
           <TextContent>
             <br />
-            {data.organization_owner_name ? <div>Organisasjon: {data.organization_owner_name}</div> : data.user_owner_username && <div>User: {data.user_owner_username}</div>}
+            {data.organization_owner_name ?
+              <div>Organisasjon: {data.organization_owner_name}</div> :
+              data.user_owner_username && <div>User: {data.user_owner_username}</div>}
           </TextContent>
           < br />
           <ButtonsWrapper>

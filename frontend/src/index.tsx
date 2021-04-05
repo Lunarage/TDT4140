@@ -24,7 +24,7 @@ import {
 } from "./store/reducers";
 import 'semantic-ui-css/semantic.min.css'
 
-
+// reducers used in store
 const allReducers: Reducer<State, Action> = combineReducers({
   eventsReducer,
   orgsReducer,

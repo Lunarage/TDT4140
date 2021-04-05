@@ -1,5 +1,3 @@
-import React from "react";
-
 import styled from "styled-components";
 
 const LoadingWrapper = styled.div`
@@ -37,7 +35,7 @@ const InnerLoading = styled.div`
   }
 `;
 
-// General loading that fills the whole screen.
+// General loading that fills the whole screen. Used when fetching from backend
 const Loading = () => (
   <LoadingWrapper>
     <InnerWrapper>

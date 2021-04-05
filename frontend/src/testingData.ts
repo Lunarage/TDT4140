@@ -1,3 +1,4 @@
+// used for frontend testing
 export const eventTest = {
     id: 1,
     title: "test",
