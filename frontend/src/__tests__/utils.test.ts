@@ -7,6 +7,8 @@ import {
     parseIntWithUndefined,
 } from "../functions";
 
+// tests for all general functions
+
 describe("Testing functions", () => {
     test("toUpperCase test", () => {
         const value = toUpperCase("test");
