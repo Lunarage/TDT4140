@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { redHexColorHover } from '../consts';
-import Button, { CustomButton } from './Button';
+import { getEvents } from '../store/actionCreators';
+import { State } from '../store/types';
+import { CustomButton, TextWrapper } from './Button';
 
 const FilterWrapper = styled.div`
   background-color: #c91801;
@@ -21,7 +24,6 @@ const FilterHeader = styled.h2`
   color: white;
   text-shadow: 4px 4px 4px darkred;
   padding: 5% 2% 0% 4%;
-  
   `;
 
 const FilterSearchInput = styled.div`
@@ -93,6 +95,16 @@ const SelectedFiltersWrap = styled.div`
   color: white;
 `;
 
+const Button = styled(CustomButton) `
+  background-color: white;
+  width: fit-content;
+  min-width: 5em;
+`
+
+const ButtonTextWrapper = styled(TextWrapper) `
+  color: darkred;
+`
+
 
 interface CheckBoxProps {
   tittel: string;
@@ -113,55 +125,62 @@ interface SelectedFiltersProps {
 }
 
 const SelectedFilters = ( props: SelectedFiltersProps) => {
-  
-  const renderButtons =  (list: Array<string>) => {
-    for (let i=0; i<list.length; i++) {
-      <h1>"test"</h1>;
-    }
+  const test = ["Innendørs", "Sykkel", "Skistøvler", "Helikopter"];
+  const renderButtons =  (filter: string) => {
+    return (
+      <Button>
+        <ButtonTextWrapper>{filter}</ButtonTextWrapper>
+      </Button>
+    );
   }
 
-  const l = ["Sykkel", "Utendørs"];
-
   return (
-    
     <SelectedFiltersWrap>
       <p>{props.tittel}</p>
-      
+      {test.map(renderButtons)}
     </SelectedFiltersWrap>
   );
 }
 
 
-interface FilterProps {
-  filters: Array<string>;
-}
+const Filter = () => {
+  const dispatch = useDispatch();
+  const [selectedFilters, setSelectedFilters] = useState<string[]>([]);  
 
-class Filter extends React.Component {
-  constructor(props: FilterProps) {
-    super(props);
-    this.state = {
-      filters: ["Sykkel", "Utendørs"]
-    }
-  }
-  handleClickOnBox() {
+  const {
+    categories: categoriesData,
+    isLoading: categoriesLoading,
+  } = useSelector((state: State) => state.categoriesReducer);
 
+  const {
+    equipment: equipmentData,
+    isLoading: equipmentLoading,
+  } = useSelector((state: State) => state.equipmentReducer);
+
+  const {
+    organizations,
+    isLoading: orgsLoading,
+  } = useSelector((state: State) => state.orgsReducer);
+
+  useEffect(() => {
+    dispatch(getEvents());
+  }, [dispatch]);
+
+  return (
+    <FilterWrapper>
+      <FilterHeader> Søk etter aktiviteter: </FilterHeader>
+      <FilterSearchInput> Skriv inn søkeørd ... </FilterSearchInput>
+      <CheckBoxes tittel="Innendørs" />
+      <CheckBoxes tittel="Utendørs" />
+      <DropDown> Kategori </DropDown>
+      <DropDown> Utstyr </DropDown>
+      <DropDown> Organisasjon </DropDown>
+      <DropDown> Intensistet </DropDown>
+      <DropDown> Pris </DropDown>
+      <SelectedFilters tittel="Utvalgte filtre: " filters={selectedFilters} />
+    </FilterWrapper>
+  );
   }
-  render () {
-    return (
-      <FilterWrapper>
-        <FilterHeader> Søk etter aktiviteter: </FilterHeader>
-        <FilterSearchInput> Skriv inn søkeørd ... </FilterSearchInput>
-        <CheckBoxes tittel="Innendørs" />
-        <CheckBoxes tittel="Utendørs" />
-        <DropDown> Kategori </DropDown>
-        <DropDown> Utstyr </DropDown>
-        <DropDown> Organisasjon </DropDown>
-        <DropDown> Intensistet </DropDown>
-        <DropDown> Pris </DropDown>
-        <SelectedFilters tittel="Utvalgte filtre: " filters={["Sykkel", "Utendørs"]} />
-      </FilterWrapper>
-    );
-  }
-}
+
 
 export default Filter;

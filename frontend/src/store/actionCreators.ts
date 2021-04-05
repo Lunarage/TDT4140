@@ -135,12 +135,16 @@ export const getCurrentUser = (token: string) => {
     };
 };
 
-export const getEvents = () => {
+export const getEvents = (filters?: string) => {
+    let filterString = "";
+    if (filters) {
+        filterString = filters;
+    }  
     return (dispatch: DispatchType) => {
         dispatch({ type: ActionTypes.EVENTS_LOADING, payload: [] });
         let client = new HttpClient(baseUrl);
         return client
-            .get("api/activity")
+            .get("api/activity/"+filterString)
             .then((r) => handleError(r))
             .then((response) => {
                 dispatch({

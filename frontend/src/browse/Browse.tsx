@@ -85,9 +85,6 @@ const Browse = () => {
     errorMessage: eventsError,
   } = useSelector((state: State) => state.eventsReducer);
 
-  useEffect(() => {
-    dispatch(getEvents());
-  }, [dispatch, type]);
 
   const handleActivityClick = (num: number) => {
     setShowExpanded(true)
@@ -98,7 +95,7 @@ const Browse = () => {
     <>
       {showExpanded && events && <ExpandWrapper > <ActivityExpand data={events[activityNum]} onExitFunc={() => setShowExpanded(false)} /></ExpandWrapper>}
       <PageWrapper >
-        <Header />
+        <Header line={true}/>
         <ContentWrapper>
           <SideBar>
             <Filter />

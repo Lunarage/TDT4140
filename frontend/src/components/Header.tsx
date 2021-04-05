@@ -80,10 +80,15 @@ export enum Type {
   arrangementer = "Arrangementer"
 }
 
-const Header = () => {
+interface HeaderProps {
+  line?: boolean,
+}
+
+const Header = ({line}: HeaderProps) => {
   const history = useHistory();
   const [showCreateNew, setShowCreateNew] = useState<boolean>(false);
   const [showSuccess, setShowSuccess] = useState<boolean>(false);
+  const [underline, setUnderline] = useState<any>(undefined);
 
   const {
     user,
@@ -101,6 +106,12 @@ const Header = () => {
       localStorage.setItem("id", user.id.toString())
     }
   }, [user]);
+
+  useEffect(() => {
+    if (line) {
+      setUnderline({borderBottom: `20px solid ${redHexColor}`})
+    }
+  }, [line]);
 
   const setUrl = (tab: string) => {
     history.push(tab);
@@ -131,7 +142,7 @@ const Header = () => {
       {!showCreateNew && showSuccess && (eventError ?
         <NewActivityResponse>Klarte ikke å poste aktiviteten.</NewActivityResponse> :
         event && <NewActivityResponse>{event?.title} er postet!</NewActivityResponse>)}
-      <Wrapper>
+      <Wrapper style={underline}>
         <Logo onClick={() => setUrl("/")}>{pageName}</Logo>
         <TabsWrapper>
           <Tab onClick={() => handleTypeClick("/browse", "aktiviteter")}>
