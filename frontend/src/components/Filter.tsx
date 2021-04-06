@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { redHexColorHover } from '../consts';
-import { getEvents } from '../store/actionCreators';
+import { getEvents, getOrgs } from '../store/actionCreators';
 import { State } from '../store/types';
 import { CustomButton, TextWrapper } from './Button';
 import Button from './Button';
+import './DropDown.css';
 
 const FilterWrapper = styled.div`
   background-color: #c91801;
@@ -66,23 +67,9 @@ const CheckBoxTittel = styled.div`
   text-shadow: 4px 4px 4px #8b0000;
 `;
 
-const DropDown = styled.div`
-  background-color: rgba(255,78,55,0.31);
-  background-blend-mode: saturation;
-  width: 187px;
-  height: 35px;
-  font-size: 18px;
-  font-weight: 600;
-  line-height: 1.75;
-  color: white;
-  padding-left: 4%;
-  margin: 4% 4% 0% 0%;
-  text-shadow: 4px 4px 4px #8b0000;
-  box-shadow: 4px 4px 4px #8b0000;
-
-  &:hover{
-    background-color: rgba(255,78,55);
-  }
+const DropDownWrapAll = styled.div`
+  height: fit-content;
+  margin-top: 10%;
 `;
 
 const SelectedFiltersWrap = styled.div`
@@ -107,6 +94,14 @@ const ButtonTextWrapper = styled(TextWrapper) `
 `
 
 
+const SearchField = () => {
+  return (
+    <FilterSearchInput>
+      Skriv inn nøkkelord ...
+    </FilterSearchInput>
+  )
+}
+
 interface CheckBoxProps {
   tittel: string;
   onClick: () => void;
@@ -120,6 +115,26 @@ const CheckBoxes = (props: CheckBoxProps) => {
     </CheckBoxWrap>
   );
 }
+
+
+interface DropDownProps {
+  tittel: string;
+}
+
+const DropDown = (props: DropDownProps) => {
+  
+  return (
+    <form>
+      <label className="dropDownLabel">Kategorier</label>
+      <select className="dropDownWrapper">
+          <option className="dropDownText">Alt test 1</option>
+          <option className="dropDownText">Alt test 2</option>
+        </select>
+    </form>
+    
+  )
+}
+
 
 interface SelectedFiltersProps {
   tittel: string;
@@ -147,12 +162,14 @@ const SelectedFilters = ( props: SelectedFiltersProps) => {
 
 const Filter = () => {
   const dispatch = useDispatch();
-  const [selectedFilters, setSelectedFilters] = useState<string[]>(["Det funker, yay!"]);  
+  const [selectedFilters, setSelectedFilters] = useState<string[]>(["Det funker, yay!"]);
+  const [urlFilters, setUrlFilters] = useState<string>("");  
 
   const {
     categories: categoriesData,
     isLoading: categoriesLoading,
   } = useSelector((state: State) => state.categoriesReducer);
+  console.log(categoriesData);
 
   const {
     equipment: equipmentData,
@@ -163,10 +180,17 @@ const Filter = () => {
     organizations,
     isLoading: orgsLoading,
   } = useSelector((state: State) => state.orgsReducer);
+  console.log(organizations);
 
   useEffect(() => {
-    dispatch(getEvents());
-  }, [dispatch]);
+    if (!organizations) {
+      dispatch(getOrgs());
+    }
+  }, [dispatch, organizations]);
+
+  useEffect(() => {
+    dispatch(getEvents(urlFilters));
+  }, [dispatch, urlFilters]);
 
 
   const handleOnClickSelect = (filter: string) => {
@@ -181,14 +205,16 @@ const Filter = () => {
   return (
     <FilterWrapper>
       <FilterHeader> Søk etter aktiviteter: </FilterHeader>
-      <FilterSearchInput> Skriv inn søkeørd ... </FilterSearchInput>
+      <SearchField />
       <CheckBoxes tittel="Innendørs" onClick={() => handleOnClickSelect("Innendørs")}/>
       <CheckBoxes tittel="Utendørs" onClick={() => handleOnClickSelect("Utendørs")}/>
-      <DropDown> Kategori </DropDown>
-      <DropDown> Utstyr </DropDown>
-      <DropDown> Organisasjon </DropDown>
-      <DropDown> Intensistet </DropDown>
-      <DropDown> Pris </DropDown>
+      <CheckBoxes tittel="Gratis (Pris: 0kr)" onClick={() => handleOnClickSelect("Gratis (Pris: 0kr)")}/>
+      <DropDownWrapAll>
+        <DropDown tittel="Kategori" />
+        <DropDown tittel="Utstyr" />
+        <DropDown tittel="Organisasjon" />
+        <DropDown tittel="Intensistet" />
+      </DropDownWrapAll>
       <SelectedFilters tittel="Utvalgte filtre: " filters={selectedFilters} />
       <Button text={"Klikk for å nulstille filtre"} onClickFunc={handleClear}/>
     </FilterWrapper>
