@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { redHexColorHover } from '../consts';
-import { getEvents, getOrgs } from '../store/actionCreators';
+import { getCategories, getEquipment, getEvents, getOrgs } from '../store/actionCreators';
 import { State } from '../store/types';
 import { CustomButton, TextWrapper } from './Button';
 import Button from './Button';
@@ -119,19 +119,32 @@ const CheckBoxes = (props: CheckBoxProps) => {
 
 interface DropDownProps {
   tittel: string;
+  items: string[];
+  onClick: any;
+  state: string[];
 }
 
 const DropDown = (props: DropDownProps) => {
+  const [selected, setSelected] = useState<string>();
+  
+  const handleGetItems = (item: string) => {
+    return (
+      <option className="dropDownItem" value={item}> {item} </option>
+    );
+  }
+  const handleSelectDropDownItem = (event: any) => {
+    setSelected(event.target.value);
+  }
+
   
   return (
-    <form>
-      <label className="dropDownLabel">Kategorier</label>
-      <select className="dropDownWrapper">
-          <option className="dropDownText">Alt test 1</option>
-          <option className="dropDownText">Alt test 2</option>
+    <form onSubmit={props.onClick(selected)}>
+      <label className="dropDownLabel">{props.tittel+" :"}</label>
+      <select className="dropDownWrapper" onChange={handleSelectDropDownItem} value={selected}>
+          <option className="dropDownItemTitle">{"Velg "+props.tittel+":"}</option>
+          {props.items.map(handleGetItems)}
         </select>
     </form>
-    
   )
 }
 
@@ -142,7 +155,6 @@ interface SelectedFiltersProps {
 }
 
 const SelectedFilters = ( props: SelectedFiltersProps) => {
-  //const test = ["Innendørs", "Sykkel", "Skistøvler", "Helikopter"];
   const renderButtons =  (filter: string) => {
     return (
       <FilterButton>
@@ -150,7 +162,7 @@ const SelectedFilters = ( props: SelectedFiltersProps) => {
       </FilterButton>
     );
   }
-
+  console.log(props.filters)
   return (
     <SelectedFiltersWrap>
       <p>{props.tittel}</p>
@@ -160,16 +172,31 @@ const SelectedFilters = ( props: SelectedFiltersProps) => {
 }
 
 
+// Main function for the filter component
 const Filter = () => {
   const dispatch = useDispatch();
-  const [selectedFilters, setSelectedFilters] = useState<string[]>(["Det funker, yay!"]);
+
+  // States of data from database
+  const [availableOrganizations, setAvailableOrganizations] = useState<string[]>([]);
+  const [availableCategories, setAvailableCategories] = useState<string[]>([]);
+  const [availableEquipment, setAvailableEquipment] = useState<string[]>([]);
+  const [availableIntensity, setAvailableIntensity] = useState<string[]>(["Intensitet = 1", "Intensitet = 2", "Intensitet = 3", "Intensitet = 4", "Intensitet = 5"]);
+ 
+  //States of the filter component
+  const [selectedFilters, setSelectedFilters] = useState<string[]>(["Det funker bra hittils :)"]);  // Collects all selected filters
   const [urlFilters, setUrlFilters] = useState<string>("");  
+  const [selectedBoxFilters, setSelectedBoxFilters] = useState<string[]>([]);  // Collects filters chosen by checkboxes
+  const [selectedEquipment, setSelectedEquipment] = useState<string[]>([]);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [selectedOrganizations, setSelectedOrganizations] = useState<string[]>([]);
+  const [selectedIntensity, setSelectedIntensity] = useState<string[]>([]);
+  
 
   const {
     categories: categoriesData,
     isLoading: categoriesLoading,
   } = useSelector((state: State) => state.categoriesReducer);
-  console.log(categoriesData);
+  
 
   const {
     equipment: equipmentData,
@@ -180,26 +207,73 @@ const Filter = () => {
     organizations,
     isLoading: orgsLoading,
   } = useSelector((state: State) => state.orgsReducer);
-  console.log(organizations);
+
 
   useEffect(() => {
     if (!organizations) {
       dispatch(getOrgs());
+    } else {
+      let orgs: string[] = [];
+      organizations.forEach((org) => {orgs.push(org.name)})
+      setAvailableOrganizations(orgs);
     }
   }, [dispatch, organizations]);
+
+
+  useEffect(() => {
+    if (!categoriesData) {
+      dispatch(getCategories());
+    } else {
+      let cats: string[] = [];
+      categoriesData.forEach((cat) => {cats.push(cat.name)})
+      setAvailableCategories(cats);
+    }
+  }, [dispatch, categoriesData]);
+
+
+  useEffect(() => {
+    if (!equipmentData) {
+      dispatch(getEquipment());
+    } else {
+      let equipments: string[] = [];
+      equipmentData.forEach((equipment) => {equipments.push(equipment.name)})
+      setAvailableEquipment(equipments);
+    }
+  }, [dispatch, equipmentData]);
+
 
   useEffect(() => {
     dispatch(getEvents(urlFilters));
   }, [dispatch, urlFilters]);
+
+  const updateFilters = () => {
+    console.log("Den kjører")
+    const kopi = selectedFilters;
+    selectedCategories.forEach((item) => {if (!kopi.includes(item) && item) {
+      kopi.push(item)
+    }});
+    setSelectedFilters(kopi);
+  }
+  
 
 
   const handleOnClickSelect = (filter: string) => {
     setSelectedFilters(selectedFilters.concat(filter));
   }
 
+
   const handleClear = () => {
     setSelectedFilters([]);
   }
+
+
+  const handleSubmit = (filter: string) => {
+    if ( !selectedCategories.includes(filter) ) {
+        setSelectedCategories(selectedCategories.concat(filter));
+        updateFilters();
+        console.log(filter)
+      }
+  };
 
 
   return (
@@ -210,10 +284,26 @@ const Filter = () => {
       <CheckBoxes tittel="Utendørs" onClick={() => handleOnClickSelect("Utendørs")}/>
       <CheckBoxes tittel="Gratis (Pris: 0kr)" onClick={() => handleOnClickSelect("Gratis (Pris: 0kr)")}/>
       <DropDownWrapAll>
-        <DropDown tittel="Kategori" />
-        <DropDown tittel="Utstyr" />
-        <DropDown tittel="Organisasjon" />
-        <DropDown tittel="Intensistet" />
+        <DropDown 
+          tittel="Kategori" 
+          items={availableCategories}
+          onClick={(filter: string) => handleSubmit(filter)}
+          state={selectedCategories}/>
+        <DropDown 
+          tittel="Utstyr" 
+          items={availableEquipment}
+          onClick={(filter: string) => handleSubmit(filter)}
+          state={selectedEquipment}/>
+        <DropDown 
+          tittel="Organisasjon" 
+          items={availableOrganizations}
+          onClick={(filter: string) => handleSubmit(filter)}
+          state={selectedOrganizations}/>
+        <DropDown 
+          tittel="Intensistet" 
+          items={availableIntensity}
+          onClick={(filter: string) => handleSubmit(filter)}
+          state={selectedIntensity}/>
       </DropDownWrapAll>
       <SelectedFilters tittel="Utvalgte filtre: " filters={selectedFilters} />
       <Button text={"Klikk for å nulstille filtre"} onClickFunc={handleClear}/>
