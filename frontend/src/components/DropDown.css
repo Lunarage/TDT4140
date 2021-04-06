@@ -27,12 +27,14 @@ code {
 .dropDownWrapper {
   background-color: rgba(255,78,55,0.31);
   background-blend-mode: saturation;
-  width: 187px;
+  width: 170px;
   height: 35px;
   margin: 4% 4% 10% 0%;
   box-shadow: 4px 4px 4px #8b0000;
   border: none;
-  color: white;
+  color:rgba(255, 255, 255, 0.651);
+  padding-left: 4%;
+   
 }
 
 .dropDownWrapper:hover {
@@ -49,8 +51,16 @@ code {
 }
 
 
-.dropDownText {
+.dropDownItem {
   color: black;
-  font-weight: 600;
-  padding-left: 10%;
+  padding-left: 4%;
+  background-color: lightgrey;
+}
+
+.dropDownItem:hover {
+  background-color: rgba(255,78,55);
+}
+
+.dropDownItemTitle {
+  color: darkred;
 }
