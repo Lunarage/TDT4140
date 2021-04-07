@@ -28,45 +28,6 @@ const FilterHeader = styled.h2`
   color: white;
   text-shadow: 4px 4px 4px darkred;
   padding: 5% 2% 0% 4%;
-  `;
-
-const FilterSearchInput = styled.div`
-  width: 100% inherit;
-  height: 30px inherit;
-  background-color: #ffc6c6;
-  margin: 0 4% 4% 4%;
-  padding: 2% 2% 2% 3%;
-  vertical-align: middle;
-  color: #313131;
-`;
-
-const CheckBoxWrap = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding-left: 4%;
-  margin: 4% 4% 4% 0;
-`;
-
-const CheckBox = styled.div`
-  width: 20px;
-  height: 20px;
-  border-style: solid;
-  border-color: white;
-  opacity: 1;
-  box-shadow: 4px 4px 4px #8b0000;
-
-  &:hover {
-    background-color: white;
-  }
-`;
-
-const CheckBoxTittel = styled.div`
-  font-weight: 600;
-  font-size: 17px;
-  color: white;
-  padding-left: 4%;
-  text-shadow: 4px 4px 4px #8b0000;
 `;
 
 const DropDownWrapAll = styled.div`
@@ -140,23 +101,6 @@ const SearchField = (props: SearchFieldProps) => {
 
 
 
-interface CheckBoxProps {
-  tittel: string;
-  onClick: () => void;
-}
-
-const CheckBoxes = (props: CheckBoxProps) => {
-  return (
-    <CheckBoxWrap>
-      <CheckBox onClick= {props.onClick}/>
-      <CheckBoxTittel>{props.tittel}</CheckBoxTittel>
-    </CheckBoxWrap>
-  );
-}
-
-
-
-
 interface DropDownProps {
   tittel: string;
   items: string[];
@@ -190,13 +134,13 @@ const DropDown = (props: DropDownProps) => {
 
 
 
-
 interface SelectedFiltersProps {
   tittel: string;
   filters: string [];
 }
 
 const SelectedFilters = ( props: SelectedFiltersProps) => {
+  console.log(props.filters)
   const renderButtons =  (filter: string) => {
     return (
       <FilterButton key={filter}>
@@ -298,12 +242,13 @@ const Filter = () => {
     let currentSelectedCategory = selectedCategory;
     let newSelectedCategory = selectedCategory;
     let oldSelectedCategory = "";
-    if (currentSelectedCategory!=filter && !filter.startsWith("--")) {
+    if (!filter.startsWith("--")) {
       newSelectedCategory = filter;
       oldSelectedCategory = currentSelectedCategory;
     }
+    console.log(newSelectedCategory)
     setSelectedCategory(newSelectedCategory);
-    updateSelectedFilters(newSelectedCategory, oldSelectedCategory);
+    
   }
 
 
@@ -316,7 +261,7 @@ const Filter = () => {
       oldSelectedEquipment = currentSelectedEquipment;
     }
     setSelectedEquipment(newSelectedEquipment);
-    updateSelectedFilters(newSelectedEquipment, oldSelectedEquipment);
+    
   }
 
 
@@ -329,7 +274,7 @@ const Filter = () => {
       oldSelectedOrganization = currentSelectedOrganization;
     }
     setSelectedOrganization(newSelectedOrganization);
-    updateSelectedFilters(newSelectedOrganization, oldSelectedOrganization);
+    
   }
 
 
@@ -342,7 +287,7 @@ const Filter = () => {
       oldSelectedIntensityFilter = currentSelectedIntensityFilter;
     }
     setSelectedIntensity(newSelectedIntensityFilter);
-    updateSelectedFilters(newSelectedIntensityFilter, oldSelectedIntensityFilter);
+    
   }
 
 
@@ -355,7 +300,7 @@ const Filter = () => {
       oldSelectedKeyword = currentSelectedKeyword;
     }
     setSelectedKeyWord(newSelectedKeyword);
-    updateSelectedFilters(newSelectedKeyword, oldSelectedKeyword);
+    
   }
 
 
@@ -368,35 +313,24 @@ const Filter = () => {
       oldSelectedLocation = currentSelectedLocation;
     }
     setSelectedLocation(newSelectedLocation);
-    updateSelectedFilters(newSelectedLocation, oldSelectedLocation);
+    
   }
 
 
-  const updateSelectedFilters = (newFilter: string, oldFilter: string) => {
-    let currentSelectedFilters = selectedFilters;
-    let updatedSelectedFilters = selectedFilters;
-      if (!currentSelectedFilters.includes(oldFilter) && oldFilter=="") {
-        updatedSelectedFilters = currentSelectedFilters.concat(oldFilter);
-        setSelectedFilters(updatedSelectedFilters);
-      }
-      if ( currentSelectedFilters.includes(oldFilter) && oldFilter!="") {
-        let newSelectedFilters: string[] = [];
-        currentSelectedFilters.forEach((filter) => {
-          if (filter!=oldFilter) {
-            newSelectedFilters.push(filter);
-          }
-        });
-        newSelectedFilters.push(newFilter);
-        updatedSelectedFilters = newSelectedFilters;
-      }
-    setSelectedFilters(updatedSelectedFilters);    
+  const updateSelectedFilters = () => {
+      let updatedSelectedFilters: string[] = [];
+      let allFilters = [selectedKeyWord, selectedLocation, selectedCategory, selectedEquipment, selectedOrganization, selectedIntensity];
+      allFilters.forEach((filterCategory) => {
+        if (filterCategory!=""){
+          updatedSelectedFilters = updatedSelectedFilters.concat(filterCategory);
+        }
+      });
+      setSelectedFilters(updatedSelectedFilters);
   }
 
-
-  const refreshFilterSearch = (url: string) => {
-    console.log(url);
-    dispatch(getEvents(url));
-  }
+  useEffect (() => {
+    updateSelectedFilters();
+  }, [selectedCategory, selectedEquipment, selectedIntensity, selectedKeyWord, selectedLocation, selectedOrganization])
 
 
   const handleClear = () => {
@@ -407,10 +341,10 @@ const Filter = () => {
     setSelectedIntensity("");
     setSelectedKeyWord("");
     setSelectedOrganization("");
+    setSelectedLocation("");
   }
 
   useEffect (() => {
-    console.log(selectedFilters);
     let string = "";
     // Steg1
     if (selectedKeyWord!="") {
@@ -424,7 +358,7 @@ const Filter = () => {
       string += "categories__name__icontains="+selectedCategory+"&";
     }
     if (selectedIntensity!="") {
-      let intensity = selectedIntensity[0]
+      let intensity = selectedIntensity
       string += "activity_level__icontains="+intensity.charAt(intensity.length-1)+"&";
     }
     if (selectedEquipment!="") {
