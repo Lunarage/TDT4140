@@ -139,9 +139,7 @@ class Activity(models.Model):
             return False
 
     def is_full(self):
-      if (self.max_participants):
         return self.signed_up.all().count() >= self.max_participants
-      return False
 
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
