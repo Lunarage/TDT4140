@@ -10,6 +10,7 @@ import './DropDown.css';
 import './FilterSearchField.css';
 
 
+// styling for tha main filter component
 const FilterWrapper = styled.div`
   background-color: #c91801;
   height: 962px;
@@ -22,6 +23,7 @@ const FilterWrapper = styled.div`
   align-content: space-between;
   `;
 
+// styling for the header of 
 const FilterHeader = styled.h2`
   font-weight: bold;
   font-size: 21px;
@@ -30,11 +32,13 @@ const FilterHeader = styled.h2`
   padding: 5% 2% 0% 4%;
 `;
 
+// size wrapping
 const DropDownWrapAll = styled.div`
   height: fit-content;
   margin-top: 10%;
 `;
 
+// styling for container that displays buttons with information about selected filters
 const SelectedFiltersWrap = styled.div`
   background-color: rgba(255,78,55,0.31);
   width = 100% inherit;
@@ -46,12 +50,14 @@ const SelectedFiltersWrap = styled.div`
   color: white;
 `;
 
+// styling for button displaying a selected filter
 const FilterButton = styled(CustomButton) `
   background-color: white;
   width: fit-content;
   min-width: 5em;
 `
 
+// styling of text of FilterButton
 const ButtonTextWrapper = styled(TextWrapper) `
   color: darkred;
 `
@@ -63,6 +69,8 @@ interface SearchFieldProps {
   submitFunction: any;
 }
 
+// input component of the filter component
+// the search field will take in a value and base the filtering on the entered value.
 const SearchField = (props: SearchFieldProps) => {
   const [ord, setOrd] = useState<string>("");
 
@@ -71,7 +79,7 @@ const SearchField = (props: SearchFieldProps) => {
   }
 
   const updateWord =  (event: any) => {
-    props.submitFunction(ord)  
+    props.submitFunction(ord)  // sends the selected word to the main Filter component to handle that the filter value has been selected.
     setOrd("");  
   }
 
@@ -107,9 +115,11 @@ interface DropDownProps {
   addFunction: any;
 }
 
+// dropdown component for the filter component
 const DropDown = (props: DropDownProps) => {
   const [selected, setSelected] = useState<string>("");
   
+  // retrieves and renders the available values based on existing data
   const handleGetItems = (item: string) => {
     return (
       <option key={item} className="dropDownItem" value={item}> {item} </option>
@@ -139,6 +149,8 @@ interface SelectedFiltersProps {
   filters: string [];
 }
 
+
+// component that shows/displays filters that have been selected and that is currently being searched on.
 const SelectedFilters = ( props: SelectedFiltersProps) => {
   console.log(props.filters)
   const renderButtons =  (filter: string) => {
@@ -241,12 +253,9 @@ const Filter = () => {
   const handleSelectedCategoryItem = (filter: string) => {
     let currentSelectedCategory = selectedCategory;
     let newSelectedCategory = selectedCategory;
-    let oldSelectedCategory = "";
     if (!filter.startsWith("--")) {
       newSelectedCategory = filter;
-      oldSelectedCategory = currentSelectedCategory;
     }
-    console.log(newSelectedCategory)
     setSelectedCategory(newSelectedCategory);
     
   }
@@ -255,10 +264,8 @@ const Filter = () => {
   const handleSelectedEquipmentFilters = (filter: string) => {
     let currentSelectedEquipment = selectedEquipment;
     let newSelectedEquipment = selectedEquipment;
-    let oldSelectedEquipment = "";
     if (currentSelectedEquipment!=filter && !filter.startsWith("--")) {
       newSelectedEquipment = filter;
-      oldSelectedEquipment = currentSelectedEquipment;
     }
     setSelectedEquipment(newSelectedEquipment);
     
@@ -281,10 +288,8 @@ const Filter = () => {
   const handleSelectIntensity = (filter: string) => {
     let currentSelectedIntensityFilter = selectedIntensity;
     let newSelectedIntensityFilter = selectedIntensity;
-    let oldSelectedIntensityFilter = "";
     if (currentSelectedIntensityFilter!=filter && !filter.startsWith("--")) {
       newSelectedIntensityFilter = filter;
-      oldSelectedIntensityFilter = currentSelectedIntensityFilter;
     }
     setSelectedIntensity(newSelectedIntensityFilter);
     
@@ -294,10 +299,8 @@ const Filter = () => {
   const handleSubmitKeyword = (keyword: string) => {
     let currentSelectedKeyword = selectedIntensity;
     let newSelectedKeyword = selectedIntensity;
-    let oldSelectedKeyword = "";
     if (currentSelectedKeyword!=keyword && !keyword.startsWith("--")) {
       newSelectedKeyword = keyword;
-      oldSelectedKeyword = currentSelectedKeyword;
     }
     setSelectedKeyWord(newSelectedKeyword);
     
@@ -307,10 +310,8 @@ const Filter = () => {
   const handleSubmitLocation = (location: string) => {
     let currentSelectedLocation = selectedIntensity;
     let newSelectedLocation = selectedIntensity;
-    let oldSelectedLocation = "";
     if (currentSelectedLocation!=location && !location.startsWith("--")) {
       newSelectedLocation = location;
-      oldSelectedLocation = currentSelectedLocation;
     }
     setSelectedLocation(newSelectedLocation);
     
@@ -352,7 +353,7 @@ const Filter = () => {
       string += "description__icontains="+selectedKeyWord+"&";
     }
     if (selectedLocation!="") {
-      string += "location_icontains="+selectedLocation+"&";
+      string += "location__icontains="+selectedLocation+"&";
     }    
     if (selectedCategory!="") {
       string += "categories__name__icontains="+selectedCategory+"&";
