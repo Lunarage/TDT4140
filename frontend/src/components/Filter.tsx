@@ -98,6 +98,7 @@ const ButtonTextWrapper = styled(TextWrapper) `
 
 
 interface SearchFieldProps {
+  tittel: string;
   submitFunction: any;
 }
 
@@ -116,7 +117,7 @@ const SearchField = (props: SearchFieldProps) => {
   return (
     <div>
       <form >
-        <label className="filterSearchInputLabel">Skriv inn søkeord ...
+        <label className="filterSearchInputLabel">{"Skriv inn "+props.tittel+" ..."}
           <input 
           className="filterSearchInput" 
           type="text" 
@@ -130,7 +131,7 @@ const SearchField = (props: SearchFieldProps) => {
         type="submit" 
         onClick={updateWord}
         >
-          {"Legg til søkeord"}
+          {"Legg til "+props.tittel}
         </button>
     </div>
   )
@@ -233,6 +234,7 @@ const Filter = () => {
   const [selectedOrganizations, setSelectedOrganizations] = useState<string[]>([]);
   const [selectedIntensity, setSelectedIntensity] = useState<string[]>([]);
   const [selectedKeyWords, setSelectedKeyWords] = useState<string[]>([]);
+  const [selectedLocations, setSelectedLocations] = useState<string[]>([]);
   
 
   const {
@@ -359,6 +361,17 @@ const Filter = () => {
   }
 
 
+  const handleSubmitLocation = (location: string) => {
+    let currentSubmittedlocations = selectedLocations;
+    let newSelectedLocations = selectedLocations;
+    if (!currentSubmittedlocations.includes(location) && (location.length > 0)) {
+      newSelectedLocations = currentSubmittedlocations.concat(location);
+    }
+    setSelectedKeyWords(newSelectedLocations);
+    updateSelectedFilters(newSelectedLocations);
+  }
+
+
   const updateSelectedFilters = (filters: string[]) => {
     let currentSelectedFilters = selectedFilters;
     let updatedSelectedFilters = selectedFilters;
@@ -396,6 +409,9 @@ const Filter = () => {
     if (selectedKeyWords.length > 0) {
       string += "title__icontains="+selectedKeyWords[0]+"&";
       string += "description__icontains="+selectedKeyWords[0]+"&";
+    }
+    if (selectedLocations.length > 0) {
+      string += "location_icontains"; //Fortsett her
     }    
     if (selectedCategories.length > 0) {
       string += "categories__name__icontains="+selectedCategories[0]+"&";
@@ -420,8 +436,8 @@ const Filter = () => {
   return (
     <FilterWrapper>
       <FilterHeader> Søk etter aktiviteter: </FilterHeader>
-      <SearchField submitFunction={(keyword: string) => handleSubmitKeyword(keyword)}/>
-      <CheckBoxes tittel="Pris: Gratis" onClick={() => handleSelectCheckBoxItem("Pris: Gratis")}/>
+      <SearchField tittel="søkeord" submitFunction={(keyword: string) => handleSubmitKeyword(keyword)}/>
+      <SearchField tittel="sted" submitFunction={(location:string) => handleSubmitLocation(location)}/>
       <DropDownWrapAll>
         <DropDown 
           tittel="Kategori" 
