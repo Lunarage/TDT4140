@@ -350,7 +350,9 @@ const Filter = () => {
     // Steg1
     if (selectedKeyWord!="") {
       string += "title__icontains="+selectedKeyWord+"&";
-      string += "description__icontains="+selectedKeyWord+"&";
+    }
+    if (selectedOrganization!="") {
+      string += "organization_owner__name__icontains="+selectedOrganization+"&";
     }
     if (selectedLocation!="") {
       string += "location__icontains="+selectedLocation+"&";
