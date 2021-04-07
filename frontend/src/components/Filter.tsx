@@ -298,6 +298,29 @@ const Filter = () => {
     updateSelectedFilters(newSelectedCategories);
   }
 
+
+  const handleSelectedEquipmentFilters = (filter: string) => {
+    let currentSelectedEquipment = selectedEquipment;
+    let newSelectedEquipment = selectedEquipment;
+    if (!currentSelectedEquipment.includes(filter) && !filter.startsWith("--")) {
+      newSelectedEquipment = currentSelectedEquipment.concat(filter);
+    }
+    setSelectedEquipment(newSelectedEquipment);
+    updateSelectedFilters(newSelectedEquipment);
+  }
+
+
+  const handleSelectedOrganizations = (filter: string) => {
+    let currentSelectedOrganizations = selectedOrganizations;
+    let newSelectedOrganization = selectedOrganizations;
+    if (!currentSelectedOrganizations.includes(filter) && !filter.startsWith("--")) {
+      newSelectedOrganization = currentSelectedOrganizations.concat(filter);
+    }
+    setSelectedOrganizations(newSelectedOrganization);
+    updateSelectedFilters(newSelectedOrganization);
+  }
+
+
   const handleSelectIntensity = (filter: string) => {
     let currentSelectedIntensityFilters = selectedIntensity;
     let newSelectedIntensityFilters = selectedIntensity;
@@ -393,11 +416,11 @@ const Filter = () => {
         <DropDown 
           tittel="Utstyr" 
           items={availableEquipment}
-          addFunction={(filter: string) => handleSelectedCategoryItem(filter)}/>
+          addFunction={(filter: string) => handleSelectedEquipmentFilters(filter)}/>
         <DropDown 
           tittel="Organisasjon" 
           items={availableOrganizations}
-          addFunction={(filter: string) => handleSelectedCategoryItem(filter)}/>
+          addFunction={(filter: string) => handleSelectedOrganizations(filter)}/>
         <DropDown 
           tittel="Intensistet" 
           items={availableIntensity}
