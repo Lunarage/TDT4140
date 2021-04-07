@@ -201,8 +201,6 @@ const SelectedFilters = ( props: SelectedFiltersProps) => {
 // Main function for the filter component
 const Filter = () => {
   const dispatch = useDispatch();
-  const url = new URL(window.location.href);
-  console.log(url);
 
   // States of data from database
   const [availableOrganizations, setAvailableOrganizations] = useState<string[]>([]);
