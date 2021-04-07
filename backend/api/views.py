@@ -3,6 +3,7 @@ DOCSTRING HERE!
 """
 
 from api import perms
+import json
 from gjorno.models import Organization, Activity, Equipment, Category
 from django.contrib.auth.models import User
 from rest_framework import viewsets, permissions, filters, status
@@ -149,7 +150,7 @@ class ActivityViewSet(viewsets.ModelViewSet):  # pylint: disable=too-many-ancest
     @action(
         methods=['GET'],
         detail=False,
-        permission_classes=[permissions.IsAuthenticated],
+        permission_classes=[],
     )
     def organization(self, request, *args, **kwargs):
         """
@@ -162,7 +163,7 @@ class ActivityViewSet(viewsets.ModelViewSet):  # pylint: disable=too-many-ancest
     @action(
         methods=['GET'],
         detail=False,
-        permission_classes=[permissions.IsAuthenticated],
+        permission_classes=[],
     )
     def user(self, request, *args, **kwargs):
         """
@@ -171,6 +172,28 @@ class ActivityViewSet(viewsets.ModelViewSet):  # pylint: disable=too-many-ancest
         activities = Activity.objects.filter(organization_owner__isnull=True)
         serializer = ActivitySerializer(activities, many=True)
         return Response(serializer.data)
+    
+    @action(
+        methods=['GET'],
+        detail=False,
+        permission_classes=[permissions.IsAuthenticated & permissions.IsAdminUser],
+    )
+    def statistics(self, request, *args, **kwargs):
+        """
+        Get statistics for activities
+        """
+        activities = Activity.objects.all()
+        stats = {}
+        for activity in activities:
+            tagged = Activity.objects.filter(id=activity.id).values('tagged')
+            tagged_len = len(tagged)
+            if (tagged[0]['tagged'] == None):
+                tagged_len = 0
+            titles = activity.id
+            stats[titles] = tagged_len
+        # Serializing json   
+        json_object = json.dumps(stats, indent = 4)  
+        return Response(json_object)
 
 
 class UserViewSet(viewsets.ModelViewSet):  # pylint: disable=too-many-ancestors

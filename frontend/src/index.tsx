@@ -14,25 +14,27 @@ import { Action, State } from "./store/types";
 import {
   eventsReducer,
   orgsReducer,
-  getUserReducer,
-  postUserReducer,
   categoriesReducer,
   equipmentReducer,
   postEventReducer,
-  getCurrentUserReducer
+  getCurrentUserReducer,
+  signUpsReducer,
+  starredReducer,
+  myActivitiesReducer
 } from "./store/reducers";
 import 'semantic-ui-css/semantic.min.css'
 
-
+// reducers used in store
 const allReducers: Reducer<State, Action> = combineReducers({
   eventsReducer,
   orgsReducer,
   categoriesReducer,
   equipmentReducer,
-  getUserReducer,
   getCurrentUserReducer,
-  postUserReducer,
-  postEventReducer
+  postEventReducer,
+  starredReducer,
+  signUpsReducer,
+  myActivitiesReducer,
 });
 
 export const store = createStore(allReducers, applyMiddleware(thunk));
@@ -50,7 +52,7 @@ ReactDOM.render(
       </BrowserRouter>
     </Provider>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById('root') || document.createElement("div") //for testing purposes
 );
 
 // If you want to start measuring performance in your app, pass a function

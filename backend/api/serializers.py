@@ -27,10 +27,11 @@ class ActivitySerializer(serializers.ModelSerializer):
     organization_owner_name = serializers.ReadOnlyField(source='organization_owner.name')
     equipment_used_names = serializers.StringRelatedField(source='equipment_used', many=True, read_only=True)
     categories_names = serializers.StringRelatedField(source='categories', many=True, read_only=True)
+    # activity_image_file = serializers.ImageField(source='image.file') 
 
     class Meta:  # pylint: disable=too-few-public-methods
         model = Activity
-        fields = ["id", "title", "date", "organization_owner", "organization_owner_name", "user_owner", "user_owner_username", "description", "location", "categories", "categories_names", "activity_level", "equipment_used", "equipment_used_names", "max_participants"]
+        fields = ["id", "title", "date", "organization_owner", "organization_owner_name", "user_owner", "user_owner_username", "description", "location", "categories", "categories_names", "activity_level", "equipment_used", "equipment_used_names", "max_participants", "activity_image", "activity_price"]
 
 class UserSerializer(serializers.ModelSerializer):
     """

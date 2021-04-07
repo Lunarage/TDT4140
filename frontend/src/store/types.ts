@@ -1,5 +1,6 @@
 import { Activity, Category, Equipment, User } from "../types/APITypes";
-import { AuthenticationResponse } from "../utilities/types";
+
+// types for action and store state.
 
 export type Action = {
     type: string;
@@ -13,10 +14,11 @@ export type State = {
     orgsReducer: OrgsState;
     categoriesReducer: CategoriesState;
     equipmentReducer: EquipmentState;
-    getUserReducer: GetUserState;
     getCurrentUserReducer: GetCurrentUserState;
-    postUserReducer: PostUserState;
     postEventReducer: PostEventState;
+    starredReducer: StarredState;
+    signUpsReducer: SignUpsState;
+    myActivitiesReducer: MyActivitiesState;
 };
 
 type BaseState = {
@@ -28,16 +30,8 @@ export type EventsState = BaseState & {
     events?: Event[];
 };
 
-export type GetUserState = BaseState & {
-    user?: AuthenticationResponse;
-};
-
 export type GetCurrentUserState = BaseState & {
     currentUser?: User[];
-};
-
-export type PostUserState = BaseState & {
-    user?: User;
 };
 
 export type PostEventState = BaseState & {
@@ -56,6 +50,18 @@ export type EquipmentState = BaseState & {
     equipment?: Equipment[];
 };
 
+export type StarredState = BaseState & {
+    starred?: Event[];
+};
+
+export type SignUpsState = BaseState & {
+    signUps?: Event[];
+};
+
+export type MyActivitiesState = BaseState & {
+    myActivities?: Event[];
+};
+
 export type Organization = BaseState & {
     id: number;
     name: string;
@@ -65,20 +71,21 @@ export type Organization = BaseState & {
     user_member: string[];
 };
 
+// event / activity
 export type Event = {
     id: number;
     title: string;
     date: string;
-    organization_owner: number;
-    organization_owner_name: number;
-    user_owner: number;
+    organization_owner: number; // id
+    organization_owner_name: string;
+    user_owner: number; // id
     user_owner_username: string;
     description: string;
     location: string;
     categories_names: string[];
-    categories: number[];
+    categories: number[]; // id
     activity_level: number;
-    equipment_used: number[];
+    equipment_used: number[]; // id
     equipment_used_names: string[];
     max_participants: number;
 };

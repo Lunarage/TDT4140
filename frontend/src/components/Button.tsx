@@ -1,18 +1,17 @@
-import React from "react";
 import styled from "styled-components";
-import { redHexColor, redHexColorHover } from "../consts";
+import { redHexColor } from "../consts";
 
 interface ButtonProps {
-  text: string;
+  text?: string;
   onClickFunc?: () => void;
+  colorInvert?: boolean;
+  image?: string;
+  autoWidth?: boolean;
 }
 
 export const CustomButton = styled.div`
-  min-width: 8em;
   height: 2.5em;
-  color: white;
   margin: 10px;
-  background-color: ${redHexColor};
   padding: 3px 15px;
   outline: 0;
   transition: ease backgroundcolor 250ms;
@@ -24,19 +23,44 @@ export const CustomButton = styled.div`
 
   &:hover {
     cursor: pointer;
-    background-color: ${redHexColorHover};
+    transition: box-shadow 0.2s;
+    box-shadow: 0 0 15px rgba(33, 33, 33, 0.7);
   }
 `;
 
 export const TextWrapper = styled.div`
   display: table-cell;
   vertical-align: middle;
+  text-align: center;
+  height: 100%;
 `;
 
-const Button = ({ text, onClickFunc }: ButtonProps) => (
-  <CustomButton onClick={onClickFunc}>
-    <TextWrapper>{text}</TextWrapper>
-  </CustomButton>
-);
+export const ImageWrapper = styled.img`
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+`;
+
+
+const Button = ({ text, onClickFunc, colorInvert, image, autoWidth = false }: ButtonProps) => {
+
+  let backgroundcolor = redHexColor;
+  let textcolor = "white";
+  if (colorInvert) { // Inverts color on red background
+    backgroundcolor = "white";
+    textcolor = redHexColor;
+  }
+
+  let minwidth = "8em"
+  if (autoWidth) { // sets 0 min width
+    minwidth = "0em"
+  }
+
+  return (
+    <CustomButton onClick={onClickFunc} style={{ color: textcolor, backgroundColor: backgroundcolor, minWidth: minwidth }}>
+      {image ? <TextWrapper> <ImageWrapper src={image} /> </TextWrapper> : <TextWrapper>{text}</TextWrapper>}
+    </CustomButton>
+  )
+}
 
 export default Button;

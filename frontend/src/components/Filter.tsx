@@ -243,13 +243,6 @@ const Filter = () => {
   }, [dispatch, equipmentData]);
 
 
-  // Snakk med databasen
-  useEffect(() => {
-    dispatch(getEvents(urlFilters));
-  }, [dispatch, urlFilters]);
-
-
-
   const handleSelectedCategoryItem = (filter: string) => {
     let currentSelectedCategory = selectedCategory;
     let newSelectedCategory = selectedCategory;
@@ -346,6 +339,7 @@ const Filter = () => {
   }
 
   useEffect (() => {
+    console.log(selectedFilters);
     let string = "";
     // Steg1
     if (selectedKeyWord!="") {
@@ -367,8 +361,12 @@ const Filter = () => {
     if (selectedEquipment!="") {
       string += "equipment_used__name__icontains="+selectedEquipment+"&";
     }
-    console.log(string)
-    dispatch(getEvents(string));
+    
+    const url = new URL(window.location.href)
+    const type = url.searchParams.get("type") //aktiviteter or arrangementer
+    if (type == "aktiviteter") {
+      dispatch(getEvents("user",string)); //get all activities
+    } else { dispatch(getEvents("organization",string)) } // get all events
   }, [selectedFilters])
 
 

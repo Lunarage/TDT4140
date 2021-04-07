@@ -116,7 +116,7 @@ class HttpClient {
             headers: this.headers,
         })
             .then(this.checkStatus)
-            .then((response: any) => response.json())
+            .then((response: any) => response.status)
             .then((response: any) => {
                 return response as T;
             })
@@ -178,10 +178,11 @@ class HttpClient {
     public put<T>(url: string, body: any): Promise<CustomError | T> {
         return fetch(this.baseURL + url, {
             method: "PUT",
+            body: JSON.stringify(body),
             headers: this.headers,
         })
             .then(this.checkStatus)
-            .then((response: any) => response.json())
+            .then((response: any) => response.status)
             .then((response: any) => {
                 return response as T;
             })

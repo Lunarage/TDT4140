@@ -3,16 +3,20 @@ import {
     Action,
     EventsState,
     OrgsState,
-    GetUserState,
-    PostUserState,
     CategoriesState,
     EquipmentState,
     PostEventState,
+    StarredState,
+    SignUpsState,
+    GetCurrentUserState,
+    MyActivitiesState,
 } from "./types";
 
 const initialState = {
     isLoading: false,
 };
+
+// reducers for all redux-states
 
 export const postEventReducer = (
     state: PostEventState = initialState,
@@ -33,46 +37,8 @@ export const postEventReducer = (
     return state;
 };
 
-export const postUserReducer = (
-    state: PostUserState = initialState,
-    action: Action
-) => {
-    switch (action.type) {
-        case ActionTypes.POST_USER_FINISHED:
-            return { ...state, isLoading: false, user: action.payload };
-        case ActionTypes.POST_USER_LOADING:
-            return { ...state, isLoading: true };
-        case ActionTypes.POST_USER_ERROR:
-            return {
-                ...state,
-                isLoading: false,
-                errorMessage: action.payload,
-            };
-    }
-    return state;
-};
-
-export const getUserReducer = (
-    state: GetUserState = initialState,
-    action: Action
-) => {
-    switch (action.type) {
-        case ActionTypes.GET_USER_FINISHED:
-            return { ...state, isLoading: false, user: action.payload };
-        case ActionTypes.GET_USER_LOADING:
-            return { ...state, isLoading: true };
-        case ActionTypes.GET_USER_ERROR:
-            return {
-                ...state,
-                isLoading: false,
-                errorMessage: action.payload,
-            };
-    }
-    return state;
-};
-
 export const getCurrentUserReducer = (
-    state: GetUserState = initialState,
+    state: GetCurrentUserState = initialState,
     action: Action
 ) => {
     switch (action.type) {
@@ -169,6 +135,75 @@ export const equipmentReducer = (
         case ActionTypes.EQUIPMENT_LOADING:
             return { ...state, isLoading: true };
         case ActionTypes.EQUIPMENT_ERROR:
+            return {
+                ...state,
+                isLoading: false,
+                errorMessage: action.payload,
+            };
+    }
+    return state;
+};
+
+export const starredReducer = (
+    state: StarredState = initialState,
+    action: Action
+) => {
+    switch (action.type) {
+        case ActionTypes.STARRED_FINISHED:
+            return {
+                ...state,
+                isLoading: false,
+                starred: action.payload,
+            };
+        case ActionTypes.STARRED_LOADING:
+            return { ...state, isLoading: true };
+        case ActionTypes.STARRED_ERROR:
+            return {
+                ...state,
+                isLoading: false,
+                errorMessage: action.payload,
+            };
+    }
+    return state;
+};
+
+export const signUpsReducer = (
+    state: SignUpsState = initialState,
+    action: Action
+) => {
+    switch (action.type) {
+        case ActionTypes.SIGNUPS_FINISHED:
+            return {
+                ...state,
+                isLoading: false,
+                signUps: action.payload,
+            };
+        case ActionTypes.SIGNUPS_LOADING:
+            return { ...state, isLoading: true };
+        case ActionTypes.SIGNUPS_ERROR:
+            return {
+                ...state,
+                isLoading: false,
+                errorMessage: action.payload,
+            };
+    }
+    return state;
+};
+
+export const myActivitiesReducer = (
+    state: MyActivitiesState = initialState,
+    action: Action
+) => {
+    switch (action.type) {
+        case ActionTypes.MYACTIVITIES_FINISHED:
+            return {
+                ...state,
+                isLoading: false,
+                myActivities: action.payload,
+            };
+        case ActionTypes.MYACTIVITIES_LOADING:
+            return { ...state, isLoading: true };
+        case ActionTypes.MYACTIVITIES_ERROR:
             return {
                 ...state,
                 isLoading: false,
