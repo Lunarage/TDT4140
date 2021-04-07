@@ -28,6 +28,8 @@ body {
   border: none;
   color: darkred;
   font-weight: 600;
+  margin-bottom: 20px;
+  margin-left: 4%;
 }
 
 .inputButton:hover {

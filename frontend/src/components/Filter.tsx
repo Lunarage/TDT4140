@@ -94,26 +94,38 @@ const ButtonTextWrapper = styled(TextWrapper) `
   color: darkred;
 `
 
-const SearchField = () => {
+interface SearchFieldProps {
+  submitFunction: any;
+}
+
+const SearchField = (props: SearchFieldProps) => {
   const [ord, setOrd] = useState<string>("");
 
+  const handleTyping = (event: any) => {
+    setOrd(event.target.value);
+  }
+
   const updateWord =  (event: any) => {
-    event.value="";
-    setOrd(event.target.value)
+    props.submitFunction(ord)  
+    setOrd("");  
   }
 
   return (
+    <div>
     <form >
       <label className="filterSearchInputLabel">Skriv inn søkeord ...
-      <input 
-        className="filterSearchInput" 
-        type="text" 
-         
-        onChange={updateWord}
+        <input 
+          className="filterSearchInput" 
+          type="text" 
+          value={ord}
+          onChange={handleTyping}
         />
         </label>
-        <button className="inputButton">+</button>
     </form>
+    <button className="inputButton" type="submit" onClick={updateWord}>
+          {"Legg til søkeord"}
+        </button>
+    </div>
   )
 }
 
@@ -259,7 +271,6 @@ const Filter = () => {
 
   // Snakk med databasen
   useEffect(() => {
-    setUrlFilters(talkToDB(selectedFilters));
     dispatch(getEvents(urlFilters));
   }, [dispatch, urlFilters]);
 
@@ -293,13 +304,20 @@ const Filter = () => {
     if (!currentSelectedIntensityFilters.includes(filter) && !filter.startsWith("--")) {
       newSelectedIntensityFilters = currentSelectedIntensityFilters.concat(filter);
     }
-    console.log(filter.charAt(filter.length-1));
     setSelectedIntensity(newSelectedIntensityFilters);
     updateSelectedFilters(newSelectedIntensityFilters);
-    console.log(newSelectedIntensityFilters);
-    console.log(selectedIntensity);
   }
 
+
+  const handleSubmitKeyword = (keyword: string) => {
+    let currentSubmittedWords = selectedKeyWords;
+    let newSelectedKeyWords = selectedKeyWords;
+    if (!currentSubmittedWords.includes(keyword) && (keyword.length > 0)) {
+      newSelectedKeyWords = currentSubmittedWords.concat(keyword);
+    }
+    setSelectedKeyWords(newSelectedKeyWords);
+    updateSelectedFilters(newSelectedKeyWords);
+  }
 
 
   const updateSelectedFilters = (filters: string[]) => {
@@ -357,32 +375,13 @@ const Filter = () => {
 
   // This method generates the string that will be passed to collect activities or events based on selected filter.
   // This method is currently based on current possible filter functionalities, but can be expanded.
-  const talkToDB = (filters: string[]) => {
-    console.log(selectedFilters);
-    let string = "";
-    // Steg1
-    if (selectedKeyWords.length > 0) {
-      string += "title__icontains="+selectedKeyWords[0]+"&";
-      string += "description__icontains="+selectedKeyWords[0]+"&";
-    }    
-    if (selectedCategories.length > 0) {
-      string += "categories__name__icontains="+selectedCategories[0]+"&";
-    }
-    if (selectedIntensity.length > 0) {
-      let intensity = selectedIntensity[0]
-      string += "activity_level__icontains="+intensity.charAt(intensity.length-1)+"&";
-    }
-    if (selectedEquipment.length > 0) {
-      string += "equipment_used__name__icontains="+selectedEquipment[0]+"&";
-    }
-    return string;
-  }
+  
 
 
   return (
     <FilterWrapper>
       <FilterHeader> Søk etter aktiviteter: </FilterHeader>
-      <SearchField />
+      <SearchField submitFunction={(keyword: string) => handleSubmitKeyword(keyword)}/>
       <CheckBoxes tittel="Innendørs" onClick={() => handleSelectCheckBoxItem("Innendørs")}/>
       <CheckBoxes tittel="Utendørs" onClick={() => handleSelectCheckBoxItem("Utendørs")}/>
       <CheckBoxes tittel="Pris: Gratis" onClick={() => handleSelectCheckBoxItem("Pris: Gratis")}/>
