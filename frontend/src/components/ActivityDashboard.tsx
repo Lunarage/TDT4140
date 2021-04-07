@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import ActivityExpand from '../components/ActivityExpand';
 import ActivityPreview from '../components/ActivityPreview';
 import Loading from '../components/Loading';
+import { redHexColor } from '../consts';
 import { Event } from '../store/types';
 import { ErrorMessage } from './NewActivity';
 
@@ -27,15 +28,29 @@ export const ExpandWrapper = styled.div`
   background-color: rgba(0, 0, 0, 0.75);
 `;
 
+const ActivityWithStatsWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const StatsText = styled.div`
+  color: ${redHexColor};
+  width: 100%;
+  font-size: 1em;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5em;
+`;
+
 interface ActivityDashboardProps {
   events: Event[] | undefined;
   isLoading: boolean;
-  error: any
+  error: any;
+  stats?: string;
 }
 
-
-const ActivityDashboard = ({ events, isLoading, error }: ActivityDashboardProps) => {
-  const dispatch = useDispatch();
+const ActivityDashboard = ({ events, isLoading, error, stats }: ActivityDashboardProps) => {
 
   const [showExpanded, setShowExpanded] = useState<boolean>(false);
   const [curEvent, setCurEvent] = useState<Event>()
@@ -44,10 +59,31 @@ const ActivityDashboard = ({ events, isLoading, error }: ActivityDashboardProps)
   useEffect(() => {
     let tempEventComponents: JSX.Element[] = [];
     if (events) {
-      events.forEach((event, i) => tempEventComponents.push(<ActivityPreview key={i} data={event} onClickFunc={() => handleActivityClick(event)} />))
+      if (!stats) { // Add normal preview if no stats
+        events.forEach((event, i) => tempEventComponents.push(<ActivityPreview key={i} data={event} onClickFunc={() => handleActivityClick(event)} />))
+      } else { // Add preview and number of starres if stats
+        // Backend returned string instead of dict :) Oops
+        const statsList = stats.replaceAll(",", "").replaceAll("{", "").replaceAll("}", "").replaceAll(" ", "").replaceAll('"', "").split("\n")
+        events.forEach((event, i) => {
+          let numStarred = "0"
+          statsList.forEach((stat) => {
+            if (stat.length > 0) {
+              const [id, num] = stat.split(":")
+              if (id == event.id.toString()) {
+                numStarred = num
+              }
+            }
+          })
+          tempEventComponents.push(
+            <ActivityWithStatsWrapper key={i}>
+              <ActivityPreview data={event} onClickFunc={() => handleActivityClick(event)} />
+              <StatsText>Antall favoritter: {numStarred}</StatsText>
+            </ActivityWithStatsWrapper>)
+        })
+      }
     }
     setEventComponents(tempEventComponents)
-  }, [dispatch, events]);
+  }, [events, stats]);
 
   const handleActivityClick = (event: Event) => {
     setShowExpanded(true)
@@ -62,7 +98,7 @@ const ActivityDashboard = ({ events, isLoading, error }: ActivityDashboardProps)
         <ExpandWrapper > {/* Show expanded activity */}
           <ActivityExpand data={curEvent} onExitFunc={() => setShowExpanded(false)} />
         </ExpandWrapper>}
-      {isLoading || !events ? <Loading /> :
+      {isLoading ? <Loading /> :
         <ActivityWrapper>
           {eventComponents}
         </ActivityWrapper>}

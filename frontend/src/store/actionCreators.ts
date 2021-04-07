@@ -82,12 +82,16 @@ export const getCurrentUser = (token: string) => {
     };
 };
 
-export const getEvents = (type: string) => {
+export const getEvents = (type?: string) => {
+    let typeStr = "";
+    if (type) {
+        typeStr = type + "/";
+    }
     return (dispatch: DispatchType) => {
         dispatch({ type: ActionTypes.EVENTS_LOADING, payload: [] });
         let client = new HttpClient(baseUrl);
         return client
-            .get("api/activity/" + type + "/")
+            .get("api/activity/" + typeStr)
             .then((r) => handleError(r))
             .then((response) => {
                 dispatch({
@@ -214,6 +218,25 @@ export const getMyActivities = (id: string, token: string) => {
                     type: ActionTypes.MYACTIVITIES_ERROR,
                     payload: error,
                 })
+            );
+    };
+};
+
+export const getAdminStatistics = () => {
+    return (dispatch: DispatchType) => {
+        dispatch({ type: ActionTypes.STATISTICS_LOADING, payload: [] });
+        let client = new HttpClient(baseUrl, localStorage.getItem("token"));
+        return client
+            .get("api/activity/statistics")
+            .then((r) => handleError(r))
+            .then((response) => {
+                dispatch({
+                    type: ActionTypes.STATISTICS_FINISHED,
+                    payload: response,
+                });
+            })
+            .catch((error) =>
+                dispatch({ type: ActionTypes.STATISTICS_ERROR, payload: error })
             );
     };
 };
