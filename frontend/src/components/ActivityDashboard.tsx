@@ -47,7 +47,7 @@ interface ActivityDashboardProps {
   events: Event[] | undefined;
   isLoading: boolean;
   error: any;
-  stats?: string;
+  stats?: { [key: string]: number };
 }
 
 const ActivityDashboard = ({ events, isLoading, error, stats }: ActivityDashboardProps) => {
@@ -61,23 +61,15 @@ const ActivityDashboard = ({ events, isLoading, error, stats }: ActivityDashboar
     if (events) {
       if (!stats) { // Add normal preview if no stats
         events.forEach((event, i) => tempEventComponents.push(<ActivityPreview key={i} data={event} onClickFunc={() => handleActivityClick(event)} />))
-      } else { // Add preview and number of starres if stats
-        // Backend returned string instead of dict :) Oops
-        const statsList = stats.replaceAll(",", "").replaceAll("{", "").replaceAll("}", "").replaceAll(" ", "").replaceAll('"', "").split("\n")
+      } else { // Add preview and number of stars if stats
+        events.sort(function (e1: Event, e2: Event) { // sorting events by number of stars
+          return stats[e2.id] - stats[e1.id];
+        });
         events.forEach((event, i) => {
-          let numStarred = "0"
-          statsList.forEach((stat) => {
-            if (stat.length > 0) {
-              const [id, num] = stat.split(":")
-              if (id == event.id.toString()) {
-                numStarred = num
-              }
-            }
-          })
           tempEventComponents.push(
             <ActivityWithStatsWrapper key={i}>
               <ActivityPreview data={event} onClickFunc={() => handleActivityClick(event)} />
-              <StatsText>Antall favoritter: {numStarred}</StatsText>
+              <StatsText>Antall favoritter: {stats[event.id]}</StatsText>
             </ActivityWithStatsWrapper>)
         })
       }

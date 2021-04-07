@@ -232,7 +232,7 @@ export const getAdminStatistics = () => {
             .then((response) => {
                 dispatch({
                     type: ActionTypes.STATISTICS_FINISHED,
-                    payload: response,
+                    payload: JSON.parse(response),
                 });
             })
             .catch((error) =>

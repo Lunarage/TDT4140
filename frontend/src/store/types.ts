@@ -64,7 +64,7 @@ export type MyActivitiesState = BaseState & {
 };
 
 export type StatisticsState = BaseState & {
-    stats?: string;
+    stats?: { [key: string]: number };
 };
 
 export type Organization = BaseState & {
