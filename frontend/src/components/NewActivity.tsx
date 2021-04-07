@@ -137,7 +137,6 @@ const NewActivity = ({ onExitFunc }: NewActivityProps) => {
     if (token) {
       !currentUser && dispatch(getCurrentUser(token));
     }
-    !organizations && dispatch(getOrgs());
   }, [dispatch]);
 
   const categoriesDropdown =
@@ -159,12 +158,16 @@ const NewActivity = ({ onExitFunc }: NewActivityProps) => {
   const [orgsDropdown, setOrgsDropdown] = useState<Dropdown>([])
 
   useEffect(() => {
+    !equipmentData && dispatch(getEquipment());
+  }, [equipmentData, dispatch]);
+
+  useEffect(() => {
     !categoriesData && dispatch(getCategories());
   }, [categoriesData, dispatch]);
 
   useEffect(() => {
-    !equipmentData && dispatch(getEquipment());
-  }, [equipmentData, dispatch]);
+    !organizations && dispatch(getOrgs());
+  }, [organizations, dispatch]);
 
   useEffect(() => {
     // find all organizations where user is a member

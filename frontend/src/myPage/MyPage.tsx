@@ -4,7 +4,7 @@ import styled from "styled-components";
 import {
   PageHeader as BasePageHeader,
   RightWrapper,
-  FilterWrapper,
+  SortWrapper,
   PageWrapper,
 } from "../browse/Browse";
 import ActivityDashboard from '../components/ActivityDashboard';
@@ -19,10 +19,9 @@ const PageHeader = styled(BasePageHeader)`
   text-align: center;
 `;
 
-const TabsWrapper = styled(FilterWrapper)`
+const TabsWrapper = styled(SortWrapper)`
   display: flex;
   justify-content: space-evenly;
-  align-items: center;
 `;
 
 const Tab = styled(HeaderItem)`
