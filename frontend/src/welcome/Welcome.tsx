@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Button from "../components/Button";
 import Header from "../components/Header";
 import WelcomeLogo from "./WelcomeLogo";
-import Filter from "../components/Filter";
+import Filter from "../filter/Filter";
 
 const PageWrapper = styled.div`
     width: 100%;

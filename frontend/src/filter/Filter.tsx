@@ -4,10 +4,12 @@ import styled from 'styled-components';
 import { redHexColorHover } from '../consts';
 import { getCategories, getEquipment, getEvents, getOrgs } from '../store/actionCreators';
 import { State } from '../store/types';
-import { CustomButton, TextWrapper } from './Button';
-import Button from './Button';
-import './DropDown.css';
-import './FilterSearchField.css';
+import { CustomButton, TextWrapper } from '../components/Button';
+import Button from '../components/Button';
+import DropDown from './DropDown';
+import SearchField from './SearchField';
+
+
 
 
 // styling for tha main filter component
@@ -63,87 +65,6 @@ const ButtonTextWrapper = styled(TextWrapper) `
 `
 
 
-
-interface SearchFieldProps {
-  tittel: string;
-  submitFunction: any;
-}
-
-// input component of the filter component
-// the search field will take in a value and base the filtering on the entered value.
-const SearchField = (props: SearchFieldProps) => {
-  const [ord, setOrd] = useState<string>("");
-
-  const handleTyping = (event: any) => {
-    setOrd(event.target.value);
-  }
-
-  const updateWord =  (event: any) => {
-    props.submitFunction(ord)  // sends the selected word to the main Filter component to handle that the filter value has been selected.
-    setOrd("");  
-  }
-
-  return (
-    <div>
-      <form >
-        <label className="filterSearchInputLabel">{"Skriv inn "+props.tittel+" ..."}
-          <input 
-          className="filterSearchInput" 
-          type="text" 
-          value={ord}
-          onChange={handleTyping}
-          />
-        </label>
-      </form>
-      <button 
-        className="inputButton" 
-        type="submit" 
-        onClick={updateWord}
-        >
-          {"Legg til "+props.tittel}
-        </button>
-    </div>
-  )
-}
-
-
-
-
-interface DropDownProps {
-  tittel: string;
-  items: string[];
-  addFunction: any;
-}
-
-// dropdown component for the filter component
-const DropDown = (props: DropDownProps) => {
-  const [selected, setSelected] = useState<string>("");
-  
-  // retrieves and renders the available values based on existing data
-  const handleGetItems = (item: string) => {
-    return (
-      <option key={item} className="dropDownItem" value={item}> {item} </option>
-    );
-  }
-  const handleSelectDropDownItem = (event: any) => {
-    let newValue = event.target.value;
-    setSelected(newValue);
-    props.addFunction(newValue);    
-  }
-  
-  return (
-    <form >
-      <label className="dropDownLabel">{props.tittel+" :"}</label>
-      <select className="dropDownWrapper" onChange={handleSelectDropDownItem} >
-          <option className="dropDownItemTitle">{"-- Velg "+props.tittel+": --"}</option>
-          {props.items.map(handleGetItems)}
-        </select>
-    </form>
-  )
-}
-
-
-
 interface SelectedFiltersProps {
   tittel: string;
   filters: string [];
@@ -152,7 +73,6 @@ interface SelectedFiltersProps {
 
 // component that shows/displays filters that have been selected and that is currently being searched on.
 const SelectedFilters = ( props: SelectedFiltersProps) => {
-  console.log(props.filters)
   const renderButtons =  (filter: string) => {
     return (
       <FilterButton key={filter}>
@@ -167,8 +87,6 @@ const SelectedFilters = ( props: SelectedFiltersProps) => {
     </SelectedFiltersWrap>
   );
 }
-
-
 
 
 // Main function for the filter component
@@ -339,7 +257,6 @@ const Filter = () => {
   }
 
   useEffect (() => {
-    console.log(selectedFilters);
     let string = "";
     // Steg1
     if (selectedKeyWord!="") {

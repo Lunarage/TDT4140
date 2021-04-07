@@ -7,7 +7,7 @@ import { logoColor, redHexColor } from '../consts';
 import { toUpperCase } from '../functions';
 import { getEvents } from '../store/actionCreators';
 import { State } from '../store/types';
-import Filter from '../components/Filter';
+import Filter from '../filter/Filter';
 //import FilterSearch from '../components/FilterSearch';
 
 export const PageWrapper = styled.div`
