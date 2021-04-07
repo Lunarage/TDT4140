@@ -22,6 +22,7 @@ const LogoText = styled(Logo)`
   }
 `;
 
+// Extended logo used in welcome and login
 const WelcomeLogo = () => (
   <>
     <LogoText>Gå ut</LogoText>

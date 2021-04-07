@@ -86,6 +86,13 @@ class Activity(models.Model):
         validators=[MaxValueValidator(5), MinValueValidator(1)],
         help_text="Indication of effort/difficulty level"
     )
+    activity_price = models.IntegerField(
+        default=0,
+        validators=[MinValueValidator(0), MaxValueValidator(9999)],
+        null=True,
+        blank=True,
+        help_text="The price of the activity"
+    )
     organization_owner = models.ForeignKey(
         Organization,
         on_delete=models.SET_NULL,
@@ -132,7 +139,9 @@ class Activity(models.Model):
             return False
 
     def is_full(self):
+      if (self.max_participants):
         return self.signed_up.all().count() >= self.max_participants
+      return False
 
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)

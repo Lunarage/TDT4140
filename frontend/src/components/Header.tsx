@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSelector } from 'react-redux';
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
-import { ExpandWrapper } from '../browse/Browse';
 import { logoColor, pageName, redHexColor } from "../consts";
 import { State } from '../store/types';
+import { ExpandWrapper } from './ActivityDashboard';
 import Button from './Button';
 import Loading from './Loading';
 import NewActivity from './NewActivity';
@@ -80,14 +80,11 @@ export enum Type {
   arrangementer = "Arrangementer"
 }
 
+// General page header used on every page
 const Header = () => {
   const history = useHistory();
   const [showCreateNew, setShowCreateNew] = useState<boolean>(false);
   const [showSuccess, setShowSuccess] = useState<boolean>(false);
-
-  const {
-    user,
-  } = useSelector((state: State) => state.getUserReducer);
 
   const {
     event,
@@ -95,19 +92,12 @@ const Header = () => {
     errorMessage: eventError,
   } = useSelector((state: State) => state.postEventReducer);
 
-  useEffect(() => {
-    if (user) {
-      localStorage.setItem("token", user.token)
-      localStorage.setItem("id", user.id.toString())
-    }
-  }, [user]);
-
   const setUrl = (tab: string) => {
     history.push(tab);
   };
 
   const handleTypeClick = (tab: string, type: string) => {
-    history.push(tab + "?type=" + type);
+    history.push(tab + "?type=" + type); // adds aktiviteter or arrangementer to url
   };
 
   const handleNewActivityExit = (submit: boolean) => {
@@ -127,6 +117,7 @@ const Header = () => {
 
   return (
     <>
+      {/* displays successs or failure of creating new activity */}
       {showCreateNew && <ExpandWrapper > <NewActivity onExitFunc={handleNewActivityExit} /></ExpandWrapper>}
       {!showCreateNew && showSuccess && (eventError ?
         <NewActivityResponse>Klarte ikke å poste aktiviteten.</NewActivityResponse> :

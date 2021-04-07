@@ -1,10 +1,7 @@
-import React from "react";
-import { useSelector } from 'react-redux';
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import Button from "../components/Button";
 import Header from "../components/Header";
-import { State } from '../store/types';
 import WelcomeLogo from "./WelcomeLogo";
 
 const PageWrapper = styled.div`
@@ -33,6 +30,8 @@ const WelcomeLogoWrapper = styled.div`
 
 const Welcome = () => {
   const history = useHistory();
+
+  // redirecting 
   const setUrl = (url: string) => {
     history.push(url);
   };
