@@ -9,6 +9,7 @@ import Button from './Button';
 import './DropDown.css';
 import './FilterSearchField.css';
 
+
 const FilterWrapper = styled.div`
   background-color: #c91801;
   height: 962px;
@@ -94,6 +95,8 @@ const ButtonTextWrapper = styled(TextWrapper) `
   color: darkred;
 `
 
+
+
 interface SearchFieldProps {
   submitFunction: any;
 }
@@ -112,22 +115,29 @@ const SearchField = (props: SearchFieldProps) => {
 
   return (
     <div>
-    <form >
-      <label className="filterSearchInputLabel">Skriv inn søkeord ...
-        <input 
+      <form >
+        <label className="filterSearchInputLabel">Skriv inn søkeord ...
+          <input 
           className="filterSearchInput" 
           type="text" 
           value={ord}
           onChange={handleTyping}
-        />
+          />
         </label>
-    </form>
-    <button className="inputButton" type="submit" onClick={updateWord}>
+      </form>
+      <button 
+        className="inputButton" 
+        type="submit" 
+        onClick={updateWord}
+        >
           {"Legg til søkeord"}
         </button>
     </div>
   )
 }
+
+
+
 
 interface CheckBoxProps {
   tittel: string;
@@ -142,6 +152,8 @@ const CheckBoxes = (props: CheckBoxProps) => {
     </CheckBoxWrap>
   );
 }
+
+
 
 
 interface DropDownProps {
@@ -176,6 +188,8 @@ const DropDown = (props: DropDownProps) => {
 }
 
 
+
+
 interface SelectedFiltersProps {
   tittel: string;
   filters: string [];
@@ -196,6 +210,8 @@ const SelectedFilters = ( props: SelectedFiltersProps) => {
     </SelectedFiltersWrap>
   );
 }
+
+
 
 
 // Main function for the filter component
