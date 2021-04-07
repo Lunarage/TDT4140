@@ -138,7 +138,7 @@ export const getCurrentUser = (token: string) => {
 export const getEvents = (filters?: string) => {
     let filterString = "";
     if (filters) {
-        filterString = filters;
+        filterString = "?"+filters;
     }  
     return (dispatch: DispatchType) => {
         dispatch({ type: ActionTypes.EVENTS_LOADING, payload: [] });
