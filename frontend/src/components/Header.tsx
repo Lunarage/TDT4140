@@ -124,8 +124,10 @@ const Header = () => {
   }
 
   const handleLogOut = () => {
-    setUrl("/")
     localStorage.clear()
+    setUrl("/")
+    window.location.reload()
+    return false
   }
 
   if (eventLoading) return <Loading />
