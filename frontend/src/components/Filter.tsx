@@ -7,6 +7,7 @@ import { State } from '../store/types';
 import { CustomButton, TextWrapper } from './Button';
 import Button from './Button';
 import './DropDown.css';
+import './FilterSearchField.css';
 
 const FilterWrapper = styled.div`
   background-color: #c91801;
@@ -93,12 +94,26 @@ const ButtonTextWrapper = styled(TextWrapper) `
   color: darkred;
 `
 
-
 const SearchField = () => {
+  const [ord, setOrd] = useState<string>("");
+
+  const updateWord =  (event: any) => {
+    event.value="";
+    setOrd(event.target.value)
+  }
+
   return (
-    <FilterSearchInput>
-      Skriv inn nøkkelord ...
-    </FilterSearchInput>
+    <form >
+      <label className="filterSearchInputLabel">Skriv inn søkeord ...
+      <input 
+        className="filterSearchInput" 
+        type="text" 
+         
+        onChange={updateWord}
+        />
+        </label>
+        <button className="inputButton">+</button>
+    </form>
   )
 }
 
@@ -120,28 +135,28 @@ const CheckBoxes = (props: CheckBoxProps) => {
 interface DropDownProps {
   tittel: string;
   items: string[];
-  onClick: any;
-  state: string[];
+  addFunction: any;
 }
 
 const DropDown = (props: DropDownProps) => {
-  const [selected, setSelected] = useState<string>();
+  const [selected, setSelected] = useState<string>("");
   
   const handleGetItems = (item: string) => {
     return (
-      <option className="dropDownItem" value={item}> {item} </option>
+      <option key={item} className="dropDownItem" value={item}> {item} </option>
     );
   }
   const handleSelectDropDownItem = (event: any) => {
-    setSelected(event.target.value);
+    let newValue = event.target.value;
+    setSelected(newValue);
+    props.addFunction(newValue);    
   }
-
   
   return (
-    <form onSubmit={props.onClick(selected)}>
+    <form >
       <label className="dropDownLabel">{props.tittel+" :"}</label>
-      <select className="dropDownWrapper" onChange={handleSelectDropDownItem} value={selected}>
-          <option className="dropDownItemTitle">{"Velg "+props.tittel+":"}</option>
+      <select className="dropDownWrapper" onChange={handleSelectDropDownItem} >
+          <option className="dropDownItemTitle">{"-- Velg "+props.tittel+": --"}</option>
           {props.items.map(handleGetItems)}
         </select>
     </form>
@@ -151,18 +166,17 @@ const DropDown = (props: DropDownProps) => {
 
 interface SelectedFiltersProps {
   tittel: string;
-  filters: Array<string>;
+  filters: string [];
 }
 
 const SelectedFilters = ( props: SelectedFiltersProps) => {
   const renderButtons =  (filter: string) => {
     return (
-      <FilterButton>
+      <FilterButton key={filter}>
         <ButtonTextWrapper>{filter}</ButtonTextWrapper>
       </FilterButton>
     );
   }
-  console.log(props.filters)
   return (
     <SelectedFiltersWrap>
       <p>{props.tittel}</p>
@@ -183,13 +197,14 @@ const Filter = () => {
   const [availableIntensity, setAvailableIntensity] = useState<string[]>(["Intensitet = 1", "Intensitet = 2", "Intensitet = 3", "Intensitet = 4", "Intensitet = 5"]);
  
   //States of the filter component
-  const [selectedFilters, setSelectedFilters] = useState<string[]>(["Det funker bra hittils :)"]);  // Collects all selected filters
+  const [selectedFilters, setSelectedFilters] = useState<string[]>([]);  // Collects all selected filters
   const [urlFilters, setUrlFilters] = useState<string>("");  
   const [selectedBoxFilters, setSelectedBoxFilters] = useState<string[]>([]);  // Collects filters chosen by checkboxes
   const [selectedEquipment, setSelectedEquipment] = useState<string[]>([]);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedOrganizations, setSelectedOrganizations] = useState<string[]>([]);
   const [selectedIntensity, setSelectedIntensity] = useState<string[]>([]);
+  const [selectedKeyWords, setSelectedKeyWords] = useState<string[]>([]);
   
 
   const {
@@ -242,68 +257,152 @@ const Filter = () => {
   }, [dispatch, equipmentData]);
 
 
+  // Snakk med databasen
   useEffect(() => {
+    setUrlFilters(talkToDB(selectedFilters));
     dispatch(getEvents(urlFilters));
   }, [dispatch, urlFilters]);
 
-  const updateFilters = () => {
-    console.log("Den kjører")
-    const kopi = selectedFilters;
-    selectedCategories.forEach((item) => {if (!kopi.includes(item) && item) {
-      kopi.push(item)
-    }});
-    setSelectedFilters(kopi);
-  }
   
 
 
-  const handleOnClickSelect = (filter: string) => {
-    setSelectedFilters(selectedFilters.concat(filter));
+  const handleSelectCheckBoxItem = (filter: string) => {
+    let currentSelectedCheckBoxFilters = selectedBoxFilters;
+    let newSelectedCheckBoxFilters = selectedBoxFilters;
+    if ( !currentSelectedCheckBoxFilters.includes(filter) ){
+      newSelectedCheckBoxFilters = currentSelectedCheckBoxFilters.concat(filter);
+      setSelectedBoxFilters(newSelectedCheckBoxFilters);
+    }
+    updateSelectedFilters(newSelectedCheckBoxFilters);
+  }
+
+
+  const handleSelectedCategoryItem = (filter: string) => {
+    let currentSelectedCategories = selectedCategories;
+    let newSelectedCategories = selectedCategories;
+    if (!currentSelectedCategories.includes(filter) && !filter.startsWith("--")) {
+      newSelectedCategories = currentSelectedCategories.concat(filter);
+    }
+    setSelectedCategories(newSelectedCategories);
+    updateSelectedFilters(newSelectedCategories);
+  }
+
+  const handleSelectIntensity = (filter: string) => {
+    let currentSelectedIntensityFilters = selectedIntensity;
+    let newSelectedIntensityFilters = selectedIntensity;
+    if (!currentSelectedIntensityFilters.includes(filter) && !filter.startsWith("--")) {
+      newSelectedIntensityFilters = currentSelectedIntensityFilters.concat(filter);
+    }
+    console.log(filter.charAt(filter.length-1));
+    setSelectedIntensity(newSelectedIntensityFilters);
+    updateSelectedFilters(newSelectedIntensityFilters);
+    console.log(newSelectedIntensityFilters);
+    console.log(selectedIntensity);
+  }
+
+
+
+  const updateSelectedFilters = (filters: string[]) => {
+    let currentSelectedFilters = selectedFilters;
+    let updatedSelectedFilters = selectedFilters;
+    filters.forEach((filter) => {
+      if (!currentSelectedFilters.includes(filter)) {
+        updatedSelectedFilters = currentSelectedFilters.concat(filter)
+        setSelectedFilters(updatedSelectedFilters);
+      }
+    })
+    setSelectedFilters(updatedSelectedFilters);
+    console.log(updatedSelectedFilters);
+    
+  }
+
+  const refreshFilterSearch = (url: string) => {
+    console.log(url);
+    dispatch(getEvents(url));
   }
 
 
   const handleClear = () => {
     setSelectedFilters([]);
+    setSelectedBoxFilters([]);
+    setSelectedCategories([]);
+    setSelectedEquipment([]);
+    setSelectedIntensity([]);
+    setSelectedKeyWords([]);
+    setSelectedOrganizations([]);
   }
 
+  useEffect (() => {
+    console.log(selectedFilters);
+    let string = "";
+    // Steg1
+    if (selectedKeyWords.length > 0) {
+      string += "title__icontains="+selectedKeyWords[0]+"&";
+      string += "description__icontains="+selectedKeyWords[0]+"&";
+    }    
+    if (selectedCategories.length > 0) {
+      string += "categories__name__icontains="+selectedCategories[0]+"&";
+    }
+    if (selectedIntensity.length > 0) {
+      let intensity = selectedIntensity[0]
+      string += "activity_level__icontains="+intensity.charAt(intensity.length-1)+"&";
+    }
+    if (selectedEquipment.length > 0) {
+      string += "equipment_used__name__icontains="+selectedEquipment[0]+"&";
+    }
+    console.log(string)
+    dispatch(getEvents(string));
+  }, [selectedFilters])
 
-  const handleSubmit = (filter: string) => {
-    if ( !selectedCategories.includes(filter) ) {
-        setSelectedCategories(selectedCategories.concat(filter));
-        updateFilters();
-        console.log(filter)
-      }
-  };
+
+  // This method generates the string that will be passed to collect activities or events based on selected filter.
+  // This method is currently based on current possible filter functionalities, but can be expanded.
+  const talkToDB = (filters: string[]) => {
+    console.log(selectedFilters);
+    let string = "";
+    // Steg1
+    if (selectedKeyWords.length > 0) {
+      string += "title__icontains="+selectedKeyWords[0]+"&";
+      string += "description__icontains="+selectedKeyWords[0]+"&";
+    }    
+    if (selectedCategories.length > 0) {
+      string += "categories__name__icontains="+selectedCategories[0]+"&";
+    }
+    if (selectedIntensity.length > 0) {
+      let intensity = selectedIntensity[0]
+      string += "activity_level__icontains="+intensity.charAt(intensity.length-1)+"&";
+    }
+    if (selectedEquipment.length > 0) {
+      string += "equipment_used__name__icontains="+selectedEquipment[0]+"&";
+    }
+    return string;
+  }
 
 
   return (
     <FilterWrapper>
       <FilterHeader> Søk etter aktiviteter: </FilterHeader>
       <SearchField />
-      <CheckBoxes tittel="Innendørs" onClick={() => handleOnClickSelect("Innendørs")}/>
-      <CheckBoxes tittel="Utendørs" onClick={() => handleOnClickSelect("Utendørs")}/>
-      <CheckBoxes tittel="Gratis (Pris: 0kr)" onClick={() => handleOnClickSelect("Gratis (Pris: 0kr)")}/>
+      <CheckBoxes tittel="Innendørs" onClick={() => handleSelectCheckBoxItem("Innendørs")}/>
+      <CheckBoxes tittel="Utendørs" onClick={() => handleSelectCheckBoxItem("Utendørs")}/>
+      <CheckBoxes tittel="Pris: Gratis" onClick={() => handleSelectCheckBoxItem("Pris: Gratis")}/>
       <DropDownWrapAll>
         <DropDown 
           tittel="Kategori" 
           items={availableCategories}
-          onClick={(filter: string) => handleSubmit(filter)}
-          state={selectedCategories}/>
+          addFunction={(filter: string) => handleSelectedCategoryItem(filter)}/>
         <DropDown 
           tittel="Utstyr" 
           items={availableEquipment}
-          onClick={(filter: string) => handleSubmit(filter)}
-          state={selectedEquipment}/>
+          addFunction={(filter: string) => handleSelectedCategoryItem(filter)}/>
         <DropDown 
           tittel="Organisasjon" 
           items={availableOrganizations}
-          onClick={(filter: string) => handleSubmit(filter)}
-          state={selectedOrganizations}/>
+          addFunction={(filter: string) => handleSelectedCategoryItem(filter)}/>
         <DropDown 
           tittel="Intensistet" 
           items={availableIntensity}
-          onClick={(filter: string) => handleSubmit(filter)}
-          state={selectedIntensity}/>
+          addFunction={(filter: string) => handleSelectIntensity(filter)}/>
       </DropDownWrapAll>
       <SelectedFilters tittel="Utvalgte filtre: " filters={selectedFilters} />
       <Button text={"Klikk for å nulstille filtre"} onClickFunc={handleClear}/>
