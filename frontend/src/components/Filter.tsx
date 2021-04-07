@@ -229,12 +229,12 @@ const Filter = () => {
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);  // Collects all selected filters
   const [urlFilters, setUrlFilters] = useState<string>("");  
   const [selectedBoxFilters, setSelectedBoxFilters] = useState<string[]>([]);  // Collects filters chosen by checkboxes
-  const [selectedEquipment, setSelectedEquipment] = useState<string[]>([]);
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-  const [selectedOrganizations, setSelectedOrganizations] = useState<string[]>([]);
-  const [selectedIntensity, setSelectedIntensity] = useState<string[]>([]);
-  const [selectedKeyWords, setSelectedKeyWords] = useState<string[]>([]);
-  const [selectedLocations, setSelectedLocations] = useState<string[]>([]);
+  const [selectedEquipment, setSelectedEquipment] = useState<string>("");
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
+  const [selectedOrganization, setSelectedOrganization] = useState<string>("");
+  const [selectedIntensity, setSelectedIntensity] = useState<string>("");
+  const [selectedKeyWord, setSelectedKeyWord] = useState<string>("");
+  const [selectedLocation, setSelectedLocation] = useState<string>("");
   
 
   const {
@@ -292,99 +292,106 @@ const Filter = () => {
     dispatch(getEvents(urlFilters));
   }, [dispatch, urlFilters]);
 
-  
-
-
-  const handleSelectCheckBoxItem = (filter: string) => {
-    let currentSelectedCheckBoxFilters = selectedBoxFilters;
-    let newSelectedCheckBoxFilters = selectedBoxFilters;
-    if ( !currentSelectedCheckBoxFilters.includes(filter) ){
-      newSelectedCheckBoxFilters = currentSelectedCheckBoxFilters.concat(filter);
-      setSelectedBoxFilters(newSelectedCheckBoxFilters);
-    }
-    updateSelectedFilters(newSelectedCheckBoxFilters);
-  }
 
 
   const handleSelectedCategoryItem = (filter: string) => {
-    let currentSelectedCategories = selectedCategories;
-    let newSelectedCategories = selectedCategories;
-    if (!currentSelectedCategories.includes(filter) && !filter.startsWith("--")) {
-      newSelectedCategories = currentSelectedCategories.concat(filter);
+    let currentSelectedCategory = selectedCategory;
+    let newSelectedCategory = selectedCategory;
+    let oldSelectedCategory = "";
+    if (currentSelectedCategory!=filter && !filter.startsWith("--")) {
+      newSelectedCategory = filter;
+      oldSelectedCategory = currentSelectedCategory;
     }
-    setSelectedCategories(newSelectedCategories);
-    updateSelectedFilters(newSelectedCategories);
+    setSelectedCategory(newSelectedCategory);
+    updateSelectedFilters(newSelectedCategory, oldSelectedCategory);
   }
 
 
   const handleSelectedEquipmentFilters = (filter: string) => {
     let currentSelectedEquipment = selectedEquipment;
     let newSelectedEquipment = selectedEquipment;
-    if (!currentSelectedEquipment.includes(filter) && !filter.startsWith("--")) {
-      newSelectedEquipment = currentSelectedEquipment.concat(filter);
+    let oldSelectedEquipment = "";
+    if (currentSelectedEquipment!=filter && !filter.startsWith("--")) {
+      newSelectedEquipment = filter;
+      oldSelectedEquipment = currentSelectedEquipment;
     }
     setSelectedEquipment(newSelectedEquipment);
-    updateSelectedFilters(newSelectedEquipment);
+    updateSelectedFilters(newSelectedEquipment, oldSelectedEquipment);
   }
 
 
   const handleSelectedOrganizations = (filter: string) => {
-    let currentSelectedOrganizations = selectedOrganizations;
-    let newSelectedOrganization = selectedOrganizations;
-    if (!currentSelectedOrganizations.includes(filter) && !filter.startsWith("--")) {
-      newSelectedOrganization = currentSelectedOrganizations.concat(filter);
+    let currentSelectedOrganization = selectedOrganization;
+    let newSelectedOrganization = selectedOrganization;
+    let oldSelectedOrganization = "";
+    if (currentSelectedOrganization!=filter && !filter.startsWith("--")) {
+      newSelectedOrganization = filter;
+      oldSelectedOrganization = currentSelectedOrganization;
     }
-    setSelectedOrganizations(newSelectedOrganization);
-    updateSelectedFilters(newSelectedOrganization);
+    setSelectedOrganization(newSelectedOrganization);
+    updateSelectedFilters(newSelectedOrganization, oldSelectedOrganization);
   }
 
 
   const handleSelectIntensity = (filter: string) => {
-    let currentSelectedIntensityFilters = selectedIntensity;
-    let newSelectedIntensityFilters = selectedIntensity;
-    if (!currentSelectedIntensityFilters.includes(filter) && !filter.startsWith("--")) {
-      newSelectedIntensityFilters = currentSelectedIntensityFilters.concat(filter);
+    let currentSelectedIntensityFilter = selectedIntensity;
+    let newSelectedIntensityFilter = selectedIntensity;
+    let oldSelectedIntensityFilter = "";
+    if (currentSelectedIntensityFilter!=filter && !filter.startsWith("--")) {
+      newSelectedIntensityFilter = filter;
+      oldSelectedIntensityFilter = currentSelectedIntensityFilter;
     }
-    setSelectedIntensity(newSelectedIntensityFilters);
-    updateSelectedFilters(newSelectedIntensityFilters);
+    setSelectedIntensity(newSelectedIntensityFilter);
+    updateSelectedFilters(newSelectedIntensityFilter, oldSelectedIntensityFilter);
   }
 
 
   const handleSubmitKeyword = (keyword: string) => {
-    let currentSubmittedWords = selectedKeyWords;
-    let newSelectedKeyWords = selectedKeyWords;
-    if (!currentSubmittedWords.includes(keyword) && (keyword.length > 0)) {
-      newSelectedKeyWords = currentSubmittedWords.concat(keyword);
+    let currentSelectedKeyword = selectedIntensity;
+    let newSelectedKeyword = selectedIntensity;
+    let oldSelectedKeyword = "";
+    if (currentSelectedKeyword!=keyword && !keyword.startsWith("--")) {
+      newSelectedKeyword = keyword;
+      oldSelectedKeyword = currentSelectedKeyword;
     }
-    setSelectedKeyWords(newSelectedKeyWords);
-    updateSelectedFilters(newSelectedKeyWords);
+    setSelectedKeyWord(newSelectedKeyword);
+    updateSelectedFilters(newSelectedKeyword, oldSelectedKeyword);
   }
 
 
   const handleSubmitLocation = (location: string) => {
-    let currentSubmittedlocations = selectedLocations;
-    let newSelectedLocations = selectedLocations;
-    if (!currentSubmittedlocations.includes(location) && (location.length > 0)) {
-      newSelectedLocations = currentSubmittedlocations.concat(location);
+    let currentSelectedLocation = selectedIntensity;
+    let newSelectedLocation = selectedIntensity;
+    let oldSelectedLocation = "";
+    if (currentSelectedLocation!=location && !location.startsWith("--")) {
+      newSelectedLocation = location;
+      oldSelectedLocation = currentSelectedLocation;
     }
-    setSelectedKeyWords(newSelectedLocations);
-    updateSelectedFilters(newSelectedLocations);
+    setSelectedLocation(newSelectedLocation);
+    updateSelectedFilters(newSelectedLocation, oldSelectedLocation);
   }
 
 
-  const updateSelectedFilters = (filters: string[]) => {
+  const updateSelectedFilters = (newFilter: string, oldFilter: string) => {
     let currentSelectedFilters = selectedFilters;
     let updatedSelectedFilters = selectedFilters;
-    filters.forEach((filter) => {
-      if (!currentSelectedFilters.includes(filter)) {
-        updatedSelectedFilters = currentSelectedFilters.concat(filter)
+      if (!currentSelectedFilters.includes(oldFilter) && oldFilter=="") {
+        updatedSelectedFilters = currentSelectedFilters.concat(oldFilter);
         setSelectedFilters(updatedSelectedFilters);
       }
-    })
-    setSelectedFilters(updatedSelectedFilters);
-    console.log(updatedSelectedFilters);
-    
+      if ( currentSelectedFilters.includes(oldFilter) && oldFilter!="") {
+        let newSelectedFilters: string[] = [];
+        currentSelectedFilters.forEach((filter) => {
+          if (filter!=oldFilter) {
+            newSelectedFilters.push(filter);
+          }
+        });
+        newSelectedFilters.push(newFilter);
+        updatedSelectedFilters = newSelectedFilters;
+      }
+    setSelectedFilters(updatedSelectedFilters);    
   }
+
 
   const refreshFilterSearch = (url: string) => {
     console.log(url);
@@ -395,33 +402,33 @@ const Filter = () => {
   const handleClear = () => {
     setSelectedFilters([]);
     setSelectedBoxFilters([]);
-    setSelectedCategories([]);
-    setSelectedEquipment([]);
-    setSelectedIntensity([]);
-    setSelectedKeyWords([]);
-    setSelectedOrganizations([]);
+    setSelectedCategory("");
+    setSelectedEquipment("");
+    setSelectedIntensity("");
+    setSelectedKeyWord("");
+    setSelectedOrganization("");
   }
 
   useEffect (() => {
     console.log(selectedFilters);
     let string = "";
     // Steg1
-    if (selectedKeyWords.length > 0) {
-      string += "title__icontains="+selectedKeyWords[0]+"&";
-      string += "description__icontains="+selectedKeyWords[0]+"&";
+    if (selectedKeyWord!="") {
+      string += "title__icontains="+selectedKeyWord+"&";
+      string += "description__icontains="+selectedKeyWord+"&";
     }
-    if (selectedLocations.length > 0) {
-      string += "location_icontains"; //Fortsett her
+    if (selectedLocation!="") {
+      string += "location_icontains="+selectedLocation+"&";
     }    
-    if (selectedCategories.length > 0) {
-      string += "categories__name__icontains="+selectedCategories[0]+"&";
+    if (selectedCategory!="") {
+      string += "categories__name__icontains="+selectedCategory+"&";
     }
-    if (selectedIntensity.length > 0) {
+    if (selectedIntensity!="") {
       let intensity = selectedIntensity[0]
       string += "activity_level__icontains="+intensity.charAt(intensity.length-1)+"&";
     }
-    if (selectedEquipment.length > 0) {
-      string += "equipment_used__name__icontains="+selectedEquipment[0]+"&";
+    if (selectedEquipment!="") {
+      string += "equipment_used__name__icontains="+selectedEquipment+"&";
     }
     console.log(string)
     dispatch(getEvents(string));
