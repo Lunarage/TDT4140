@@ -201,6 +201,8 @@ const SelectedFilters = ( props: SelectedFiltersProps) => {
 // Main function for the filter component
 const Filter = () => {
   const dispatch = useDispatch();
+  const url = new URL(window.location.href);
+  console.log(url);
 
   // States of data from database
   const [availableOrganizations, setAvailableOrganizations] = useState<string[]>([]);
@@ -405,8 +407,6 @@ const Filter = () => {
     <FilterWrapper>
       <FilterHeader> Søk etter aktiviteter: </FilterHeader>
       <SearchField submitFunction={(keyword: string) => handleSubmitKeyword(keyword)}/>
-      <CheckBoxes tittel="Innendørs" onClick={() => handleSelectCheckBoxItem("Innendørs")}/>
-      <CheckBoxes tittel="Utendørs" onClick={() => handleSelectCheckBoxItem("Utendørs")}/>
       <CheckBoxes tittel="Pris: Gratis" onClick={() => handleSelectCheckBoxItem("Pris: Gratis")}/>
       <DropDownWrapAll>
         <DropDown 
