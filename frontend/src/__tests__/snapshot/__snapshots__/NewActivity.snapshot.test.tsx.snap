@@ -24,7 +24,7 @@ exports[`NewActivity Should match NewActivity snapshot 1`] = `
             onClick={[Function]}
           >
             <button
-              className="sc-dQppl hxrjdE"
+              className="sc-dQppl dsOCEP"
               onClick={[Function]}
             >
                X 
@@ -229,6 +229,60 @@ exports[`NewActivity Should match NewActivity snapshot 1`] = `
                       </Input>
                     </div>
                   </styled.div>
+                  <styled.div>
+                    <div
+                      className="sc-fFubgz eQFdiA"
+                    >
+                      <styled.div>
+                        <div
+                          className="sc-bkzZxe ijhGEg"
+                        >
+                          Pris: 
+                        </div>
+                      </styled.div>
+                      <Input
+                        onChange={[Function]}
+                        size="mini"
+                        type="text"
+                      >
+                        <div
+                          className="ui mini input"
+                        >
+                          <input
+                            onChange={[Function]}
+                            type="text"
+                          />
+                        </div>
+                      </Input>
+                    </div>
+                  </styled.div>
+                  <styled.div>
+                    <div
+                      className="sc-fFubgz eQFdiA"
+                    >
+                      <styled.div>
+                        <div
+                          className="sc-bkzZxe ijhGEg"
+                        >
+                          Bilde: 
+                        </div>
+                      </styled.div>
+                      <Input
+                        onChange={[Function]}
+                        size="mini"
+                        type="file"
+                      >
+                        <div
+                          className="ui mini input"
+                        >
+                          <input
+                            onChange={[Function]}
+                            type="file"
+                          />
+                        </div>
+                      </Input>
+                    </div>
+                  </styled.div>
                 </div>
               </styled.div>
               <styled.div>
@@ -371,6 +425,13 @@ exports[`NewActivity Should match NewActivity snapshot 1`] = `
                   </Button>
                 </div>
               </styled.div>
+            </div>
+          </styled.div>
+          <styled.div>
+            <div
+              className="sc-dIUggk hGswMX"
+            >
+               Noe gikk galt med posting av aktiviteten 
             </div>
           </styled.div>
         </div>

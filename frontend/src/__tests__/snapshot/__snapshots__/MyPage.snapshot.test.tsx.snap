@@ -16,7 +16,7 @@ exports[`MyPage Should match MyPage snapshot 1`] = `
     <MyPage>
       <styled.div>
         <div
-          className="sc-jNMdTA gFRJNv"
+          className="sc-cTkwdZ gZeKoe"
         >
           <Header
             line={true}
@@ -87,25 +87,25 @@ exports[`MyPage Should match MyPage snapshot 1`] = `
           </Header>
           <styled.div>
             <div
-              className="sc-cOajty dLNeee"
+              className="sc-bBrOnJ oJRbJ"
             >
               <Styled(styled.h1)>
                 <h1
-                  className="sc-khAkjo sc-iNqMTl kPEFrp gfEEak"
+                  className="sc-AzgDb sc-laRPJI bvpRCL jejDTr"
                 >
                   Min side
                 </h1>
               </Styled(styled.h1)>
               <Styled(styled.div)>
                 <div
-                  className="sc-AzgDb sc-jeGSBP gzAEGR kUugXk"
+                  className="sc-cOajty sc-iNqMTl hjPOjN easWDW"
                 >
                   <Styled(Styled(styled.div))
                     key="Mine aktiviteter"
                     onClick={[Function]}
                   >
                     <div
-                      className="sc-lmoMRL sc-iJuUWI sc-nFpLZ hDtEWp hAXfgU dlyIMt"
+                      className="sc-lmoMRL sc-iJuUWI sc-eJMQSu hDtEWp hAXfgU fbRiSa"
                       onClick={[Function]}
                     >
                       Mine aktiviteter
@@ -116,7 +116,7 @@ exports[`MyPage Should match MyPage snapshot 1`] = `
                     onClick={[Function]}
                   >
                     <div
-                      className="sc-lmoMRL sc-eJMQSu hDtEWp fbRiSa"
+                      className="sc-lmoMRL sc-jeGSBP hDtEWp gbjUAe"
                       onClick={[Function]}
                     >
                       Oppmeldte aktiviteter
@@ -127,7 +127,7 @@ exports[`MyPage Should match MyPage snapshot 1`] = `
                     onClick={[Function]}
                   >
                     <div
-                      className="sc-lmoMRL sc-eJMQSu hDtEWp fbRiSa"
+                      className="sc-lmoMRL sc-jeGSBP hDtEWp gbjUAe"
                       onClick={[Function]}
                     >
                       Favoritter

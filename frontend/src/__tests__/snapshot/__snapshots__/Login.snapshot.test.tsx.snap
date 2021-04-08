@@ -16,7 +16,7 @@ exports[`Login Should match Login snapshot 1`] = `
     <Login>
       <styled.div>
         <div
-          className="sc-eggNIi loa-dLa"
+          className="sc-iBaPrD AJnpx"
         >
           <Header>
             <styled.div>
@@ -74,19 +74,19 @@ exports[`Login Should match Login snapshot 1`] = `
           </Header>
           <styled.div>
             <div
-              className="sc-cTkwdZ buPqhb"
+              className="sc-eggNIi eWTXyJ"
             >
               <WelcomeLogo>
                 <Styled(styled.div)>
                   <div
-                    className="sc-cBNfnY sc-iBaPrD bDxDMJ ixpiby"
+                    className="sc-cBNfnY sc-iUuytg bDxDMJ gjnBsR"
                   >
                     Gå ut
                   </div>
                 </Styled(styled.div)>
                 <Styled(styled.div)>
                   <div
-                    className="sc-cBNfnY sc-iUuytg bDxDMJ oyGnq"
+                    className="sc-cBNfnY sc-bZSQDF bDxDMJ fKHsfl"
                   >
                     Gjør No'
                   </div>
@@ -96,22 +96,22 @@ exports[`Login Should match Login snapshot 1`] = `
           </styled.div>
           <styled.div>
             <div
-              className="sc-jNMdTA iXRCsH"
+              className="sc-cTkwdZ eBfFQS"
             >
               <styled.div>
                 <div
-                  className="sc-bBrOnJ iyTsMg"
+                  className="sc-dOSReg ipFANJ"
                 >
                   <styled.div>
                     <div
-                      className="sc-AzgDb cDZJIa"
+                      className="sc-cOajty kmBQZS"
                     >
                       Logg inn
                     </div>
                   </styled.div>
                   <styled.div>
                     <div
-                      className="sc-cOajty bjDzWG"
+                      className="sc-bBrOnJ dDzzIR"
                     >
                       <InputField
                         name="Brukernavn"
@@ -119,11 +119,11 @@ exports[`Login Should match Login snapshot 1`] = `
                       >
                         <styled.div>
                           <div
-                            className="sc-jcVebW eOyFQk"
+                            className="sc-citwmv obwtd"
                           >
                             <styled.div>
                               <div
-                                className="sc-bZSQDF jyJKRh"
+                                className="sc-jcVebW llCqVi"
                               >
                                 Brukernavn
                               </div>
@@ -151,11 +151,11 @@ exports[`Login Should match Login snapshot 1`] = `
                       >
                         <styled.div>
                           <div
-                            className="sc-jcVebW eOyFQk"
+                            className="sc-citwmv obwtd"
                           >
                             <styled.div>
                               <div
-                                className="sc-bZSQDF jyJKRh"
+                                className="sc-jcVebW llCqVi"
                               >
                                 Passord
                               </div>
@@ -218,7 +218,7 @@ exports[`Login Should match Login snapshot 1`] = `
               </styled.div>
               <styled.div>
                 <div
-                  className="sc-dOSReg ixWBtA"
+                  className="sc-jNMdTA dxOtOM"
                 >
                   <Button
                     onClickFunc={[Function]}
