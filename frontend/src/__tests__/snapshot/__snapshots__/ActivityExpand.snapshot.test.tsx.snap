@@ -51,7 +51,7 @@ exports[`ActivityExpand Should match ActivityExpand snapshot 1`] = `
             onClick={[Function]}
           >
             <button
-              className="sc-dQppl hxrjdE"
+              className="sc-dQppl dsOCEP"
               onClick={[Function]}
             >
                X 
@@ -69,16 +69,19 @@ exports[`ActivityExpand Should match ActivityExpand snapshot 1`] = `
             <div
               className="sc-pFZIQ hewYpo"
             >
-              <styled.div>
+              <styled.div
+                onClick={[Function]}
+              >
                 <div
-                  className="sc-crrsfI ftcCrD"
+                  className="sc-crrsfI jmOxMp"
+                  onClick={[Function]}
                 >
                    
                   <styled.img
                     src="static/22858269.jpg"
                   >
                     <img
-                      className="sc-iqHYGH fbxCNf"
+                      className="sc-iqHYGH fZOXeU"
                       src="static/22858269.jpg"
                     />
                   </styled.img>

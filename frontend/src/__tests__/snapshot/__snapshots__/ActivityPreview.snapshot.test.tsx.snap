@@ -52,13 +52,13 @@ exports[`ActivityPreview Should match ActivityPreview snapshot 1`] = `
         >
           <styled.div>
             <div
-              className="sc-jSgupP jKWuSU"
+              className="sc-jSgupP gIA-doS"
             >
               <styled.img
                 src="static/Red-Rocks_horizontal.jpg"
               >
                 <img
-                  className="sc-dlfnbm cDnPeZ"
+                  className="sc-dlfnbm hfQihQ"
                   src="static/Red-Rocks_horizontal.jpg"
                 />
               </styled.img>

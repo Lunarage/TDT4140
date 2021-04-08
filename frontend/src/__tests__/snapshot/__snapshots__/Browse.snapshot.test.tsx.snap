@@ -16,7 +16,7 @@ exports[`Browse Should match Browse snapshot 1`] = `
     <Browse>
       <styled.div>
         <div
-          className="sc-jNMdTA gFRJNv"
+          className="sc-cTkwdZ gZeKoe"
         >
           <Header
             line={true}
@@ -87,20 +87,20 @@ exports[`Browse Should match Browse snapshot 1`] = `
           </Header>
           <styled.div>
             <div
-              className="sc-dOSReg bkIVLj"
+              className="sc-jNMdTA fvZRMf"
             >
               <styled.div>
                 <div
-                  className="sc-bBrOnJ leiNsd"
+                  className="sc-dOSReg cVTILM"
                 >
                   <Filter>
                     <styled.div>
                       <div
-                        className="sc-jcVebW jPpRrL"
+                        className="sc-citwmv iUwhOK"
                       >
                         <styled.h2>
                           <h2
-                            className="sc-bZSQDF iLsUIz"
+                            className="sc-jcVebW kgrTjs"
                           >
                              Søk etter aktiviteter: 
                           </h2>
@@ -165,7 +165,7 @@ exports[`Browse Should match Browse snapshot 1`] = `
                         </SearchField>
                         <styled.div>
                           <div
-                            className="sc-iUuytg cpwbCR"
+                            className="sc-bZSQDF hpVUKG"
                           >
                             <DropDown
                               addFunction={[Function]}
@@ -320,7 +320,7 @@ exports[`Browse Should match Browse snapshot 1`] = `
                         >
                           <styled.div>
                             <div
-                              className="sc-iBaPrD hKyCaK"
+                              className="sc-iUuytg dEWCvN"
                             >
                               <p>
                                 Utvalgte filtre: 
@@ -370,20 +370,20 @@ exports[`Browse Should match Browse snapshot 1`] = `
               </styled.div>
               <styled.div>
                 <div
-                  className="sc-cOajty dLNeee"
+                  className="sc-bBrOnJ oJRbJ"
                 >
                   <styled.h1>
                     <h1
-                      className="sc-khAkjo kPEFrp"
+                      className="sc-AzgDb bvpRCL"
                     />
                   </styled.h1>
                   <styled.div>
                     <div
-                      className="sc-AzgDb gzAEGR"
+                      className="sc-cOajty hjPOjN"
                     >
                       <styled.div>
                         <div
-                          className="sc-hTZhsR hENyRZ"
+                          className="sc-khAkjo NOGpG"
                         >
                           <h2
                             style={
@@ -398,7 +398,7 @@ exports[`Browse Should match Browse snapshot 1`] = `
                             key="Dato"
                           >
                             <div
-                              className="sc-jgHCyG sc-gTgzIj TjYfJ cRPiBQ"
+                              className="sc-hTZhsR sc-jgHCyG juskWq gbEhWJ"
                             >
                               Dato
                             </div>
@@ -408,7 +408,7 @@ exports[`Browse Should match Browse snapshot 1`] = `
                             onClick={[Function]}
                           >
                             <div
-                              className="sc-jgHCyG TjYfJ"
+                              className="sc-hTZhsR juskWq"
                               onClick={[Function]}
                             >
                                
@@ -419,7 +419,7 @@ exports[`Browse Should match Browse snapshot 1`] = `
                       </styled.div>
                       <styled.div>
                         <div
-                          className="sc-hTZhsR hENyRZ"
+                          className="sc-khAkjo NOGpG"
                         >
                           <h2
                             style={
@@ -434,7 +434,7 @@ exports[`Browse Should match Browse snapshot 1`] = `
                             onClick={[Function]}
                           >
                             <div
-                              className="sc-laRPJI ijFjmN"
+                              className="sc-gTgzIj cTTbVQ"
                               onClick={[Function]}
                             >
                               <img

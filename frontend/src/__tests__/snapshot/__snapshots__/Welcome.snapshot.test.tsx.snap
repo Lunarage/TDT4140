@@ -16,7 +16,7 @@ exports[`Welcome Should match Welcome snapshot 1`] = `
     <Welcome>
       <styled.div>
         <div
-          className="sc-iUuytg dteJyh"
+          className="sc-bZSQDF lUiGS"
         >
           <Header>
             <styled.div>
@@ -74,23 +74,23 @@ exports[`Welcome Should match Welcome snapshot 1`] = `
           </Header>
           <styled.div>
             <div
-              className="sc-iBaPrD bqRAiY"
+              className="sc-iUuytg gqsdvP"
             >
               <styled.div>
                 <div
-                  className="sc-eggNIi akaGd"
+                  className="sc-iBaPrD eMRhQm"
                 >
                   <WelcomeLogo>
                     <Styled(styled.div)>
                       <div
-                        className="sc-cBNfnY sc-bZSQDF bDxDMJ sFTRS"
+                        className="sc-cBNfnY sc-jcVebW bDxDMJ iGRZbl"
                       >
                         Gå ut
                       </div>
                     </Styled(styled.div)>
                     <Styled(styled.div)>
                       <div
-                        className="sc-cBNfnY sc-jcVebW bDxDMJ kCPxtm"
+                        className="sc-cBNfnY sc-citwmv bDxDMJ mInNP"
                       >
                         Gjør No'
                       </div>
