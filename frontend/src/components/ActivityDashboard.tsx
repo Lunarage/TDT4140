@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import ActivityExpand from '../components/ActivityExpand';
 import ActivityPreview from '../components/ActivityPreview';

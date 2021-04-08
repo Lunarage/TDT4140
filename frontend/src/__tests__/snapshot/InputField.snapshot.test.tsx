@@ -1,9 +1,8 @@
-import React from "react";
 import { shallow } from "enzyme";
 import Enzyme from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import toJSON from "enzyme-to-json";
-import InputField from '../../components/InputField';
+import InputField from '../../login/InputField';
 
 Enzyme.configure({ adapter: new Adapter() });
 
