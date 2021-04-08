@@ -48,7 +48,7 @@ const Stats = () => {
 
   return (
     <PageWrapper>
-      <Header />
+      <Header line={true} />
       <ContentWrapper>
         <PageHeader>Statistikkside</PageHeader>
         <ActivityDashboard events={events} isLoading={statsIsLoading && eventsLoading} error={statsError || eventsError} stats={stats} />

@@ -87,7 +87,7 @@ export const getEvents = (type?: string, filters?: string) => {
     if (filters) {
         filterString = "?" + filters;
     }
-    let typeStr = "";
+    let typeStr = "activity/";
     if (type == "user") {
         typeStr = "useractivities/";
     } else if (type == "organization") {
@@ -97,7 +97,7 @@ export const getEvents = (type?: string, filters?: string) => {
         dispatch({ type: ActionTypes.EVENTS_LOADING, payload: [] });
         let client = new HttpClient(baseUrl);
         return client
-            .get("api/activity/" + typeStr + filterString)
+            .get("api/" + typeStr + filterString)
             .then((r) => handleError(r))
             .then((response) => {
                 dispatch({

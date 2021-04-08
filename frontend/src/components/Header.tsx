@@ -114,7 +114,7 @@ const Header = ({ line }: HeaderProps) => {
 
   useEffect(() => {
     if (line) {
-      setUnderline({ borderBottom: `10px solid rgba(236, 47, 22, 1)` })
+      setUnderline({ borderBottom: `5px solid rgba(236, 47, 22, 1)` })
     }
   }, [line]);
 
