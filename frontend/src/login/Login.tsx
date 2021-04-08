@@ -6,7 +6,7 @@ import Header from "../components/Header";
 import InputField from "../components/InputField";
 import WelcomeLogo from "../welcome/WelcomeLogo";
 import { useHistory } from 'react-router-dom';
-import { getSignUps, getStarred, getUser, postUser } from '../store/actionCreators';
+import { getSignUps, getStarred, getUser, postUser, getAdminStatistics } from '../store/actionCreators';
 
 const PageWrapper = styled.div`
   display: flex;
@@ -111,6 +111,7 @@ const Login = () => {
         resetMessages()
         localStorage.setItem("token", getUserResponse.token)
         localStorage.setItem("id", getUserResponse.id.toString())
+        dispatch(getAdminStatistics())
         dispatch(getStarred(getUserResponse.id.toString(), getUserResponse.token))
         dispatch(getSignUps(getUserResponse.id.toString(), getUserResponse.token))
         history.push("/");
@@ -208,3 +209,4 @@ const Login = () => {
 };
 
 export default Login;
+

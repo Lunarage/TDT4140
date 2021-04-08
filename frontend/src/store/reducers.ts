@@ -10,6 +10,7 @@ import {
     SignUpsState,
     GetCurrentUserState,
     MyActivitiesState,
+    StatisticsState,
 } from "./types";
 
 const initialState = {
@@ -204,6 +205,29 @@ export const myActivitiesReducer = (
         case ActionTypes.MYACTIVITIES_LOADING:
             return { ...state, isLoading: true };
         case ActionTypes.MYACTIVITIES_ERROR:
+            return {
+                ...state,
+                isLoading: false,
+                errorMessage: action.payload,
+            };
+    }
+    return state;
+};
+
+export const statsReducer = (
+    state: StatisticsState = initialState,
+    action: Action
+) => {
+    switch (action.type) {
+        case ActionTypes.STATISTICS_FINISHED:
+            return {
+                ...state,
+                isLoading: false,
+                stats: action.payload,
+            };
+        case ActionTypes.STATISTICS_LOADING:
+            return { ...state, isLoading: true };
+        case ActionTypes.STATISTICS_ERROR:
             return {
                 ...state,
                 isLoading: false,
