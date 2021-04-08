@@ -62,7 +62,7 @@ const ActivityDashboard = ({ events, isLoading, error }: ActivityDashboardProps)
         <ExpandWrapper > {/* Show expanded activity */}
           <ActivityExpand data={curEvent} onExitFunc={() => setShowExpanded(false)} />
         </ExpandWrapper>}
-      {isLoading || !events ? <Loading /> :
+      {isLoading ? <Loading /> :
         <ActivityWrapper>
           {eventComponents}
         </ActivityWrapper>}
