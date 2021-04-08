@@ -19,6 +19,7 @@ export type State = {
     starredReducer: StarredState;
     signUpsReducer: SignUpsState;
     myActivitiesReducer: MyActivitiesState;
+    statsReducer: StatisticsState;
 };
 
 type BaseState = {
@@ -60,6 +61,10 @@ export type SignUpsState = BaseState & {
 
 export type MyActivitiesState = BaseState & {
     myActivities?: Event[];
+};
+
+export type StatisticsState = BaseState & {
+    stats?: { [key: string]: number };
 };
 
 export type Organization = BaseState & {
