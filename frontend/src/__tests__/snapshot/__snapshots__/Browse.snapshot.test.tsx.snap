@@ -1,0 +1,481 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Browse Should match Browse snapshot 1`] = `
+<BrowseWrapper>
+  <Provider
+    store={
+      Object {
+        "dispatch": [Function],
+        "getState": [Function],
+        "replaceReducer": [Function],
+        "subscribe": [Function],
+        Symbol(observable): [Function],
+      }
+    }
+  >
+    <Browse>
+      <styled.div>
+        <div
+          className="sc-jNMdTA gFRJNv"
+        >
+          <Header
+            line={true}
+          >
+            <styled.div
+              style={
+                Object {
+                  "borderBottom": "5px solid rgba(236, 47, 22, 1)",
+                }
+              }
+            >
+              <div
+                className="sc-iktFzd uGybn"
+                style={
+                  Object {
+                    "borderBottom": "5px solid rgba(236, 47, 22, 1)",
+                  }
+                }
+              >
+                <styled.div
+                  onClick={[Function]}
+                >
+                  <div
+                    className="sc-cBNfnY bDxDMJ"
+                    onClick={[Function]}
+                  >
+                    Gjør No'
+                  </div>
+                </styled.div>
+                <styled.div>
+                  <div
+                    className="sc-gWHgXt bcglBl"
+                  >
+                    <styled.div
+                      onClick={[Function]}
+                    >
+                      <div
+                        className="sc-hiSbYr hZBClG"
+                        onClick={[Function]}
+                      >
+                        Aktiviteter
+                      </div>
+                    </styled.div>
+                    <styled.div
+                      onClick={[Function]}
+                    >
+                      <div
+                        className="sc-hiSbYr hZBClG"
+                        onClick={[Function]}
+                      >
+                        Arrangementer
+                      </div>
+                    </styled.div>
+                  </div>
+                </styled.div>
+                <styled.div
+                  onClick={[Function]}
+                >
+                  <div
+                    className="sc-jJEJSO cgHETT"
+                    onClick={[Function]}
+                  >
+                    Logg inn
+                  </div>
+                </styled.div>
+              </div>
+            </styled.div>
+          </Header>
+          <styled.div>
+            <div
+              className="sc-dOSReg bkIVLj"
+            >
+              <styled.div>
+                <div
+                  className="sc-bBrOnJ leiNsd"
+                >
+                  <Filter>
+                    <styled.div>
+                      <div
+                        className="sc-jcVebW jPpRrL"
+                      >
+                        <styled.h2>
+                          <h2
+                            className="sc-bZSQDF iLsUIz"
+                          >
+                             Søk etter aktiviteter: 
+                          </h2>
+                        </styled.h2>
+                        <SearchField
+                          submitFunction={[Function]}
+                          tittel="søkeord"
+                        >
+                          <div>
+                            <form
+                              onSubmit={[Function]}
+                            >
+                              <label
+                                className="filterSearchInputLabel"
+                              >
+                                Skriv inn søkeord ...
+                                <input
+                                  className="filterSearchInput"
+                                  onChange={[Function]}
+                                  type="text"
+                                  value=""
+                                />
+                              </label>
+                            </form>
+                            <button
+                              className="inputButton"
+                              onClick={[Function]}
+                              type="submit"
+                            >
+                              Legg til søkeord
+                            </button>
+                          </div>
+                        </SearchField>
+                        <SearchField
+                          submitFunction={[Function]}
+                          tittel="sted"
+                        >
+                          <div>
+                            <form
+                              onSubmit={[Function]}
+                            >
+                              <label
+                                className="filterSearchInputLabel"
+                              >
+                                Skriv inn sted ...
+                                <input
+                                  className="filterSearchInput"
+                                  onChange={[Function]}
+                                  type="text"
+                                  value=""
+                                />
+                              </label>
+                            </form>
+                            <button
+                              className="inputButton"
+                              onClick={[Function]}
+                              type="submit"
+                            >
+                              Legg til sted
+                            </button>
+                          </div>
+                        </SearchField>
+                        <styled.div>
+                          <div
+                            className="sc-iUuytg cpwbCR"
+                          >
+                            <DropDown
+                              addFunction={[Function]}
+                              items={Array []}
+                              tittel="Kategori"
+                            >
+                              <form>
+                                <label
+                                  className="dropDownLabel"
+                                >
+                                  Kategori :
+                                </label>
+                                <select
+                                  className="dropDownWrapper"
+                                  onChange={[Function]}
+                                >
+                                  <option
+                                    className="dropDownItemTitle"
+                                  >
+                                    -- Velg Kategori: --
+                                  </option>
+                                </select>
+                              </form>
+                            </DropDown>
+                            <DropDown
+                              addFunction={[Function]}
+                              items={Array []}
+                              tittel="Utstyr"
+                            >
+                              <form>
+                                <label
+                                  className="dropDownLabel"
+                                >
+                                  Utstyr :
+                                </label>
+                                <select
+                                  className="dropDownWrapper"
+                                  onChange={[Function]}
+                                >
+                                  <option
+                                    className="dropDownItemTitle"
+                                  >
+                                    -- Velg Utstyr: --
+                                  </option>
+                                </select>
+                              </form>
+                            </DropDown>
+                            <DropDown
+                              addFunction={[Function]}
+                              items={Array []}
+                              tittel="Organisasjon"
+                            >
+                              <form>
+                                <label
+                                  className="dropDownLabel"
+                                >
+                                  Organisasjon :
+                                </label>
+                                <select
+                                  className="dropDownWrapper"
+                                  onChange={[Function]}
+                                >
+                                  <option
+                                    className="dropDownItemTitle"
+                                  >
+                                    -- Velg Organisasjon: --
+                                  </option>
+                                </select>
+                              </form>
+                            </DropDown>
+                            <DropDown
+                              addFunction={[Function]}
+                              items={
+                                Array [
+                                  "Intensitet = 1",
+                                  "Intensitet = 2",
+                                  "Intensitet = 3",
+                                  "Intensitet = 4",
+                                  "Intensitet = 5",
+                                ]
+                              }
+                              tittel="Intensistet"
+                            >
+                              <form>
+                                <label
+                                  className="dropDownLabel"
+                                >
+                                  Intensistet :
+                                </label>
+                                <select
+                                  className="dropDownWrapper"
+                                  onChange={[Function]}
+                                >
+                                  <option
+                                    className="dropDownItemTitle"
+                                  >
+                                    -- Velg Intensistet: --
+                                  </option>
+                                  <option
+                                    className="dropDownItem"
+                                    key="Intensitet = 1"
+                                    value="Intensitet = 1"
+                                  >
+                                     
+                                    Intensitet = 1
+                                     
+                                  </option>
+                                  <option
+                                    className="dropDownItem"
+                                    key="Intensitet = 2"
+                                    value="Intensitet = 2"
+                                  >
+                                     
+                                    Intensitet = 2
+                                     
+                                  </option>
+                                  <option
+                                    className="dropDownItem"
+                                    key="Intensitet = 3"
+                                    value="Intensitet = 3"
+                                  >
+                                     
+                                    Intensitet = 3
+                                     
+                                  </option>
+                                  <option
+                                    className="dropDownItem"
+                                    key="Intensitet = 4"
+                                    value="Intensitet = 4"
+                                  >
+                                     
+                                    Intensitet = 4
+                                     
+                                  </option>
+                                  <option
+                                    className="dropDownItem"
+                                    key="Intensitet = 5"
+                                    value="Intensitet = 5"
+                                  >
+                                     
+                                    Intensitet = 5
+                                     
+                                  </option>
+                                </select>
+                              </form>
+                            </DropDown>
+                          </div>
+                        </styled.div>
+                        <SelectedFilters
+                          filters={Array []}
+                          tittel="Utvalgte filtre: "
+                        >
+                          <styled.div>
+                            <div
+                              className="sc-iBaPrD hKyCaK"
+                            >
+                              <p>
+                                Utvalgte filtre: 
+                              </p>
+                            </div>
+                          </styled.div>
+                        </SelectedFilters>
+                        <Button
+                          onClickFunc={[Function]}
+                          text="Klikk for å nulstille filtre"
+                        >
+                          <styled.div
+                            onClick={[Function]}
+                            style={
+                              Object {
+                                "backgroundColor": "#ff4e37",
+                                "color": "white",
+                                "minWidth": "8em",
+                              }
+                            }
+                          >
+                            <div
+                              className="sc-bdfBwQ jzdiim"
+                              onClick={[Function]}
+                              style={
+                                Object {
+                                  "backgroundColor": "#ff4e37",
+                                  "color": "white",
+                                  "minWidth": "8em",
+                                }
+                              }
+                            >
+                              <styled.div>
+                                <div
+                                  className="sc-gsTCUz dfTHCv"
+                                >
+                                  Klikk for å nulstille filtre
+                                </div>
+                              </styled.div>
+                            </div>
+                          </styled.div>
+                        </Button>
+                      </div>
+                    </styled.div>
+                  </Filter>
+                </div>
+              </styled.div>
+              <styled.div>
+                <div
+                  className="sc-cOajty dLNeee"
+                >
+                  <styled.h1>
+                    <h1
+                      className="sc-khAkjo kPEFrp"
+                    />
+                  </styled.h1>
+                  <styled.div>
+                    <div
+                      className="sc-AzgDb gzAEGR"
+                    >
+                      <styled.div>
+                        <div
+                          className="sc-hTZhsR hENyRZ"
+                        >
+                          <h2
+                            style={
+                              Object {
+                                "margin": "0.15em",
+                              }
+                            }
+                          >
+                            Sorter på: 
+                          </h2>
+                          <Styled(styled.div)
+                            key="Dato"
+                          >
+                            <div
+                              className="sc-jgHCyG sc-gTgzIj TjYfJ cRPiBQ"
+                            >
+                              Dato
+                            </div>
+                          </Styled(styled.div)>
+                          <styled.div
+                            key="Aktivitetsnivå"
+                            onClick={[Function]}
+                          >
+                            <div
+                              className="sc-jgHCyG TjYfJ"
+                              onClick={[Function]}
+                            >
+                               
+                              Aktivitetsnivå
+                            </div>
+                          </styled.div>
+                        </div>
+                      </styled.div>
+                      <styled.div>
+                        <div
+                          className="sc-hTZhsR hENyRZ"
+                        >
+                          <h2
+                            style={
+                              Object {
+                                "margin": "0.15em",
+                              }
+                            }
+                          >
+                            Retning: 
+                          </h2>
+                          <styled.div
+                            onClick={[Function]}
+                          >
+                            <div
+                              className="sc-laRPJI ijFjmN"
+                              onClick={[Function]}
+                            >
+                              <img
+                                src="static/upArrow.png"
+                              />
+                            </div>
+                          </styled.div>
+                        </div>
+                      </styled.div>
+                    </div>
+                  </styled.div>
+                  <ActivityDashboard
+                    isLoading={true}
+                  >
+                    <Loading>
+                      <styled.div>
+                        <div
+                          className="sc-hKgILt cWRLyD"
+                        >
+                          <styled.div>
+                            <div
+                              className="sc-eCssSg dQfWbl"
+                            >
+                              <styled.div>
+                                <div
+                                  className="sc-jSgupP igHREp"
+                                />
+                              </styled.div>
+                            </div>
+                          </styled.div>
+                        </div>
+                      </styled.div>
+                    </Loading>
+                  </ActivityDashboard>
+                </div>
+              </styled.div>
+            </div>
+          </styled.div>
+        </div>
+      </styled.div>
+    </Browse>
+  </Provider>
+</BrowseWrapper>
+`;

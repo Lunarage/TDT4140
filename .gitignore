@@ -3,4 +3,3 @@ tags
 .vscode/*
 frontend/.eslintcache
 node_modules/
-*.snap

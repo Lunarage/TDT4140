@@ -1,0 +1,154 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MyPage Should match MyPage snapshot 1`] = `
+<MyPageWrapper>
+  <Provider
+    store={
+      Object {
+        "dispatch": [Function],
+        "getState": [Function],
+        "replaceReducer": [Function],
+        "subscribe": [Function],
+        Symbol(observable): [Function],
+      }
+    }
+  >
+    <MyPage>
+      <styled.div>
+        <div
+          className="sc-jNMdTA gFRJNv"
+        >
+          <Header
+            line={true}
+          >
+            <styled.div
+              style={
+                Object {
+                  "borderBottom": "5px solid rgba(236, 47, 22, 1)",
+                }
+              }
+            >
+              <div
+                className="sc-iktFzd uGybn"
+                style={
+                  Object {
+                    "borderBottom": "5px solid rgba(236, 47, 22, 1)",
+                  }
+                }
+              >
+                <styled.div
+                  onClick={[Function]}
+                >
+                  <div
+                    className="sc-cBNfnY bDxDMJ"
+                    onClick={[Function]}
+                  >
+                    Gjør No'
+                  </div>
+                </styled.div>
+                <styled.div>
+                  <div
+                    className="sc-gWHgXt bcglBl"
+                  >
+                    <styled.div
+                      onClick={[Function]}
+                    >
+                      <div
+                        className="sc-hiSbYr hZBClG"
+                        onClick={[Function]}
+                      >
+                        Aktiviteter
+                      </div>
+                    </styled.div>
+                    <styled.div
+                      onClick={[Function]}
+                    >
+                      <div
+                        className="sc-hiSbYr hZBClG"
+                        onClick={[Function]}
+                      >
+                        Arrangementer
+                      </div>
+                    </styled.div>
+                  </div>
+                </styled.div>
+                <styled.div
+                  onClick={[Function]}
+                >
+                  <div
+                    className="sc-jJEJSO cgHETT"
+                    onClick={[Function]}
+                  >
+                    Logg inn
+                  </div>
+                </styled.div>
+              </div>
+            </styled.div>
+          </Header>
+          <styled.div>
+            <div
+              className="sc-cOajty dLNeee"
+            >
+              <Styled(styled.h1)>
+                <h1
+                  className="sc-khAkjo sc-iNqMTl kPEFrp gfEEak"
+                >
+                  Min side
+                </h1>
+              </Styled(styled.h1)>
+              <Styled(styled.div)>
+                <div
+                  className="sc-AzgDb sc-jeGSBP gzAEGR kUugXk"
+                >
+                  <Styled(Styled(styled.div))
+                    key="Mine aktiviteter"
+                    onClick={[Function]}
+                  >
+                    <div
+                      className="sc-lmoMRL sc-iJuUWI sc-nFpLZ hDtEWp hAXfgU dlyIMt"
+                      onClick={[Function]}
+                    >
+                      Mine aktiviteter
+                    </div>
+                  </Styled(Styled(styled.div))>
+                  <Styled(styled.div)
+                    key="Oppmeldte aktiviteter"
+                    onClick={[Function]}
+                  >
+                    <div
+                      className="sc-lmoMRL sc-eJMQSu hDtEWp fbRiSa"
+                      onClick={[Function]}
+                    >
+                      Oppmeldte aktiviteter
+                    </div>
+                  </Styled(styled.div)>
+                  <Styled(styled.div)
+                    key="Favoritter"
+                    onClick={[Function]}
+                  >
+                    <div
+                      className="sc-lmoMRL sc-eJMQSu hDtEWp fbRiSa"
+                      onClick={[Function]}
+                    >
+                      Favoritter
+                    </div>
+                  </Styled(styled.div)>
+                </div>
+              </Styled(styled.div)>
+              <ActivityDashboard
+                isLoading={false}
+              >
+                <styled.div>
+                  <div
+                    className="sc-giIncl gxyexG"
+                  />
+                </styled.div>
+              </ActivityDashboard>
+            </div>
+          </styled.div>
+        </div>
+      </styled.div>
+    </MyPage>
+  </Provider>
+</MyPageWrapper>
+`;

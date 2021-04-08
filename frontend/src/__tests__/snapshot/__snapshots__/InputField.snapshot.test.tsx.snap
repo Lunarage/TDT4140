@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InputField Should match InputField snapshot 1`] = `
+<styled.div>
+  <styled.div>
+    test
+  </styled.div>
+  <Input
+    onChange={[Function]}
+    type="text"
+  />
+</styled.div>
+`;
