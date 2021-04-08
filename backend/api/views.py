@@ -19,6 +19,7 @@ from .serializers import (
 from django_filters import rest_framework as filters
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
+from rest_framework.parsers import MultiPartParser
 
 
 class OrganizationFilter(filters.FilterSet):
@@ -191,8 +192,13 @@ class ActivityViewSet(viewsets.ModelViewSet):  # pylint: disable=too-many-ancest
                 tagged_len = 0
             titles = activity.id
             stats[titles] = tagged_len
+<<<<<<< HEAD
+        # Serializing json   
+        json_object = json.dumps(stats, indent=4)  
+=======
         # Serializing json
         json_object = json.dumps(stats, indent = 4)  
+>>>>>>> master
         return Response(json_object)
     
 class OrganizationActivities(viewsets.ModelViewSet):  # pylint: disable=too-many-ancestors
@@ -219,7 +225,23 @@ class UserActivities(viewsets.ModelViewSet):  # pylint: disable=too-many-ancesto
     def get_queryset(self):
         return Activity.objects.filter(organization_owner__isnull=True)
 
+    @action(
+        methods=['put'],
+        detail=True,
+        permission_classes=[permissions.IsAuthenticated],
+        parser_classes=(MultiPartParser,)
+    )    
+    def image_view(self, request, *args, **kvargs):
+        activity = self.get_object()
+        image = request.FILES.get("activity_image")
+        if image:
+            activity.activity_image = image
+            activity.save()
+            
+            return Response(status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
 
+            
 class UserViewSet(viewsets.ModelViewSet):  # pylint: disable=too-many-ancestors
     """
     API endpoint for User model.
