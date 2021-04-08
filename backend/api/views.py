@@ -192,13 +192,8 @@ class ActivityViewSet(viewsets.ModelViewSet):  # pylint: disable=too-many-ancest
                 tagged_len = 0
             titles = activity.id
             stats[titles] = tagged_len
-<<<<<<< HEAD
         # Serializing json   
         json_object = json.dumps(stats, indent=4)  
-=======
-        # Serializing json
-        json_object = json.dumps(stats, indent = 4)  
->>>>>>> master
         return Response(json_object)
     
 class OrganizationActivities(viewsets.ModelViewSet):  # pylint: disable=too-many-ancestors
