@@ -147,31 +147,31 @@ class ActivityViewSet(viewsets.ModelViewSet):  # pylint: disable=too-many-ancest
         # This should never be run
         return Response(status=status.HTTP_418_IM_A_TEAPOT)
     
-    @action(
-        methods=['GET'],
-        detail=False,
-        permission_classes=[],
-    )
-    def organization(self, request, *args, **kwargs):
-        """
-        Get all activities with an organization_owner
-        """
-        activities = Activity.objects.filter(organization_owner__id__isnull=False)
-        serializer = ActivitySerializer(activities, many=True)
-        return Response(serializer.data)
+    # @action(
+    #     methods=['GET'],
+    #     detail=False,
+    #     permission_classes=[],
+    # )
+    # def organization(self, request, *args, **kwargs):
+    #     """
+    #     Get all activities with an organization_owner
+    #     """
+    #     activities = Activity.objects.filter(organization_owner__id__isnull=False)
+    #     serializer = ActivitySerializer(activities, many=True)
+    #     return Response(serializer.data)
     
-    @action(
-        methods=['GET'],
-        detail=False,
-        permission_classes=[],
-    )
-    def user(self, request, *args, **kwargs):
-        """
-        Get all activities with an organization_owner
-        """
-        activities = Activity.objects.filter(organization_owner__isnull=True)
-        serializer = ActivitySerializer(activities, many=True)
-        return Response(serializer.data)
+    # @action(
+    #     methods=['GET'],
+    #     detail=False,
+    #     permission_classes=[],
+    # )
+    # def user(self, request, *args, **kwargs):
+    #     """
+    #     Get all activities without an organization_owner
+    #     """
+    #     activities = Activity.objects.filter(organization_owner__isnull=True)
+    #     serializer = ActivitySerializer(activities, many=True)
+    #     return Response(serializer.data)
     
     @action(
         methods=['GET'],
@@ -191,9 +191,33 @@ class ActivityViewSet(viewsets.ModelViewSet):  # pylint: disable=too-many-ancest
                 tagged_len = 0
             titles = activity.id
             stats[titles] = tagged_len
-        # Serializing json   
+        # Serializing json
         json_object = json.dumps(stats, indent = 4)  
         return Response(json_object)
+    
+class OrganizationActivities(viewsets.ModelViewSet):  # pylint: disable=too-many-ancestors
+    """
+    Get all activities with an organization_owner
+    """
+    serializer_class = ActivitySerializer
+    filter_backends = [SearchFilter, DjangoFilterBackend]
+    search_fields = ['title', 'description', 'user_owner__username', 'organization_owner__name', 'location', 'activity_level', 'equipment_used__name', 'categories__name', 'max_participants']
+    filterset_class = ActivityFilter
+
+    def get_queryset(self):
+        return Activity.objects.filter(organization_owner__id__isnull=False)
+    
+class UserActivities(viewsets.ModelViewSet):  # pylint: disable=too-many-ancestors
+    """
+    Get all activities without an organization_owner
+    """
+    serializer_class = ActivitySerializer
+    filter_backends = [SearchFilter, DjangoFilterBackend]
+    search_fields = ['title', 'description', 'user_owner__username', 'organization_owner__name', 'location', 'activity_level', 'equipment_used__name', 'categories__name', 'max_participants']
+    filterset_class = ActivityFilter
+
+    def get_queryset(self):
+        return Activity.objects.filter(organization_owner__isnull=True)
 
 
 class UserViewSet(viewsets.ModelViewSet):  # pylint: disable=too-many-ancestors
@@ -202,6 +226,9 @@ class UserViewSet(viewsets.ModelViewSet):  # pylint: disable=too-many-ancestors
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    filter_backends = [SearchFilter, DjangoFilterBackend]
+    search_fields = ['first_name', 'last_name', 'username', 'email']
+    filterset_class = UserFilter
 
     @action(detail=True, methods=['GET'], permission_classes=[permissions.IsAuthenticated],)
     def activity(self, request, *args, **kwargs):
@@ -216,9 +243,6 @@ class UserViewSet(viewsets.ModelViewSet):  # pylint: disable=too-many-ancestors
         organizations = Organization.objects.filter(user_member__id=user.id)
         serializer = OrganizationSerializer(organizations, many=True)
         return Response(serializer.data)
-    filter_backends = [SearchFilter, DjangoFilterBackend]
-    search_fields = ['first_name', 'last_name', 'username', 'email']
-    filterset_class = UserFilter
 
     @action(
         methods=['get'],

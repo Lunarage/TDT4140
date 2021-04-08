@@ -4,7 +4,7 @@ import { redHexColor } from '../consts';
 import { isoToDateList } from '../functions';
 import { Event, State } from '../store/types';
 import Button from "../components/Button";
-import { getSignUps, getStarred, revokeSignUpUser, revokeStarUser, signUpUser, starUser } from '../store/actionCreators';
+import { getAdminStatistics, getSignUps, getStarred, revokeSignUpUser, revokeStarUser, signUpUser, starUser } from '../store/actionCreators';
 import { useDispatch, useSelector } from 'react-redux';
 import Loading from './Loading';
 
@@ -193,6 +193,7 @@ const ActivityExpand = ({ data, onExitFunc }: ActivityExpandProps) => {
         let promise = revokeStarUser(data.id.toString(), token).then(r => { return r }) // remove star activity
         promise.then(r => { setSignUpResponse(r); fetchStarred() })
       }
+      dispatch(getAdminStatistics())
     }
   }
 
