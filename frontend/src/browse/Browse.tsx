@@ -28,7 +28,7 @@ export const SideBar = styled.div`
   min-height: 100vh;
   height: auto;
   width: 220px;
-  background-color: ${redHexColor};
+  background-color: #c91801;
 `;
 
 // Wrapper for page header, filter and dashboard

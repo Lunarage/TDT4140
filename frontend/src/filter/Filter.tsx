@@ -160,7 +160,7 @@ const Filter = () => {
 
   const handleSelectedEquipmentFilters = (filter: string) => {
     let newSelectedEquipment = selectedEquipment;
-    if (newSelectedEquipment != filter && !filter.startsWith("--")) {
+    if (selectedEquipment != filter && !filter.startsWith("--")) {
       newSelectedEquipment = filter;
     }
     setSelectedEquipment(newSelectedEquipment);
@@ -168,7 +168,7 @@ const Filter = () => {
 
   const handleSelectedOrganizations = (filter: string) => {
     let newSelectedOrganization = selectedOrganization;
-    if (newSelectedOrganization != filter && !filter.startsWith("--")) {
+    if (selectedOrganization != filter && !filter.startsWith("--")) {
       newSelectedOrganization = filter;
     }
     setSelectedOrganization(newSelectedOrganization);
@@ -176,7 +176,7 @@ const Filter = () => {
 
   const handleSelectIntensity = (filter: string) => {
     let newSelectedIntensityFilter = selectedIntensity;
-    if (newSelectedIntensityFilter != filter && !filter.startsWith("--")) {
+    if (selectedIntensity != filter && !filter.startsWith("--")) {
       newSelectedIntensityFilter = filter;
     }
     setSelectedIntensity(newSelectedIntensityFilter);
@@ -184,7 +184,7 @@ const Filter = () => {
 
   const handleSubmitKeyword = (keyword: string) => {
     let newSelectedKeyword = selectedKeyWord;
-    if (newSelectedKeyword != keyword && !keyword.startsWith("--")) {
+    if (selectedKeyWord != keyword && !keyword.startsWith("--")) {
       newSelectedKeyword = keyword;
     }
     setSelectedKeyWord(newSelectedKeyword);
@@ -192,7 +192,7 @@ const Filter = () => {
 
   const handleSubmitLocation = (location: string) => {
     let newSelectedLocation = selectedIntensity;
-    if (newSelectedLocation != location && !location.startsWith("--")) {
+    if (selectedIntensity != location && !location.startsWith("--")) {
       newSelectedLocation = location;
     }
     setSelectedLocation(newSelectedLocation);
