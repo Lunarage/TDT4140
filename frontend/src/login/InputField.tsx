@@ -18,17 +18,18 @@ const BoldText = styled.div`
 `;
 interface InputFieldProps {
   name: string;
-  password?: boolean;
+  type?: string;
   text?: string;
   onChangeFunc: (val: string) => void
 }
 
 // Used for login / register input fields
-const InputField = ({ name, password, text, onChangeFunc }: InputFieldProps) => {
+const InputField = ({ name, type, text, onChangeFunc }: InputFieldProps) => {
   return (
     <LineWrapper>
       <BoldText>{name}</BoldText>
       <Input
+        type={type}
         placeholder={text}
         onChange={(event) => onChangeFunc(event.target.value)}
       />

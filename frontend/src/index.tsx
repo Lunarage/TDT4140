@@ -7,6 +7,7 @@ import Welcome from './welcome/Welcome';
 import MyPage from './myPage/MyPage';
 import Login from './login/Login';
 import Browse from './browse/Browse';
+import Stats from './stats/Stats';
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware, Reducer, combineReducers } from "redux";
 import thunk from "redux-thunk";
@@ -20,7 +21,8 @@ import {
   getCurrentUserReducer,
   signUpsReducer,
   starredReducer,
-  myActivitiesReducer
+  myActivitiesReducer,
+  statsReducer
 } from "./store/reducers";
 import 'semantic-ui-css/semantic.min.css'
 
@@ -35,8 +37,10 @@ const allReducers: Reducer<State, Action> = combineReducers({
   starredReducer,
   signUpsReducer,
   myActivitiesReducer,
+  statsReducer,
 });
 
+// redux store
 export const store = createStore(allReducers, applyMiddleware(thunk));
 
 ReactDOM.render(
@@ -48,6 +52,7 @@ ReactDOM.render(
           <Route exact path="/browse" component={Browse} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/mypage" component={MyPage} />
+          <Route exact path="/admin" component={Stats} />
         </Switch>
       </BrowserRouter>
     </Provider>

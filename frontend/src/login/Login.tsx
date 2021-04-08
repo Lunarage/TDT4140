@@ -3,10 +3,10 @@ import { useDispatch } from 'react-redux';
 import styled from "styled-components";
 import Button from "../components/Button";
 import Header from "../components/Header";
-import InputField from "../components/InputField";
+import InputField from "./InputField";
 import WelcomeLogo from "../welcome/WelcomeLogo";
 import { useHistory } from 'react-router-dom';
-import { getSignUps, getStarred, getUser, postUser } from '../store/actionCreators';
+import { getSignUps, getStarred, getUser, postUser, getAdminStatistics } from '../store/actionCreators';
 
 const PageWrapper = styled.div`
   display: flex;
@@ -111,6 +111,7 @@ const Login = () => {
         resetMessages()
         localStorage.setItem("token", getUserResponse.token)
         localStorage.setItem("id", getUserResponse.id.toString())
+        dispatch(getAdminStatistics())
         dispatch(getStarred(getUserResponse.id.toString(), getUserResponse.token))
         dispatch(getSignUps(getUserResponse.id.toString(), getUserResponse.token))
         history.push("/");
@@ -180,9 +181,9 @@ const Login = () => {
               <InputField name="Last name" onChangeFunc={(val) => setLastName(val)} />
               <InputField name="E-post" onChangeFunc={(val) => setEmail(val)} /> </>)}
             <InputField name="Brukernavn" onChangeFunc={(val) => setUsername(val)} />
-            <InputField name="Passord" onChangeFunc={(val) => setPassword(val)} />
+            <InputField name="Passord" type="password" onChangeFunc={(val) => setPassword(val)} />
             {method === Method.register && (
-              <InputField name="Confirm passord" onChangeFunc={(val) => setConfPassword(val)} />
+              <InputField name="Confirm passord" type="password" onChangeFunc={(val) => setConfPassword(val)} />
             )}
           </InputWrapper>
           {loginError && (getUserResponse?.error?.statusCode === 400 ? <div>Feil brukernavn eller passord</div> : ErrorMessage)} {/* statuscode 400 means password or username is wrong. All other possible scenario are tested in frontend. */}
@@ -208,3 +209,4 @@ const Login = () => {
 };
 
 export default Login;
+

@@ -1,8 +1,9 @@
-import { useState } from "react";
-import { useSelector } from 'react-redux';
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { logoColor, pageName, redHexColor } from "../consts";
+import { getAdminStatistics } from '../store/actionCreators';
 import { State } from '../store/types';
 import { ExpandWrapper } from './ActivityDashboard';
 import Button from './Button';
@@ -80,17 +81,42 @@ export enum Type {
   arrangementer = "Arrangementer"
 }
 
-// General page header used on every page
-const Header = () => {
+interface HeaderProps {
+  line?: boolean,
+}
+
+const Header = ({ line }: HeaderProps) => {
   const history = useHistory();
+  const dispatch = useDispatch();
+
   const [showCreateNew, setShowCreateNew] = useState<boolean>(false);
   const [showSuccess, setShowSuccess] = useState<boolean>(false);
+  const [underline, setUnderline] = useState<any>(undefined);
+
+  const {
+    stats,
+    isLoading: statsIsLoading,
+    errorMessage: statsError,
+  } = useSelector((state: State) => state.statsReducer);
+
+  useEffect(() => {
+    if (!stats && !statsIsLoading && !statsError) {
+      dispatch(getAdminStatistics())
+    }
+  }, [stats])
 
   const {
     event,
     isLoading: eventLoading,
     errorMessage: eventError,
   } = useSelector((state: State) => state.postEventReducer);
+
+
+  useEffect(() => {
+    if (line) {
+      setUnderline({ borderBottom: `5px solid rgba(236, 47, 22, 1)` })
+    }
+  }, [line]);
 
   const setUrl = (tab: string) => {
     history.push(tab);
@@ -109,8 +135,10 @@ const Header = () => {
   }
 
   const handleLogOut = () => {
-    setUrl("/")
     localStorage.clear()
+    setUrl("/")
+    window.location.reload()
+    return false
   }
 
   if (eventLoading) return <Loading />
@@ -122,7 +150,7 @@ const Header = () => {
       {!showCreateNew && showSuccess && (eventError ?
         <NewActivityResponse>Klarte ikke å poste aktiviteten.</NewActivityResponse> :
         event && <NewActivityResponse>{event?.title} er postet!</NewActivityResponse>)}
-      <Wrapper>
+      <Wrapper style={underline}>
         <Logo onClick={() => setUrl("/")}>{pageName}</Logo>
         <TabsWrapper>
           <Tab onClick={() => handleTypeClick("/browse", "aktiviteter")}>
@@ -140,6 +168,10 @@ const Header = () => {
         </TabsWrapper>
         {localStorage.getItem("token") ? (
           <TabsWrapper>
+            {stats &&
+              <UserButton onClick={() => setUrl("/admin")}>
+                Statistikk
+          </UserButton>}
             <UserButton onClick={() => setUrl("/mypage")}>
               Min side
           </UserButton>

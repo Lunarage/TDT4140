@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Button from "../components/Button";
 import Header from "../components/Header";
 import WelcomeLogo from "./WelcomeLogo";
+import Filter from "../filter/Filter";
 
 const PageWrapper = styled.div`
     width: 100%;
@@ -49,6 +50,7 @@ const Welcome = () => {
         />
         {!localStorage.getItem("token") &&
           <Button text="Logg inn" onClickFunc={() => setUrl("/login")} />}
+          
       </ContentWrapper>
     </PageWrapper>
   );

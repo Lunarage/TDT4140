@@ -4,7 +4,7 @@ import styled from "styled-components";
 import {
   PageHeader as BasePageHeader,
   RightWrapper,
-  FilterWrapper,
+  SortWrapper,
   PageWrapper,
 } from "../browse/Browse";
 import ActivityDashboard from '../components/ActivityDashboard';
@@ -19,10 +19,9 @@ const PageHeader = styled(BasePageHeader)`
   text-align: center;
 `;
 
-const TabsWrapper = styled(FilterWrapper)`
+const TabsWrapper = styled(SortWrapper)`
   display: flex;
   justify-content: space-evenly;
-  align-items: center;
 `;
 
 const Tab = styled(HeaderItem)`
@@ -70,61 +69,65 @@ const MyPage = () => {
     errorMessage: myActivitiesError,
   } = useSelector((state: State) => state.myActivitiesReducer);
 
-  // gets starred, sign ups and my activities
+  // underlines selected tab
   useEffect(() => {
     const token = localStorage.getItem("token")
     const id = localStorage.getItem("id")
     if (id && token) {
-      if (!starred && !starredIsLoading) {
-        dispatch(getStarred(id, token))
-      }
-      if (!signUps && !signUpsIsLoading) {
-        dispatch(getSignUps(id, token))
-      }
-      if (!myActivities && !myActivitiesIsLoading) {
-        dispatch(getMyActivities(id, token))
-      }
+      dispatch(getMyActivities(id, token))
     }
-    changeTab(currentTab)
-  }, [starred, myActivities, signUps, currentTab]);
-
-  // change between showing my activities, starred and sign ups
-  const changeTab = (newTab: tab) => {
-    setCurrentTab(newTab);
-    if (newTab == tab.starred) {
-      setEvents(starred)
-      setIsLoading(starredIsLoading)
-      setError(starredError)
-    }
-    else if (newTab == tab.signUp) {
-      setEvents(signUps)
-      setIsLoading(signUpsIsLoading)
-      setError(signUpsError)
-    }
-    else if (newTab == tab.myAct) {
-      setEvents(myActivities)
-      setIsLoading(myActivitiesIsLoading)
-      setError(myActivitiesError)
-    }
-  }
-
-  // underlines selected tab
-  useEffect(() => {
     const tabList = [tab.myAct, tab.signUp, tab.starred]
     let tempTabComponents: JSX.Element[] = []
     tabList.forEach(t => {
       if (t == currentTab) {
-        tempTabComponents.push(<TabUnderlined onClick={() => changeTab(t)}>{t}</TabUnderlined>)
+        tempTabComponents.push(<TabUnderlined key={t} onClick={() => changeTab(t)}>{t}</TabUnderlined>)
       } else {
-        tempTabComponents.push(<Tab onClick={() => changeTab(t)}>{t}</Tab>)
+        tempTabComponents.push(<Tab key={t} onClick={() => changeTab(t)}>{t}</Tab>)
       }
     })
     setTabComponents(tempTabComponents)
   }, [currentTab])
 
+  // gets starred, sign ups and my activities
+  useEffect(() => {
+    if (currentTab == tab.starred) {
+      setEvents(starred)
+      setIsLoading(starredIsLoading)
+      setError(starredError)
+    }
+    else if (currentTab == tab.signUp) {
+      setEvents(signUps)
+      setIsLoading(signUpsIsLoading)
+      setError(signUpsError)
+    }
+    else if (currentTab == tab.myAct) {
+      setEvents(myActivities)
+      setIsLoading(myActivitiesIsLoading)
+      setError(myActivitiesError)
+    }
+  }, [starred, myActivities, signUps]);
+
+  // change between showing my activities, starred and sign ups
+  const changeTab = (newTab: tab) => {
+    setCurrentTab(newTab)
+    const token = localStorage.getItem("token")
+    const id = localStorage.getItem("id")
+    if (id && token) {
+      if (newTab == tab.starred) {
+        dispatch(getStarred(id, token))
+      }
+      else if (newTab == tab.signUp) {
+        dispatch(getSignUps(id, token))
+      }
+      else if (newTab == tab.myAct) {
+        dispatch(getMyActivities(id, token))
+      }
+    }
+  }
+
   return (
     <PageWrapper>
-      <Header />
+      <Header line={true} />
       <RightWrapper>
         <PageHeader>Min side</PageHeader>
         <TabsWrapper>
