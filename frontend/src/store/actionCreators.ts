@@ -11,74 +11,6 @@ const handleError = (response: any) => {
     return response;
 };
 
-// Action creators for all states in the redux-system. Also some functions that are not connected to redux at the bottom.
-
-// export const postEvent = (
-//     title: string,
-//     date: string | undefined,
-//     description: string,
-//     location: string,
-//     categories: number[] | undefined,
-//     equipment_used: number[] | undefined,
-//     max_participants: number | undefined,
-//     activity_level: number | undefined,
-//     activity_price: number | undefined,
-//     activity_image: File | undefined,
-//     organization_owner: number | undefined,
-//     user_owner: number,
-//     token: string
-// ) => {
-//     return (dispatch: DispatchType) => {
-//         dispatch({ type: ActionTypes.POST_EVENT_LOADING, payload: [] });
-//         var formData = new FormData();
-
-//         // setting all fields in form data
-//         formData.append("title", JSON.stringify(title));
-//         date && formData.append("date", JSON.stringify(date));
-//         formData.append("description", JSON.stringify(description));
-//         formData.append("location", JSON.stringify(location));
-//         categories &&
-//             categories.length > 0 &&
-//             formData.append("categories", JSON.stringify(categories));
-//         equipment_used &&
-//             equipment_used.length > 0 &&
-//             formData.append("equipment_used", JSON.stringify(equipment_used));
-//         max_participants &&
-//             formData.append(
-//                 "max_participants",
-//                 JSON.stringify(max_participants)
-//             );
-//         activity_level &&
-//             formData.append("activity_level", JSON.stringify(activity_level));
-//         activity_price &&
-//             formData.append("activity_price", JSON.stringify(activity_price));
-//         activity_image && formData.append("activity_image", activity_image);
-//         organization_owner &&
-//             formData.append(
-//                 "organization_owner",
-//                 JSON.stringify(organization_owner)
-//             );
-//         formData.append("user_owner", JSON.stringify(user_owner));
-
-//         let client = new HttpClient(baseUrl, token, true);
-//         return client
-//             .postWithImage("api/activity/", formData)
-//             .then((r) => handleError(r))
-//             .then((response) => {
-//                 dispatch({
-//                     type: ActionTypes.POST_EVENT_FINISHED,
-//                     payload: response,
-//                 });
-//             })
-//             .catch((error) => {
-//                 dispatch({
-//                     type: ActionTypes.POST_EVENT_ERROR,
-//                     payload: error,
-//                 });
-//             });
-//     };
-// };
-
 export const getCurrentUser = (token: string) => {
     return (dispatch: DispatchType) => {
         dispatch({ type: ActionTypes.GET_CURRENT_USER_LOADING, payload: [] });
@@ -397,9 +329,7 @@ export const postEvent = (
 };
 
 export const putImage = (activity_image: File, id: number, token: string) => {
-    console.log(activity_image);
     var formData = new FormData();
-    console.log(activity_image);
     activity_image && formData.append("activity_image", activity_image);
     formData.append("foo", "foo");
     let client = new HttpClient(baseUrl, token, true);
