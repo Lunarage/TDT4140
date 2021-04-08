@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { logoColor, pageName, redHexColor } from "../consts";
-import { getAdminStatistics } from '../store/actionCreators';
+import { getAdminStatistics, getMyActivities } from '../store/actionCreators';
 import { State } from '../store/types';
 import { ExpandWrapper } from './ActivityDashboard';
 import Button from './Button';
@@ -67,7 +67,6 @@ const Header = ({ line }: HeaderProps) => {
   const dispatch = useDispatch();
 
   const [showCreateNew, setShowCreateNew] = useState<boolean>(false);
-  const [showSuccess, setShowSuccess] = useState<boolean>(false);
   const [underline, setUnderline] = useState<any>(undefined);
 
   const {
@@ -99,6 +98,11 @@ const Header = ({ line }: HeaderProps) => {
   const handleNewActivityExit = (submit: boolean) => {
     setShowCreateNew(false);
     if (submit) {
+      const token = localStorage.getItem("token")
+      const id = localStorage.getItem("id")
+      if (id && token) {
+        dispatch(getMyActivities(id, token))
+      }
       history.push("/mypage")
     }
   }

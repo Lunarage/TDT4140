@@ -397,11 +397,14 @@ export const postEvent = (
 };
 
 export const putImage = (activity_image: File, id: number, token: string) => {
-    let client = new HttpClient(baseUrl, token);
+    console.log(activity_image);
+    var formData = new FormData();
+    console.log(activity_image);
+    activity_image && formData.append("activity_image", activity_image);
+    formData.append("foo", "foo");
+    let client = new HttpClient(baseUrl, token, true);
     return client
-        .put("api/activity/" + id + "/image", {
-            activity_image,
-        })
+        .put("api/activity/" + id.toString() + "/image_view/", formData, true)
         .then((r) => handleError(r))
         .then((response) => {
             return response;

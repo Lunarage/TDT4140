@@ -196,6 +196,22 @@ class ActivityViewSet(viewsets.ModelViewSet):  # pylint: disable=too-many-ancest
         # Serializing json   
         json_object = json.dumps(stats, indent=4)  
         return Response(json_object)
+
+    @action(
+        methods=['put'],
+        detail=True,
+        permission_classes=[permissions.IsAuthenticated],
+        parser_classes=(MultiPartParser,)
+    )    
+    def image_view(self, request, *args, **kvargs):
+        activity = self.get_object()
+        image = request.FILES.get("activity_image")
+        if image:
+            activity.activity_image = image
+            activity.save()
+            
+            return Response(status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
     
 class OrganizationActivities(viewsets.ModelViewSet):  # pylint: disable=too-many-ancestors
     """
@@ -220,22 +236,6 @@ class UserActivities(viewsets.ModelViewSet):  # pylint: disable=too-many-ancesto
 
     def get_queryset(self):
         return Activity.objects.filter(organization_owner__isnull=True)
-
-    @action(
-        methods=['put'],
-        detail=True,
-        permission_classes=[permissions.IsAuthenticated],
-        parser_classes=(MultiPartParser,)
-    )    
-    def image_view(self, request, *args, **kvargs):
-        activity = self.get_object()
-        image = request.FILES.get("activity_image")
-        if image:
-            activity.activity_image = image
-            activity.save()
-            
-            return Response(status=status.HTTP_200_OK)
-        return Response(status=status.HTTP_400_BAD_REQUEST)
 
             
 class UserViewSet(viewsets.ModelViewSet):  # pylint: disable=too-many-ancestors

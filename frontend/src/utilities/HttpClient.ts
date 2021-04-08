@@ -174,35 +174,6 @@ class HttpClient {
     }
 
     /**
-     * Same as above, but with formData because of image
-     *
-     * @template T - The expected type of the response
-     * @param {string} url - The url to send the request to
-     * @return {Promise<T>} The promise of a response
-     */
-    public postWithImage<T>(url: string, body: any): Promise<CustomError | T> {
-        return fetch(this.baseURL + url, {
-            method: "POST",
-            body: body,
-            headers: this.headers,
-        })
-            .then(this.checkStatus)
-            .then((response: any) => response.json())
-            .then((response: any) => {
-                return response as T;
-            })
-            .catch((err) => {
-                return {
-                    error: {
-                        name: err.name,
-                        message: err.message,
-                        statusCode: err.statusCode,
-                    },
-                };
-            });
-    }
-
-    /**
      * Sends a put request to the specified url
      * and returns a promise of a result
      * with the expected type.
@@ -213,10 +184,18 @@ class HttpClient {
      * @param {string} url - The url to send the request to
      * @return {Promise<T>} The promise of a response
      */
-    public put<T>(url: string, body: any): Promise<CustomError | T> {
+    public put<T>(
+        url: string,
+        body: any,
+        formData: boolean = false
+    ): Promise<CustomError | T> {
+        let newBody = body;
+        if (!formData) {
+            newBody = JSON.stringify(body);
+        }
         return fetch(this.baseURL + url, {
             method: "PUT",
-            body: JSON.stringify(body),
+            body: newBody,
             headers: this.headers,
         })
             .then(this.checkStatus)
