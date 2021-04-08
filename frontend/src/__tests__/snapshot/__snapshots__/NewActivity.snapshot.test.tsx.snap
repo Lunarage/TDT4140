@@ -1,0 +1,381 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NewActivity Should match NewActivity snapshot 1`] = `
+<NewActivityWrapper>
+  <Provider
+    store={
+      Object {
+        "dispatch": [Function],
+        "getState": [Function],
+        "replaceReducer": [Function],
+        "subscribe": [Function],
+        Symbol(observable): [Function],
+      }
+    }
+  >
+    <NewActivity
+      onExitFunc={[Function]}
+    >
+      <Styled(styled.div)>
+        <div
+          className="sc-gKsewC sc-fodVxV ixCJZn dZXJCK"
+        >
+          <styled.button
+            onClick={[Function]}
+          >
+            <button
+              className="sc-dQppl hxrjdE"
+              onClick={[Function]}
+            >
+               X 
+            </button>
+          </styled.button>
+          <Styled(styled.h1)>
+            <h1
+              className="sc-fubCfw sc-hHftDr kfLCrt gDAPEd"
+            >
+              <styled.div
+                onClick={[Function]}
+              >
+                <div
+                  className="sc-dmlrTW iLXAaM"
+                  onClick={[Function]}
+                >
+                   Aktivitet 
+                </div>
+              </styled.div>
+              <Styled(styled.div)>
+                <div
+                  className="sc-dmlrTW sc-kfzAmx iLXAaM ceMXGy"
+                >
+                   Arrangement 
+                </div>
+              </Styled(styled.div)>
+            </h1>
+          </Styled(styled.h1)>
+          <styled.div>
+            <div
+              className="sc-hBEYos jqcfGW"
+            >
+              <styled.div>
+                <div
+                  className="sc-idOhPF idFhzz"
+                >
+                  <styled.div>
+                    <div
+                      className="sc-fFubgz eQFdiA"
+                    >
+                      <styled.div>
+                        <div
+                          className="sc-bkzZxe ijhGEg"
+                        >
+                          Tittel*: 
+                        </div>
+                      </styled.div>
+                      <Input
+                        onChange={[Function]}
+                        size="mini"
+                        type="text"
+                      >
+                        <div
+                          className="ui mini input"
+                        >
+                          <input
+                            onChange={[Function]}
+                            type="text"
+                          />
+                        </div>
+                      </Input>
+                    </div>
+                  </styled.div>
+                  <styled.div>
+                    <div
+                      className="sc-fFubgz eQFdiA"
+                    >
+                      <styled.div>
+                        <div
+                          className="sc-bkzZxe ijhGEg"
+                        >
+                          Lokasjon*: 
+                        </div>
+                      </styled.div>
+                      <Input
+                        onChange={[Function]}
+                        size="mini"
+                        type="text"
+                      >
+                        <div
+                          className="ui mini input"
+                        >
+                          <input
+                            onChange={[Function]}
+                            type="text"
+                          />
+                        </div>
+                      </Input>
+                    </div>
+                  </styled.div>
+                  <styled.div>
+                    <div
+                      className="sc-fFubgz eQFdiA"
+                    >
+                      <styled.div>
+                        <div
+                          className="sc-bkzZxe ijhGEg"
+                        >
+                          Dato*: 
+                        </div>
+                      </styled.div>
+                      <Input
+                        onChange={[Function]}
+                        placeholder="YYYY-MM-DD"
+                        size="mini"
+                        type="text"
+                      >
+                        <div
+                          className="ui mini input"
+                        >
+                          <input
+                            onChange={[Function]}
+                            placeholder="YYYY-MM-DD"
+                            type="text"
+                          />
+                        </div>
+                      </Input>
+                    </div>
+                  </styled.div>
+                  <styled.div>
+                    <div
+                      className="sc-fFubgz eQFdiA"
+                    >
+                      <styled.div>
+                        <div
+                          className="sc-bkzZxe ijhGEg"
+                        >
+                          Starttid*: 
+                        </div>
+                      </styled.div>
+                      <Input
+                        onChange={[Function]}
+                        placeholder="hh:mm"
+                        size="mini"
+                        type="text"
+                      >
+                        <div
+                          className="ui mini input"
+                        >
+                          <input
+                            onChange={[Function]}
+                            placeholder="hh:mm"
+                            type="text"
+                          />
+                        </div>
+                      </Input>
+                    </div>
+                  </styled.div>
+                  <styled.div>
+                    <div
+                      className="sc-fFubgz eQFdiA"
+                    >
+                      <styled.div>
+                        <div
+                          className="sc-bkzZxe ijhGEg"
+                        >
+                          Maks deltakere: 
+                        </div>
+                      </styled.div>
+                      <Input
+                        onChange={[Function]}
+                        size="mini"
+                        type="text"
+                      >
+                        <div
+                          className="ui mini input"
+                        >
+                          <input
+                            onChange={[Function]}
+                            type="text"
+                          />
+                        </div>
+                      </Input>
+                    </div>
+                  </styled.div>
+                  <styled.div>
+                    <div
+                      className="sc-fFubgz eQFdiA"
+                    >
+                      <styled.div>
+                        <div
+                          className="sc-bkzZxe ijhGEg"
+                        >
+                          Aktivitetsnivå: 
+                        </div>
+                      </styled.div>
+                      <Input
+                        onChange={[Function]}
+                        placeholder="1-5"
+                        size="mini"
+                        type="text"
+                      >
+                        <div
+                          className="ui mini input"
+                        >
+                          <input
+                            onChange={[Function]}
+                            placeholder="1-5"
+                            type="text"
+                          />
+                        </div>
+                      </Input>
+                    </div>
+                  </styled.div>
+                </div>
+              </styled.div>
+              <styled.div>
+                <div
+                  className="sc-idOhPF idFhzz"
+                >
+                  <styled.div>
+                    <div
+                      className="sc-fFubgz eQFdiA"
+                    >
+                      <styled.div>
+                        <div
+                          className="sc-bkzZxe ijhGEg"
+                        >
+                          Organisasjon*: 
+                        </div>
+                      </styled.div>
+                      loading...
+                    </div>
+                  </styled.div>
+                  <styled.div>
+                    <div
+                      className="sc-fFubgz eQFdiA"
+                    >
+                      <styled.div>
+                        <div
+                          className="sc-bkzZxe ijhGEg"
+                        >
+                          Kategorier: 
+                        </div>
+                      </styled.div>
+                      loading...
+                    </div>
+                  </styled.div>
+                  <styled.div>
+                    <div
+                      className="sc-fFubgz eQFdiA"
+                    >
+                      <styled.div>
+                        <div
+                          className="sc-bkzZxe ijhGEg"
+                        >
+                          Utstyr: 
+                        </div>
+                      </styled.div>
+                      loading...
+                    </div>
+                  </styled.div>
+                  <styled.div>
+                    <div
+                      className="sc-bkzZxe ijhGEg"
+                    >
+                      Beskrivelse*: 
+                    </div>
+                  </styled.div>
+                  <TextArea
+                    as="textarea"
+                    onChange={[Function]}
+                    rows={3}
+                    style={
+                      Object {
+                        "minHeight": 100,
+                      }
+                    }
+                  >
+                    <Ref
+                      innerRef={
+                        Object {
+                          "current": <textarea
+                            rows="3"
+                            style="min-height: 100px;"
+                          />,
+                        }
+                      }
+                    >
+                      <RefFindNode
+                        innerRef={
+                          Object {
+                            "current": <textarea
+                              rows="3"
+                              style="min-height: 100px;"
+                            />,
+                          }
+                        }
+                      >
+                        <textarea
+                          onChange={[Function]}
+                          onInput={[Function]}
+                          rows={3}
+                          style={
+                            Object {
+                              "minHeight": 100,
+                            }
+                          }
+                        />
+                      </RefFindNode>
+                    </Ref>
+                  </TextArea>
+                </div>
+              </styled.div>
+              <styled.div>
+                <div
+                  className="sc-kstrdz erdcS"
+                >
+                  <Button
+                    colorInvert={true}
+                    onClickFunc={[Function]}
+                    text="Publiser"
+                  >
+                    <styled.div
+                      onClick={[Function]}
+                      style={
+                        Object {
+                          "backgroundColor": "white",
+                          "color": "#ff4e37",
+                          "minWidth": "8em",
+                        }
+                      }
+                    >
+                      <div
+                        className="sc-bdfBwQ jzdiim"
+                        onClick={[Function]}
+                        style={
+                          Object {
+                            "backgroundColor": "white",
+                            "color": "#ff4e37",
+                            "minWidth": "8em",
+                          }
+                        }
+                      >
+                        <styled.div>
+                          <div
+                            className="sc-gsTCUz dfTHCv"
+                          >
+                            Publiser
+                          </div>
+                        </styled.div>
+                      </div>
+                    </styled.div>
+                  </Button>
+                </div>
+              </styled.div>
+            </div>
+          </styled.div>
+        </div>
+      </Styled(styled.div)>
+    </NewActivity>
+  </Provider>
+</NewActivityWrapper>
+`;

@@ -1,0 +1,172 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ActivityExpand Should match ActivityExpand snapshot 1`] = `
+<ActivityExpandWrapper>
+  <Provider
+    store={
+      Object {
+        "dispatch": [Function],
+        "getState": [Function],
+        "replaceReducer": [Function],
+        "subscribe": [Function],
+        Symbol(observable): [Function],
+      }
+    }
+  >
+    <ActivityExpand
+      data={
+        Object {
+          "activity_level": 1,
+          "categories": Array [
+            1,
+          ],
+          "categories_names": Array [
+            "cat",
+          ],
+          "date": "2021-06-06T20:20:20Z",
+          "description": "desc",
+          "equipment_used": Array [
+            1,
+          ],
+          "equipment_used_names": Array [
+            "eq",
+          ],
+          "id": 1,
+          "location": "loc",
+          "max_participants": 1,
+          "organization_owner": 1,
+          "organization_owner_name": "org",
+          "title": "test",
+          "user_owner": 1,
+          "user_owner_username": "user",
+        }
+      }
+      onExitFunc={[Function]}
+    >
+      <styled.div>
+        <div
+          className="sc-gKsewC ixCJZn"
+        >
+          <styled.button
+            onClick={[Function]}
+          >
+            <button
+              className="sc-dQppl hxrjdE"
+              onClick={[Function]}
+            >
+               X 
+            </button>
+          </styled.button>
+          <styled.h1>
+            <h1
+              className="sc-fubCfw kfLCrt"
+            >
+                  
+              test
+            </h1>
+          </styled.h1>
+          <styled.div>
+            <div
+              className="sc-pFZIQ hewYpo"
+            >
+              <styled.div>
+                <div
+                  className="sc-crrsfI ftcCrD"
+                >
+                   
+                  <styled.img
+                    src="static/22858269.jpg"
+                  >
+                    <img
+                      className="sc-iqHYGH fbxCNf"
+                      src="static/22858269.jpg"
+                    />
+                  </styled.img>
+                </div>
+              </styled.div>
+              <styled.div>
+                <div
+                  className="sc-jrAGrp fJSdFd"
+                >
+                  <styled.div>
+                    <div
+                      className="sc-kEjbxe DmrAK"
+                    >
+                      <b>
+                        desc
+                      </b>
+                    </div>
+                  </styled.div>
+                  <styled.div>
+                    <div
+                      className="sc-kEjbxe DmrAK"
+                    >
+                      <br />
+                      <h2>
+                        Sted: 
+                        loc
+                      </h2>
+                      <h2>
+                        Dato: 
+                        06
+                        /
+                        06
+                         
+                        2021
+                         - 
+                        20
+                        :
+                        20
+                      </h2>
+                    </div>
+                  </styled.div>
+                  <styled.div>
+                    <div
+                      className="sc-kEjbxe DmrAK"
+                    >
+                      <br />
+                      <div>
+                        Intensitet: 
+                        1
+                      </div>
+                      <div>
+                        Required equipment: 
+                        eq
+                      </div>
+                      <div>
+                        Kategori: 
+                        cat
+                      </div>
+                      <div>
+                        Antall plasser: 
+                        1
+                      </div>
+                    </div>
+                  </styled.div>
+                  <styled.div>
+                    <div
+                      className="sc-kEjbxe DmrAK"
+                    >
+                      <br />
+                      <div>
+                        Organisasjon: 
+                        org
+                      </div>
+                    </div>
+                  </styled.div>
+                  <br />
+                  <styled.div>
+                    <div
+                      className="sc-iBPRYJ lhmUwC"
+                    />
+                  </styled.div>
+                </div>
+              </styled.div>
+            </div>
+          </styled.div>
+        </div>
+      </styled.div>
+    </ActivityExpand>
+  </Provider>
+</ActivityExpandWrapper>
+`;

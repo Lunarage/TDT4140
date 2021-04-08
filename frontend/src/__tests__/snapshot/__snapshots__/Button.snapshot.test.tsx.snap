@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button Should match Button snapshot 1`] = `
+<styled.div
+  style={
+    Object {
+      "backgroundColor": "#ff4e37",
+      "color": "white",
+      "minWidth": "8em",
+    }
+  }
+>
+  <styled.div>
+    test
+  </styled.div>
+</styled.div>
+`;

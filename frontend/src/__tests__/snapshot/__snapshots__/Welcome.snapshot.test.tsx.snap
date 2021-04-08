@@ -1,0 +1,178 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Welcome Should match Welcome snapshot 1`] = `
+<WelcomeWrapper>
+  <Provider
+    store={
+      Object {
+        "dispatch": [Function],
+        "getState": [Function],
+        "replaceReducer": [Function],
+        "subscribe": [Function],
+        Symbol(observable): [Function],
+      }
+    }
+  >
+    <Welcome>
+      <styled.div>
+        <div
+          className="sc-iUuytg dteJyh"
+        >
+          <Header>
+            <styled.div>
+              <div
+                className="sc-iktFzd uGybn"
+              >
+                <styled.div
+                  onClick={[Function]}
+                >
+                  <div
+                    className="sc-cBNfnY bDxDMJ"
+                    onClick={[Function]}
+                  >
+                    Gjør No'
+                  </div>
+                </styled.div>
+                <styled.div>
+                  <div
+                    className="sc-gWHgXt bcglBl"
+                  >
+                    <styled.div
+                      onClick={[Function]}
+                    >
+                      <div
+                        className="sc-hiSbYr hZBClG"
+                        onClick={[Function]}
+                      >
+                        Aktiviteter
+                      </div>
+                    </styled.div>
+                    <styled.div
+                      onClick={[Function]}
+                    >
+                      <div
+                        className="sc-hiSbYr hZBClG"
+                        onClick={[Function]}
+                      >
+                        Arrangementer
+                      </div>
+                    </styled.div>
+                  </div>
+                </styled.div>
+                <styled.div
+                  onClick={[Function]}
+                >
+                  <div
+                    className="sc-jJEJSO cgHETT"
+                    onClick={[Function]}
+                  >
+                    Logg inn
+                  </div>
+                </styled.div>
+              </div>
+            </styled.div>
+          </Header>
+          <styled.div>
+            <div
+              className="sc-iBaPrD bqRAiY"
+            >
+              <styled.div>
+                <div
+                  className="sc-eggNIi akaGd"
+                >
+                  <WelcomeLogo>
+                    <Styled(styled.div)>
+                      <div
+                        className="sc-cBNfnY sc-bZSQDF bDxDMJ sFTRS"
+                      >
+                        Gå ut
+                      </div>
+                    </Styled(styled.div)>
+                    <Styled(styled.div)>
+                      <div
+                        className="sc-cBNfnY sc-jcVebW bDxDMJ kCPxtm"
+                      >
+                        Gjør No'
+                      </div>
+                    </Styled(styled.div)>
+                  </WelcomeLogo>
+                </div>
+              </styled.div>
+              <Button
+                onClickFunc={[Function]}
+                text="Utforsk"
+              >
+                <styled.div
+                  onClick={[Function]}
+                  style={
+                    Object {
+                      "backgroundColor": "#ff4e37",
+                      "color": "white",
+                      "minWidth": "8em",
+                    }
+                  }
+                >
+                  <div
+                    className="sc-bdfBwQ jzdiim"
+                    onClick={[Function]}
+                    style={
+                      Object {
+                        "backgroundColor": "#ff4e37",
+                        "color": "white",
+                        "minWidth": "8em",
+                      }
+                    }
+                  >
+                    <styled.div>
+                      <div
+                        className="sc-gsTCUz dfTHCv"
+                      >
+                        Utforsk
+                      </div>
+                    </styled.div>
+                  </div>
+                </styled.div>
+              </Button>
+              <Button
+                onClickFunc={[Function]}
+                text="Logg inn"
+              >
+                <styled.div
+                  onClick={[Function]}
+                  style={
+                    Object {
+                      "backgroundColor": "#ff4e37",
+                      "color": "white",
+                      "minWidth": "8em",
+                    }
+                  }
+                >
+                  <div
+                    className="sc-bdfBwQ jzdiim"
+                    onClick={[Function]}
+                    style={
+                      Object {
+                        "backgroundColor": "#ff4e37",
+                        "color": "white",
+                        "minWidth": "8em",
+                      }
+                    }
+                  >
+                    <styled.div>
+                      <div
+                        className="sc-gsTCUz dfTHCv"
+                      >
+                        Logg inn
+                      </div>
+                    </styled.div>
+                  </div>
+                </styled.div>
+              </Button>
+            </div>
+          </styled.div>
+        </div>
+      </styled.div>
+    </Welcome>
+  </Provider>
+</WelcomeWrapper>
+`;

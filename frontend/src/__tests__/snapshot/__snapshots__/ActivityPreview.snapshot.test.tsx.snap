@@ -1,0 +1,145 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ActivityPreview Should match ActivityPreview snapshot 1`] = `
+<ActivityPreviewWrapper>
+  <Provider
+    store={
+      Object {
+        "dispatch": [Function],
+        "getState": [Function],
+        "replaceReducer": [Function],
+        "subscribe": [Function],
+        Symbol(observable): [Function],
+      }
+    }
+  >
+    <ActivityPreview
+      data={
+        Object {
+          "activity_level": 1,
+          "categories": Array [
+            1,
+          ],
+          "categories_names": Array [
+            "cat",
+          ],
+          "date": "2021-06-06T20:20:20Z",
+          "description": "desc",
+          "equipment_used": Array [
+            1,
+          ],
+          "equipment_used_names": Array [
+            "eq",
+          ],
+          "id": 1,
+          "location": "loc",
+          "max_participants": 1,
+          "organization_owner": 1,
+          "organization_owner_name": "org",
+          "title": "test",
+          "user_owner": 1,
+          "user_owner_username": "user",
+        }
+      }
+      onClickFunc={[Function]}
+    >
+      <styled.div
+        onClick={[Function]}
+      >
+        <div
+          className="sc-bdfBwQ lmgbPw"
+          onClick={[Function]}
+        >
+          <styled.div>
+            <div
+              className="sc-jSgupP jKWuSU"
+            >
+              <styled.img
+                src="static/Red-Rocks_horizontal.jpg"
+              >
+                <img
+                  className="sc-dlfnbm cDnPeZ"
+                  src="static/Red-Rocks_horizontal.jpg"
+                />
+              </styled.img>
+            </div>
+          </styled.div>
+          <styled.div>
+            <div
+              className="sc-gsTCUz foYBRd"
+            >
+              <styled.h2>
+                <h2
+                  className="sc-hKgILt dbvOfW"
+                >
+                   
+                  test
+                   
+                </h2>
+              </styled.h2>
+              <styled.div>
+                <div
+                  className="sc-eCssSg kVXabg"
+                >
+                  <b>
+                    Sted: 
+                  </b>
+                  loc
+                </div>
+              </styled.div>
+              <styled.div>
+                <div
+                  className="sc-eCssSg kVXabg"
+                >
+                  <b>
+                    Dato: 
+                  </b>
+                   
+                  06
+                  /
+                  06
+                   
+                  2021
+                </div>
+              </styled.div>
+              <styled.div>
+                <div
+                  className="sc-eCssSg kVXabg"
+                >
+                  <b>
+                    Aktivitetsnivå: 
+                  </b>
+                   
+                  1
+                </div>
+              </styled.div>
+              <styled.div>
+                <div
+                  className="sc-eCssSg kVXabg"
+                >
+                  <b>
+                    Kategorier: 
+                  </b>
+                   
+                  cat
+                </div>
+              </styled.div>
+              <styled.div>
+                <div
+                  className="sc-eCssSg kVXabg"
+                >
+                  <b>
+                    Organization: 
+                  </b>
+                   
+                  org
+                </div>
+              </styled.div>
+            </div>
+          </styled.div>
+        </div>
+      </styled.div>
+    </ActivityPreview>
+  </Provider>
+</ActivityPreviewWrapper>
+`;

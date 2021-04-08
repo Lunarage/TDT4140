@@ -1,0 +1,302 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Login Should match Login snapshot 1`] = `
+<LoginWrapper>
+  <Provider
+    store={
+      Object {
+        "dispatch": [Function],
+        "getState": [Function],
+        "replaceReducer": [Function],
+        "subscribe": [Function],
+        Symbol(observable): [Function],
+      }
+    }
+  >
+    <Login>
+      <styled.div>
+        <div
+          className="sc-eggNIi loa-dLa"
+        >
+          <Header>
+            <styled.div>
+              <div
+                className="sc-iktFzd uGybn"
+              >
+                <styled.div
+                  onClick={[Function]}
+                >
+                  <div
+                    className="sc-cBNfnY bDxDMJ"
+                    onClick={[Function]}
+                  >
+                    Gjør No'
+                  </div>
+                </styled.div>
+                <styled.div>
+                  <div
+                    className="sc-gWHgXt bcglBl"
+                  >
+                    <styled.div
+                      onClick={[Function]}
+                    >
+                      <div
+                        className="sc-hiSbYr hZBClG"
+                        onClick={[Function]}
+                      >
+                        Aktiviteter
+                      </div>
+                    </styled.div>
+                    <styled.div
+                      onClick={[Function]}
+                    >
+                      <div
+                        className="sc-hiSbYr hZBClG"
+                        onClick={[Function]}
+                      >
+                        Arrangementer
+                      </div>
+                    </styled.div>
+                  </div>
+                </styled.div>
+                <styled.div
+                  onClick={[Function]}
+                >
+                  <div
+                    className="sc-jJEJSO cgHETT"
+                    onClick={[Function]}
+                  >
+                    Logg inn
+                  </div>
+                </styled.div>
+              </div>
+            </styled.div>
+          </Header>
+          <styled.div>
+            <div
+              className="sc-cTkwdZ buPqhb"
+            >
+              <WelcomeLogo>
+                <Styled(styled.div)>
+                  <div
+                    className="sc-cBNfnY sc-iBaPrD bDxDMJ ixpiby"
+                  >
+                    Gå ut
+                  </div>
+                </Styled(styled.div)>
+                <Styled(styled.div)>
+                  <div
+                    className="sc-cBNfnY sc-iUuytg bDxDMJ oyGnq"
+                  >
+                    Gjør No'
+                  </div>
+                </Styled(styled.div)>
+              </WelcomeLogo>
+            </div>
+          </styled.div>
+          <styled.div>
+            <div
+              className="sc-jNMdTA iXRCsH"
+            >
+              <styled.div>
+                <div
+                  className="sc-bBrOnJ iyTsMg"
+                >
+                  <styled.div>
+                    <div
+                      className="sc-AzgDb cDZJIa"
+                    >
+                      Logg inn
+                    </div>
+                  </styled.div>
+                  <styled.div>
+                    <div
+                      className="sc-cOajty bjDzWG"
+                    >
+                      <InputField
+                        name="Brukernavn"
+                        onChangeFunc={[Function]}
+                      >
+                        <styled.div>
+                          <div
+                            className="sc-jcVebW eOyFQk"
+                          >
+                            <styled.div>
+                              <div
+                                className="sc-bZSQDF jyJKRh"
+                              >
+                                Brukernavn
+                              </div>
+                            </styled.div>
+                            <Input
+                              onChange={[Function]}
+                              type="text"
+                            >
+                              <div
+                                className="ui input"
+                              >
+                                <input
+                                  onChange={[Function]}
+                                  type="text"
+                                />
+                              </div>
+                            </Input>
+                          </div>
+                        </styled.div>
+                      </InputField>
+                      <InputField
+                        name="Passord"
+                        onChangeFunc={[Function]}
+                        type="password"
+                      >
+                        <styled.div>
+                          <div
+                            className="sc-jcVebW eOyFQk"
+                          >
+                            <styled.div>
+                              <div
+                                className="sc-bZSQDF jyJKRh"
+                              >
+                                Passord
+                              </div>
+                            </styled.div>
+                            <Input
+                              onChange={[Function]}
+                              type="password"
+                            >
+                              <div
+                                className="ui input"
+                              >
+                                <input
+                                  onChange={[Function]}
+                                  type="password"
+                                />
+                              </div>
+                            </Input>
+                          </div>
+                        </styled.div>
+                      </InputField>
+                    </div>
+                  </styled.div>
+                   
+                  <Button
+                    onClickFunc={[Function]}
+                    text="Submit"
+                  >
+                    <styled.div
+                      onClick={[Function]}
+                      style={
+                        Object {
+                          "backgroundColor": "#ff4e37",
+                          "color": "white",
+                          "minWidth": "8em",
+                        }
+                      }
+                    >
+                      <div
+                        className="sc-bdfBwQ jzdiim"
+                        onClick={[Function]}
+                        style={
+                          Object {
+                            "backgroundColor": "#ff4e37",
+                            "color": "white",
+                            "minWidth": "8em",
+                          }
+                        }
+                      >
+                        <styled.div>
+                          <div
+                            className="sc-gsTCUz dfTHCv"
+                          >
+                            Submit
+                          </div>
+                        </styled.div>
+                      </div>
+                    </styled.div>
+                  </Button>
+                </div>
+              </styled.div>
+              <styled.div>
+                <div
+                  className="sc-dOSReg ixWBtA"
+                >
+                  <Button
+                    onClickFunc={[Function]}
+                    text="Registrer"
+                  >
+                    <styled.div
+                      onClick={[Function]}
+                      style={
+                        Object {
+                          "backgroundColor": "#ff4e37",
+                          "color": "white",
+                          "minWidth": "8em",
+                        }
+                      }
+                    >
+                      <div
+                        className="sc-bdfBwQ jzdiim"
+                        onClick={[Function]}
+                        style={
+                          Object {
+                            "backgroundColor": "#ff4e37",
+                            "color": "white",
+                            "minWidth": "8em",
+                          }
+                        }
+                      >
+                        <styled.div>
+                          <div
+                            className="sc-gsTCUz dfTHCv"
+                          >
+                            Registrer
+                          </div>
+                        </styled.div>
+                      </div>
+                    </styled.div>
+                  </Button>
+                  <Button
+                    onClickFunc={[Function]}
+                    text="Logg inn"
+                  >
+                    <styled.div
+                      onClick={[Function]}
+                      style={
+                        Object {
+                          "backgroundColor": "#ff4e37",
+                          "color": "white",
+                          "minWidth": "8em",
+                        }
+                      }
+                    >
+                      <div
+                        className="sc-bdfBwQ jzdiim"
+                        onClick={[Function]}
+                        style={
+                          Object {
+                            "backgroundColor": "#ff4e37",
+                            "color": "white",
+                            "minWidth": "8em",
+                          }
+                        }
+                      >
+                        <styled.div>
+                          <div
+                            className="sc-gsTCUz dfTHCv"
+                          >
+                            Logg inn
+                          </div>
+                        </styled.div>
+                      </div>
+                    </styled.div>
+                  </Button>
+                </div>
+              </styled.div>
+            </div>
+          </styled.div>
+        </div>
+      </styled.div>
+    </Login>
+  </Provider>
+</LoginWrapper>
+`;

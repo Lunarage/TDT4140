@@ -22,6 +22,10 @@ You will also see any lint errors in the console.
 
 Deploys files to backend.
 
+### `yarn test`
+
+Test frontend.
+
 ## Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
