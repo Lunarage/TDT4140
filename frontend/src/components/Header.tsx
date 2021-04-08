@@ -81,13 +81,17 @@ export enum Type {
   arrangementer = "Arrangementer"
 }
 
-// General page header used on every page
-const Header = () => {
+interface HeaderProps {
+  line?: boolean,
+}
+
+const Header = ({ line }: HeaderProps) => {
   const history = useHistory();
   const dispatch = useDispatch();
 
   const [showCreateNew, setShowCreateNew] = useState<boolean>(false);
   const [showSuccess, setShowSuccess] = useState<boolean>(false);
+  const [underline, setUnderline] = useState<any>(undefined);
 
   const {
     stats,
@@ -106,6 +110,13 @@ const Header = () => {
     isLoading: eventLoading,
     errorMessage: eventError,
   } = useSelector((state: State) => state.postEventReducer);
+
+
+  useEffect(() => {
+    if (line) {
+      setUnderline({ borderBottom: `5px solid rgba(236, 47, 22, 1)` })
+    }
+  }, [line]);
 
   const setUrl = (tab: string) => {
     history.push(tab);
@@ -139,7 +150,7 @@ const Header = () => {
       {!showCreateNew && showSuccess && (eventError ?
         <NewActivityResponse>Klarte ikke å poste aktiviteten.</NewActivityResponse> :
         event && <NewActivityResponse>{event?.title} er postet!</NewActivityResponse>)}
-      <Wrapper>
+      <Wrapper style={underline}>
         <Logo onClick={() => setUrl("/")}>{pageName}</Logo>
         <TabsWrapper>
           <Tab onClick={() => handleTypeClick("/browse", "aktiviteter")}>

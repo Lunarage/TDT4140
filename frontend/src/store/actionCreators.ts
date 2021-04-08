@@ -82,16 +82,22 @@ export const getCurrentUser = (token: string) => {
     };
 };
 
-export const getEvents = (type?: string) => {
-    let typeStr = "";
-    if (type) {
-        typeStr = type + "/";
+export const getEvents = (type?: string, filters?: string) => {
+    let filterString = "";
+    if (filters) {
+        filterString = "?" + filters;
+    }
+    let typeStr = "activity/";
+    if (type == "user") {
+        typeStr = "useractivities/";
+    } else if (type == "organization") {
+        typeStr = "organizationactivities/";
     }
     return (dispatch: DispatchType) => {
         dispatch({ type: ActionTypes.EVENTS_LOADING, payload: [] });
         let client = new HttpClient(baseUrl);
         return client
-            .get("api/activity/" + typeStr)
+            .get("api/" + typeStr + filterString)
             .then((r) => handleError(r))
             .then((response) => {
                 dispatch({

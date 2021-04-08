@@ -127,7 +127,7 @@ const MyPage = () => {
 
   return (
     <PageWrapper>
-      <Header />
+      <Header line={true} />
       <RightWrapper>
         <PageHeader>Min side</PageHeader>
         <TabsWrapper>

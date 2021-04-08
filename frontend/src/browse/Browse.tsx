@@ -7,6 +7,8 @@ import { logoColor, redHexColor } from '../consts';
 import { toUpperCase } from '../functions';
 import { getEvents } from '../store/actionCreators';
 import { State, Event } from '../store/types';
+import Filter from '../filter/Filter';
+//import FilterSearch from '../components/FilterSearch';
 
 export const PageWrapper = styled.div`
   display: flex;
@@ -26,13 +28,14 @@ export const SideBar = styled.div`
   min-height: 100vh;
   height: auto;
   width: 220px;
-  background-color: ${redHexColor};
+  background-color: #c91801;
 `;
 
 // Wrapper for page header, filter and dashboard
 export const RightWrapper = styled.div`
   height: 100%;
   width: 100%;
+  padding: 10px;
 `;
 
 export const SortWrapper = styled.div`
@@ -156,9 +159,10 @@ const Browse = () => {
 
   return (
     <PageWrapper >
-      <Header />
+      <Header line={true} />
       <ContentWrapper>
         <SideBar>
+          <Filter />
         </SideBar>
         <RightWrapper>
           <PageHeader>{toUpperCase(type)}</PageHeader>
