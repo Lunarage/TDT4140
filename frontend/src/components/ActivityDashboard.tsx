@@ -10,12 +10,11 @@ import { ErrorMessage } from './NewActivity';
 
 
 const ActivityWrapper = styled.div`
-  padding: 15px 15px 0 15px;
-  display: flex;
-  flex-flow: row wrap;
-  align-items: flex-start;
-  justify-content: flex-start;
-  width: 100%;
+  margin: 30px;
+  display: grid; /* 1 */
+  grid-template-columns: repeat(auto-fill, 270px); /* 2 */
+  grid-gap: 1rem; /* 3 */
+  justify-content: space-between; /* 4 */
 `;
 
 // Grey background

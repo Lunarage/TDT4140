@@ -16,7 +16,7 @@ const Wrapper = styled.div`
   font-weight: 500;
   font-size: 20px;
   line-height: 27px;
-  margin: 20px;
+  margin: 10px;
 
   &:hover {
     cursor: pointer;
