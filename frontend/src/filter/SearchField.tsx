@@ -16,30 +16,30 @@ const SearchField = (props: SearchFieldProps) => {
     setOrd(event.target.value);
   }
 
-  const updateWord =  (event: any) => {
+  const updateWord = (event: any) => {
     props.submitFunction(ord)  // sends the selected word to the main Filter component to handle that the filter value has been selected.
-    setOrd("");  
+    setOrd("");
   }
 
   return (
     <div>
-      <form >
-        <label className="filterSearchInputLabel">{"Skriv inn "+props.tittel+" ..."}
-          <input 
-          className="filterSearchInput" 
-          type="text" 
-          value={ord}
-          onChange={handleTyping}
+      <form onSubmit={e => { e.preventDefault(); }}>
+        <label className="filterSearchInputLabel">{"Skriv inn " + props.tittel + " ..."}
+          <input
+            className="filterSearchInput"
+            type="text"
+            value={ord}
+            onChange={handleTyping}
           />
         </label>
       </form>
-      <button 
-        className="inputButton" 
-        type="submit" 
+      <button
+        className="inputButton"
+        type="submit"
         onClick={updateWord}
-        >
-          {"Legg til "+props.tittel}
-        </button>
+      >
+        {"Legg til " + props.tittel}
+      </button>
     </div>
   )
 }
