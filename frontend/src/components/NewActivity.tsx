@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { ActivityExpandHeader, CloseButton, Wrapper as BaseWrapper } from './ActivityExpand';
 import { useDispatch, useSelector } from 'react-redux';
 import { State } from '../store/types';
-import { getCategories, getCurrentUser, getEquipment, postEvent, getOrgs } from '../store/actionCreators';
+import { getCategories, getCurrentUser, getEquipment, postEvent, getOrgs, putImage } from '../store/actionCreators';
 import { Dropdown, Input, TextArea } from 'semantic-ui-react';
 import { allDigits, isIsoDate, parseIntWithUndefined, isFutureDate } from '../functions';
 import Loading from './Loading';
@@ -98,6 +98,7 @@ const NewActivity = ({ onExitFunc }: NewActivityProps) => {
   const [emptyFields, setEmptyFields] = useState<boolean>(false)
   const [invalidFields, setInvalidFields] = useState<string | null>(null)
   const [futureDate, setFutureDate] = useState<boolean>(true)
+  const [postingError, setPostingError] = useState<boolean>(false)
 
   // states for all fields
   const [title, setTitle] = useState<string>()
@@ -107,6 +108,8 @@ const NewActivity = ({ onExitFunc }: NewActivityProps) => {
   const [time, setTime] = useState<string>()
   const [maxParticipants, setMaxParticipants] = useState<string>()
   const [activityLevel, setActivityLevel] = useState<string>()
+  const [price, setPrice] = useState<string>()
+  const [image, setImage] = useState<any>()
 
   const [selectedCategories, setSelectedCategories] = useState<string>("");
   const [selectedEquipment, setSelectedEquipment] = useState<string>("");
@@ -188,6 +191,12 @@ const NewActivity = ({ onExitFunc }: NewActivityProps) => {
   const handleSubmit = () => {
     setEmptyFields(false)
     setInvalidFields(null)
+    setPostingError(false)
+
+    let allowPosting = false
+    let fullDate = undefined
+    let orgId = undefined
+
     let categoriesIdList
     let equipmentIdList
     if (categoriesData && equipmentData) {
@@ -198,8 +207,6 @@ const NewActivity = ({ onExitFunc }: NewActivityProps) => {
     if (!title || !location || !description || (createEvent && (!time || !selectedOrgName || !date))) {
       setEmptyFields(true)
     } else {
-      const userToken = localStorage.getItem("token")
-      let userId = parseIntWithUndefined(localStorage.getItem("id"))
       // some checks for valid input
       if (!allDigits(maxParticipants)) {
         setInvalidFields("maks deltakere")
@@ -208,8 +215,7 @@ const NewActivity = ({ onExitFunc }: NewActivityProps) => {
       }
       // create event
       else if (createEvent) {
-        const fullDate = date + "T" + time + ":00Z"
-        let orgId
+        fullDate = date + "T" + time + ":00Z"
         // finds org id from name
         orgsDropdown.forEach(org => {
           if (org.value === selectedOrgName) {
@@ -221,39 +227,49 @@ const NewActivity = ({ onExitFunc }: NewActivityProps) => {
           setInvalidFields("dato eller starttid")
         } else if (!isFutureDate(fullDate)) {
           setFutureDate(false)
+        } else if (price && (!allDigits(price) || parseInt(price) < 0)) { // check price field
+          setInvalidFields("pris")
         } else {
-          if (userToken && userId) {
-            dispatch(postEvent(title,
-              fullDate,
-              description,
-              location,
-              categoriesIdList,
-              equipmentIdList,
-              parseIntWithUndefined(maxParticipants),
-              parseIntWithUndefined(activityLevel),
-              orgId,
-              userId,
-              undefined,
-              userToken))
-            onExitFunc(true)
-          }
+          allowPosting = true
         }
       }
       // create activity
-      else if (!createEvent && userId && userToken) {
-        dispatch(postEvent(title,
-          undefined,
+      else if (!createEvent) {
+        allowPosting = true
+      }
+    }
+    if (title && description && location && allowPosting) {
+      const userToken = localStorage.getItem("token")
+      let userId = parseIntWithUndefined(localStorage.getItem("id"))
+      if (userToken && userId) {
+        let promise = postEvent(
+          title,
+          fullDate,
           description,
           location,
           categoriesIdList,
           equipmentIdList,
           parseIntWithUndefined(maxParticipants),
           parseIntWithUndefined(activityLevel),
-          undefined,
+          parseIntWithUndefined(price),
+          orgId,
           userId,
-          undefined,
-          userToken))
-        onExitFunc(true)
+          userToken).then(r => { return r }) // sign up for activity
+        promise.then(r => {
+          if (!r.error) {
+            if (image) {
+              let imgPromise = putImage(image, r.id, userToken)
+              imgPromise.then(r => {
+                onExitFunc(true)
+              })
+            } else {
+              onExitFunc(true)
+            }
+          }
+          else {
+            setPostingError(true)
+          }
+        })
       }
     }
   }
@@ -324,6 +340,21 @@ const NewActivity = ({ onExitFunc }: NewActivityProps) => {
               onChange={(event) => setActivityLevel(event.target.value)}
             />
           </LineWrapper>
+          {createEvent && <LineWrapper>
+            <BoldText>Pris: </BoldText>
+            <Input
+              size="mini"
+              onChange={(event) => setPrice(event.target.value)}
+            />
+          </LineWrapper>}
+          <LineWrapper>
+            <BoldText>Bilde: </BoldText>
+            <Input
+              type="file"
+              size="mini"
+              onChange={(event) => event.target.files && setImage(event.target.files[0])}
+            />
+          </LineWrapper>
         </TextContentWrapper>
         <TextContentWrapper>
           {createEvent && <LineWrapper>
@@ -389,6 +420,7 @@ const NewActivity = ({ onExitFunc }: NewActivityProps) => {
       {emptyFields && <ErrorMessage>Fyll ut alle feltene merket med *</ErrorMessage>}
       {invalidFields && <ErrorMessage>Feltet {invalidFields} er ikke gyldig</ErrorMessage>}
       {!futureDate && <ErrorMessage> Tidspunkt må være i fremtiden </ErrorMessage>}
+      {!postingError && <ErrorMessage> Noe gikk galt med posting av aktiviteten </ErrorMessage>}
     </WidgetWrapper>
   );
 }

@@ -3,11 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { logoColor, pageName, redHexColor } from "../consts";
-import { getAdminStatistics } from '../store/actionCreators';
+import { getAdminStatistics, getMyActivities } from '../store/actionCreators';
 import { State } from '../store/types';
 import { ExpandWrapper } from './ActivityDashboard';
 import Button from './Button';
-import Loading from './Loading';
 import NewActivity from './NewActivity';
 
 const Wrapper = styled.div`
@@ -54,28 +53,6 @@ export const Logo = styled.div`
   }
 `;
 
-const NewActivityResponse = styled.div`
-  background-color: ${redHexColor};
-  border: solid;
-  border-radius: 10px;
-  border-color: white;
-  width: auto;
-  min-width: 150px;
-  height: auto;
-  min-height: 100px;
-  box-shadow: 1px 1px 20px 4px rgba(0, 0, 0, 0.45);
-  color: white;
-  font-size: 30px;
-  position: absolute;
-  padding: 1em;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
 export enum Type {
   aktiviteter = "Aktiviteter",
   arrangementer = "Arrangementer"
@@ -90,7 +67,6 @@ const Header = ({ line }: HeaderProps) => {
   const dispatch = useDispatch();
 
   const [showCreateNew, setShowCreateNew] = useState<boolean>(false);
-  const [showSuccess, setShowSuccess] = useState<boolean>(false);
   const [underline, setUnderline] = useState<any>(undefined);
 
   const {
@@ -104,13 +80,6 @@ const Header = ({ line }: HeaderProps) => {
       dispatch(getAdminStatistics())
     }
   }, [stats])
-
-  const {
-    event,
-    isLoading: eventLoading,
-    errorMessage: eventError,
-  } = useSelector((state: State) => state.postEventReducer);
-
 
   useEffect(() => {
     if (line) {
@@ -129,8 +98,12 @@ const Header = ({ line }: HeaderProps) => {
   const handleNewActivityExit = (submit: boolean) => {
     setShowCreateNew(false);
     if (submit) {
-      setShowSuccess(true)
-      setTimeout(() => setShowSuccess(false), 4000)
+      const token = localStorage.getItem("token")
+      const id = localStorage.getItem("id")
+      if (id && token) {
+        dispatch(getMyActivities(id, token))
+      }
+      history.push("/mypage")
     }
   }
 
@@ -141,15 +114,10 @@ const Header = ({ line }: HeaderProps) => {
     return false
   }
 
-  if (eventLoading) return <Loading />
-
   return (
     <>
       {/* displays successs or failure of creating new activity */}
       {showCreateNew && <ExpandWrapper > <NewActivity onExitFunc={handleNewActivityExit} /></ExpandWrapper>}
-      {!showCreateNew && showSuccess && (eventError ?
-        <NewActivityResponse>Klarte ikke å poste aktiviteten.</NewActivityResponse> :
-        event && <NewActivityResponse>{event?.title} er postet!</NewActivityResponse>)}
       <Wrapper style={underline}>
         <Logo onClick={() => setUrl("/")}>{pageName}</Logo>
         <TabsWrapper>

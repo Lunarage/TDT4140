@@ -5,7 +5,6 @@ import {
     OrgsState,
     CategoriesState,
     EquipmentState,
-    PostEventState,
     StarredState,
     SignUpsState,
     GetCurrentUserState,
@@ -18,25 +17,6 @@ const initialState = {
 };
 
 // reducers for all redux-states
-
-export const postEventReducer = (
-    state: PostEventState = initialState,
-    action: Action
-) => {
-    switch (action.type) {
-        case ActionTypes.POST_EVENT_FINISHED:
-            return { ...state, isLoading: false, event: action.payload };
-        case ActionTypes.POST_EVENT_LOADING:
-            return { ...state, isLoading: true };
-        case ActionTypes.POST_EVENT_ERROR:
-            return {
-                ...state,
-                isLoading: false,
-                errorMessage: action.payload,
-            };
-    }
-    return state;
-};
 
 export const getCurrentUserReducer = (
     state: GetCurrentUserState = initialState,

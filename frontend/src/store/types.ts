@@ -15,7 +15,6 @@ export type State = {
     categoriesReducer: CategoriesState;
     equipmentReducer: EquipmentState;
     getCurrentUserReducer: GetCurrentUserState;
-    postEventReducer: PostEventState;
     starredReducer: StarredState;
     signUpsReducer: SignUpsState;
     myActivitiesReducer: MyActivitiesState;
@@ -33,10 +32,6 @@ export type EventsState = BaseState & {
 
 export type GetCurrentUserState = BaseState & {
     currentUser?: User[];
-};
-
-export type PostEventState = BaseState & {
-    event?: Activity;
 };
 
 export type OrgsState = BaseState & {
@@ -93,4 +88,6 @@ export type Event = {
     equipment_used: number[]; // id
     equipment_used_names: string[];
     max_participants: number;
+    activity_image: string;
+    activity_price: number;
 };

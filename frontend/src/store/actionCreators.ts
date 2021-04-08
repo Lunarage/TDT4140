@@ -11,55 +11,6 @@ const handleError = (response: any) => {
     return response;
 };
 
-// Action creators for all states in the redux-system. Also some functions that are not connected to redux at the bottom.
-
-export const postEvent = (
-    title: string,
-    date: string | undefined,
-    description: string,
-    location: string,
-    categories: number[] | undefined,
-    equipment_used: number[] | undefined,
-    max_participants: number | undefined,
-    activity_level: number | undefined,
-    organization_owner: number | undefined,
-    user_owner: number,
-    activity_image: string | undefined,
-    token: string
-) => {
-    return (dispatch: DispatchType) => {
-        dispatch({ type: ActionTypes.POST_EVENT_LOADING, payload: [] });
-        let client = new HttpClient(baseUrl, token);
-        return client
-            .post("api/activity/", {
-                title,
-                date,
-                organization_owner,
-                user_owner,
-                description,
-                location,
-                categories,
-                activity_level,
-                equipment_used,
-                max_participants,
-                activity_image,
-            })
-            .then((r) => handleError(r))
-            .then((response) => {
-                dispatch({
-                    type: ActionTypes.POST_EVENT_FINISHED,
-                    payload: response,
-                });
-            })
-            .catch((error) => {
-                dispatch({
-                    type: ActionTypes.POST_EVENT_ERROR,
-                    payload: error,
-                });
-            });
-    };
-};
-
 export const getCurrentUser = (token: string) => {
     return (dispatch: DispatchType) => {
         dispatch({ type: ActionTypes.GET_CURRENT_USER_LOADING, payload: [] });
@@ -330,6 +281,60 @@ export const getUser = (username: string, password: string) => {
     let client = new HttpClient(baseUrl);
     return client
         .post("api/token-auth", { username, password })
+        .then((r) => handleError(r))
+        .then((response) => {
+            return response;
+        })
+        .catch((error) => {
+            return { error: error };
+        });
+};
+
+export const postEvent = (
+    title: string,
+    date: string | undefined,
+    description: string,
+    location: string,
+    categories: number[] | undefined,
+    equipment_used: number[] | undefined,
+    max_participants: number | undefined,
+    activity_level: number | undefined,
+    activity_price: number | undefined,
+    organization_owner: number | undefined,
+    user_owner: number,
+    token: string
+) => {
+    let client = new HttpClient(baseUrl, token);
+    return client
+        .post("api/activity/", {
+            title,
+            date,
+            organization_owner,
+            user_owner,
+            description,
+            location,
+            categories,
+            activity_level,
+            activity_price,
+            equipment_used,
+            max_participants,
+        })
+        .then((r) => handleError(r))
+        .then((response) => {
+            return response;
+        })
+        .catch((error) => {
+            return { error: error };
+        });
+};
+
+export const putImage = (activity_image: File, id: number, token: string) => {
+    var formData = new FormData();
+    activity_image && formData.append("activity_image", activity_image);
+    formData.append("foo", "foo");
+    let client = new HttpClient(baseUrl, token, true);
+    return client
+        .put("api/activity/" + id.toString() + "/image_view/", formData, true)
         .then((r) => handleError(r))
         .then((response) => {
             return response;

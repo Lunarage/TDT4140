@@ -20,9 +20,18 @@ class HttpClient {
     private baseURL: string;
     private headers: {};
 
-    constructor(baseURL: string, userToken: string | null = null) {
+    constructor(
+        baseURL: string,
+        userToken: string | null = null,
+        formData: boolean = false
+    ) {
         this.baseURL = baseURL;
-        if (userToken != null) {
+        if (formData) {
+            // special case for http request with images
+            this.headers = {
+                Authorization: "Token " + userToken,
+            };
+        } else if (userToken != null) {
             this.headers = {
                 "Content-Type": "application/json",
                 "Authorization": "Token " + userToken,
@@ -175,10 +184,18 @@ class HttpClient {
      * @param {string} url - The url to send the request to
      * @return {Promise<T>} The promise of a response
      */
-    public put<T>(url: string, body: any): Promise<CustomError | T> {
+    public put<T>(
+        url: string,
+        body: any,
+        formData: boolean = false
+    ): Promise<CustomError | T> {
+        let newBody = body;
+        if (!formData) {
+            newBody = JSON.stringify(body);
+        }
         return fetch(this.baseURL + url, {
             method: "PUT",
-            body: JSON.stringify(body),
+            body: newBody,
             headers: this.headers,
         })
             .then(this.checkStatus)
