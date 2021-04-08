@@ -141,7 +141,11 @@ const ActivityExpand = ({ data, onExitFunc }: ActivityExpandProps) => {
   // sets image if there is one
   useEffect(() => {
     if (data.activity_image) {
-      setImage("http://127.0.0.1:8000" + data.activity_image)
+      if (data.activity_image.split(":")[0] == "http") {
+        setImage(data.activity_image)
+      } else {
+        setImage("http://127.0.0.1:8000" + data.activity_image)
+      }
     }
   }, [data])
 

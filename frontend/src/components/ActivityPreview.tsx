@@ -71,7 +71,11 @@ const ActivityPreview = ({ data, onClickFunc }: ActivityPreviewProps) => {
   // sets image
   useEffect(() => {
     if (data.activity_image) {
-      setImage("http://127.0.0.1:8000" + data.activity_image)
+      if (data.activity_image.split(":")[0] == "http") {
+        setImage(data.activity_image)
+      } else {
+        setImage("http://127.0.0.1:8000" + data.activity_image)
+      }
     }
   }, [data])
 
